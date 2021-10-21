@@ -3,6 +3,6 @@ module com.example.programme {
     requires javafx.fxml;
 
 
-    opens com.example.programme to javafx.fxml;
-    exports com.example.programme;
+    opens windowManager to javafx.fxml;
+    exports windowManager;
 }
