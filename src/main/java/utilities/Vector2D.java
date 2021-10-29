@@ -1,7 +1,5 @@
 package utilities;
 
-import java.util.Vector;
-
 public class Vector2D {
     public double x;
     public double y;
@@ -13,6 +11,10 @@ public class Vector2D {
 
     public Vector2D() {
         this(0,0);
+    }
+
+    public Vector2D(Vector2D vector2D) {
+        this(vector2D.x, vector2D.y);
     }
 
     public Vector2D add(Vector2D vector2D){
