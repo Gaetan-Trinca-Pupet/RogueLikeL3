@@ -2,10 +2,13 @@ package windowManager;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Shape;
 import utilities.Sprite;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class GameWindow extends Canvas {
     private Vector2D screenSize;
@@ -62,6 +65,68 @@ public class GameWindow extends Canvas {
         return screenCenter;
     }
 
+    private void addToList(ArrayList<Sprite> spriteList, int index, Sprite... sprites){
+        spriteList.addAll(index, List.of(sprites));
+    }
+
+    private void removeFromList(ArrayList<Sprite> spriteList, Sprite... sprites){
+        spriteList.removeAll(List.of(sprites));
+    }
+
+///
+/// AddToList
+///
+    public void addToBackground(int index, Sprite... sprites){
+        addToList(background, index, sprites);
+    }
+
+    public void addToBackground(Sprite... sprites){
+        addToList(background, background.size()-1, sprites);
+    }
+
+    public void addToGround(int index, Sprite... sprites){
+        addToList(ground, index, sprites);
+    }
+
+    public void addToGround(Sprite... sprites){
+        addToList(ground, background.size()-1, sprites);
+    }
+    public void addToForeground(int index, Sprite... sprites){
+        addToList(foreground, index, sprites);
+    }
+
+    public void addToForeground(Sprite... sprites){
+        addToList(foreground, background.size()-1, sprites);
+    }
+    public void addToHUD(int index, Sprite... sprites){
+        addToList(HUD, index, sprites);
+    }
+
+    public void addToHUD(Sprite... sprites){
+        addToList(HUD, background.size()-1, sprites);
+    }
+///
+/// RemoverFromList
+///
+    public void removeFromBackground(Sprite... sprites){
+        removeFromList(background, sprites);
+    }
+
+    public void removeGround(Sprite... sprites){
+        removeFromList(ground, sprites);
+    }
+
+    public void removeFromForeground(Sprite... sprites){
+        removeFromList(foreground, sprites);
+    }
+
+    public void removeFromHUD(Sprite... sprites){
+        removeFromList(HUD, sprites);
+    }
+
+///
+/// Getter
+///
     public ArrayList<Sprite> getBackground() {
         return background;
     }
