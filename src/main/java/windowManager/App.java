@@ -1,24 +1,32 @@
 package windowManager;
 
-import gameComponents.Game;
+import gameComponents.GameContext;
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import utilities.Vector2D;
 
 public class App extends Application {
-    private static Game RogueLike;
+    private GameContext gameContext;
+    private Vector2D screen;
+    private GameWindow window;
+
     public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        RogueLike = new Game(primaryStage);
+    public void start(Stage primaryStage) {
+        Group root = new Group();
+        window = new GameWindow(new Vector2D(Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight()));
+        root.getChildren().add(window);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setFullScreen(true);
+        primaryStage.show();
 
-        RogueLike.configure();
-        RogueLike.startGame();
-        //RogueLike.endGame();
+        gameContext = new GameContext(window);
     }
 
 
