@@ -1,7 +1,9 @@
-package utilities;
+package sprite;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import utilities.Vector2D;
+
 import java.util.ArrayList;
 
 public class AnimatedSprite extends Sprite {

@@ -1,6 +1,7 @@
-package utilities;
+package sprite;
 
 import javafx.scene.canvas.GraphicsContext;
+import utilities.Vector2D;
 
 public abstract class Sprite {
     protected Vector2D position;
