@@ -2,7 +2,7 @@ package test;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import utilities.Sprite;
+import sprite.Sprite;
 import utilities.Vector2D;
 
 public class Square extends Sprite {
