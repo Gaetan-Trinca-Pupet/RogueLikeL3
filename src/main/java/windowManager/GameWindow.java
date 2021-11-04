@@ -1,6 +1,7 @@
 package windowManager;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
 import utilities.Sprite;
 import utilities.Vector2D;
 
@@ -55,6 +56,10 @@ public class GameWindow extends Canvas {
             HUD.get(i).computeDrawerPosition(screenCenter);
             HUD.get(i).drawSelfOnto(getGraphicsContext2D());
         }
+    }
+
+    public Vector2D getScreenCenter() {
+        return screenCenter;
     }
 
     public ArrayList<Sprite> getBackground() {

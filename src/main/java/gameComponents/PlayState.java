@@ -1,6 +1,8 @@
 package gameComponents;
 
 import javafx.event.Event;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -15,7 +17,6 @@ public class PlayState implements GameState{
     public PlayState(GameContext gameContext){
         this.gameContext = gameContext;
         startGame();
-        addEventHandlers();
     }
 
     public void startGame(){
@@ -30,27 +31,20 @@ public class PlayState implements GameState{
         gameContext.gameWindow.paintAll();
     }
 
-    //Exemple gestion des events
-    public void addEventHandlers(){
-        gameContext.gameWindow.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClick);
-    }
-
-    public void onClick(Event event) {
-        gameContext.gameWindow.getHUD().add(new Square(new Vector2D(50, -50), new Vector2D(50, 5), new Color(0, 0.2, 0.4, 1)));
-        gameContext.gameWindow.paintAll();
-    }
-
-    public void endGame(){
-        primaryStage.close();
-    }
-
     @Override
     public void update() {
         gameContext.gameWindow.paintAll();
     }
 
     @Override
-    public void handle(Event event) {
-        System.out.println(event);
+    public void mouseEvent(MouseEvent event) {
+        if(event.getEventType() == MouseEvent.MOUSE_CLICKED)
+            System.out.println((event.getX() - gameContext.gameWindow.getScreenCenter().x) + " " + (event.getY() - gameContext.gameWindow.getScreenCenter().y));
+    }
+
+    @Override
+    public void keyboardEvent(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED)
+            System.out.println(event.getCode());
     }
 }
