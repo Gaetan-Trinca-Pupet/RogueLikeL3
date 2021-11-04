@@ -1,13 +1,10 @@
 package windowManager;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Shape;
-import utilities.Sprite;
+import sprite.Sprite;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GameWindow extends Canvas {
