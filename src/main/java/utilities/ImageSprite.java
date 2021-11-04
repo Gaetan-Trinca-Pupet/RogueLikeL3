@@ -7,7 +7,7 @@ public class ImageSprite extends Sprite {
     Vector2D size;
     Image image;
 
-    public ImageSprite(Image image, Vector2D position, Vector2D size) {
+    public ImageSprite(Vector2D position, Image image, Vector2D size) {
         super(position);
         this.image = image;
         this.size = size;
