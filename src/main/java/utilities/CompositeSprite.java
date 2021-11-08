@@ -1,6 +1,7 @@
 package utilities;
 
 import javafx.scene.canvas.GraphicsContext;
+import sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
