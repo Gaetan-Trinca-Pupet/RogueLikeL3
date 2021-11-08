@@ -19,7 +19,7 @@ public class ImageSprite extends Sprite {
     }
 
     @Override
-    public void drawSelfOnto(GraphicsContext graphicsContext) {
-        graphicsContext.drawImage(image, drawerPosition.x, drawerPosition.y);
+    public void draw(GraphicsContext graphicsContext, Vector2D position) {
+        graphicsContext.drawImage(image, position.x, position.y);
     }
 }

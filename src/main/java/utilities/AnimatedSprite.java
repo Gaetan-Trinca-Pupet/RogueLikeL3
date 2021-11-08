@@ -13,9 +13,9 @@ public class AnimatedSprite extends Sprite {
     }
 
     @Override
-    public void drawSelfOnto(GraphicsContext graphicsContext) {
+    public void draw(GraphicsContext graphicsContext, Vector2D position) {
         for (Image img:animation) {
-            graphicsContext.drawImage(img, drawerPosition.x, drawerPosition.y);
+            graphicsContext.drawImage(img, position.x, position.y);
         }
     }
 
