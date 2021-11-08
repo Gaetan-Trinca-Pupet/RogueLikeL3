@@ -10,9 +10,9 @@ public class Square extends Sprite {
     Color color;
 
     @Override
-    public void drawSelfOnto(GraphicsContext graphicsContext) {
+    public void draw(GraphicsContext graphicsContext, Vector2D position) {
         graphicsContext.setFill(color);
-        graphicsContext.fillRect(drawerPosition.x, drawerPosition.y, size.x, size.y);
+        graphicsContext.fillRect(position.x, position.y, size.x, size.y);
     }
 
     public Square(Vector2D position, Vector2D size, Color color){

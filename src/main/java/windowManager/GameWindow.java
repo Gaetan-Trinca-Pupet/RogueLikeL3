@@ -38,23 +38,19 @@ public class GameWindow extends Canvas {
 
     public void paintAll(){
         for (int i = background.size()-1 ; i >=0 ; --i){
-            background.get(i).computeDrawerPosition(screenCenter);
-            background.get(i).drawSelfOnto(getGraphicsContext2D());
+            background.get(i).drawSelfOnto(getGraphicsContext2D(), screenCenter);
         }
 
         for (int i = ground.size()-1 ; i >=0 ; --i){
-            ground.get(i).computeDrawerPosition(screenCenter);
-            ground.get(i).drawSelfOnto(getGraphicsContext2D());
+            ground.get(i).drawSelfOnto(getGraphicsContext2D(), screenCenter);
         }
 
         for (int i = foreground.size()-1 ; i >=0 ; --i){
-            foreground.get(i).computeDrawerPosition(screenCenter);
-            foreground.get(i).drawSelfOnto(getGraphicsContext2D());
+            foreground.get(i).drawSelfOnto(getGraphicsContext2D(), screenCenter);
         }
 
         for (int i = HUD.size()-1 ; i >=0 ; --i){
-            HUD.get(i).computeDrawerPosition(screenCenter);
-            HUD.get(i).drawSelfOnto(getGraphicsContext2D());
+            HUD.get(i).drawSelfOnto(getGraphicsContext2D(), screenCenter);
         }
     }
 
