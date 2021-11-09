@@ -5,8 +5,8 @@ import utilities.Vector2D;
 import java.security.PrivateKey;
 
 public class SquareCollision extends Collision {
-    public Vector2D position;
-    public Vector2D size;
+    private Vector2D position;
+    private Vector2D size;
 
     private SegmentCollision top;
     private SegmentCollision bottom;

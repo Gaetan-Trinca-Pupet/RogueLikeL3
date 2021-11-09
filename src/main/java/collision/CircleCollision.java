@@ -2,36 +2,53 @@ package collision;
 
 import utilities.Vector2D;
 
+import static java.lang.Math.toRadians;
+
 public class CircleCollision extends Collision {
-    public Vector2D position;
-    public long radius;
+    private Vector2D position;
+    private long radius;
+
+    private SegmentCollision[] segmentedCircle;
 
     public CircleCollision(Vector2D position, long radius){
         this.position = position;
         this.radius = radius;
+
+        segmentedCircle = new SegmentCollision[100];
+        for(int i = 0 ; i < segmentedCircle.length ; ++i)
+            segmentedCircle[i] = new SegmentCollision(new Vector2D(), new Vector2D());
+        computeSegments();
+    }
+
+    public void computeSegments(){
+        double radiantAngle = Math.toRadians(360/segmentedCircle.length * (segmentedCircle.length - 1));
+        Vector2D newPointOnCircle;
+        Vector2D oldPointOnCircle = new Vector2D(position.x + Math.cos(radiantAngle) * radius, position.y + Math.sin(radiantAngle) * radius);
+        for(int i = 0 ; i < segmentedCircle.length ; ++i)
+        {
+            radiantAngle = Math.toRadians(360/segmentedCircle.length * i);
+            newPointOnCircle = new Vector2D(position.x + Math.cos(radiantAngle) * radius, position.y + Math.sin(radiantAngle) * radius);
+            segmentedCircle[i].setStart(newPointOnCircle);
+            segmentedCircle[i].setEnd(oldPointOnCircle);
+            oldPointOnCircle = new Vector2D(newPointOnCircle);
+        }
     }
 
     public void setPosition(Vector2D position){
         this.position = position;
+        computeSegments();
     }
 
     public void setRadius(long radius){
         this.radius = radius;
+        computeSegments();
     }
 
     @Override
     public boolean isInside(Collision collision) {
-        Vector2D newPointOnCircle;
-        Vector2D oldPointOnCircle = new Vector2D(position.x + Math.cos(Math.toRadians(0)) * radius, position.y + Math.sin(Math.toRadians(0)) * radius);
-        for(double angle = 360/100 ; angle < 360 ; angle += 360/100)
-        {
-            double radiantAngle = Math.toRadians(angle);
-            newPointOnCircle = new Vector2D(position.x + Math.cos(radiantAngle) * radius, position.y + Math.sin(radiantAngle) * radius);
-            if(collision.isInside(new SegmentCollision(newPointOnCircle, oldPointOnCircle)))
+        for(SegmentCollision segment : segmentedCircle)
+            if(collision.isInside(segment))
                 return true;
-            oldPointOnCircle = new Vector2D(newPointOnCircle);
-        }
-
         return false;
     }
 
