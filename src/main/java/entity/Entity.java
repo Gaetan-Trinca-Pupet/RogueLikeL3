@@ -1,10 +1,18 @@
 package entity;
 
 import collision.Collision;
+import gameComponents.GameContext;
+import gameComponents.GameState;
 import sprite.Sprite;
 import utilities.Vector2D;
 
 public class Entity {
+    static protected GameContext game;
+
+    public static void setGameContext(GameContext context){
+        game = context;
+    }
+
     private Collision hitBox;
 
     private Sprite sprite;
