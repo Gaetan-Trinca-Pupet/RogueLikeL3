@@ -16,4 +16,16 @@ public abstract class Sprite {
     public Sprite(Vector2D position){
         this.position = position;
     }
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position = position;
+    }
+
+    public void translate(Vector2D difference) {
+        this.position.add(difference);
+    }
 }
