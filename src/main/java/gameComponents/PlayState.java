@@ -1,5 +1,7 @@
 package gameComponents;
 
+import collision.SquareCollision;
+import entity.Entity;
 import javafx.event.Event;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
@@ -7,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import map.Map;
+import test.EntityTest;
 import test.Square;
 import utilities.CompositeSprite;
 import utilities.Vector2D;
@@ -14,6 +17,8 @@ import utilities.Vector2D;
 public class PlayState implements GameState{
     private Stage primaryStage;
     private GameContext gameContext;
+
+    private EntityTest entityTest;
 
 
     public PlayState(GameContext gameContext){
@@ -24,9 +29,20 @@ public class PlayState implements GameState{
     public void startGame(){
         //TODO
         //Exemple :
+        Entity.setGameContext(gameContext);
+
+        entityTest = new EntityTest();
+
+        entityTest.setPosition(new Vector2D(0,0));
+        entityTest.setHitBox(new SquareCollision(entityTest.getPosition(), new Vector2D(100, 100)));
+
         Map map = new Map();
         gameContext.gameWindow.getBackground().add(map.getSprite());
         gameContext.gameWindow.paintAll();
+
+
+        map.getSprite().setPosition(entityTest.getPosition());
+        entityTest.setSprite(map.getSprite());
     }
 
     @Override
@@ -36,13 +52,18 @@ public class PlayState implements GameState{
 
     @Override
     public void mouseEvent(MouseEvent event) {
+        entityTest.mouseEvent(event);
         if(event.getEventType() == MouseEvent.MOUSE_CLICKED)
             System.out.println((event.getX() - gameContext.gameWindow.getScreenCenter().x) + " " + (event.getY() - gameContext.gameWindow.getScreenCenter().y));
+        gameContext.gameWindow.paintAll();
     }
 
     @Override
     public void keyboardEvent(KeyEvent event) {
+        entityTest.keyboardEvent(event);
         if (event.getEventType() == KeyEvent.KEY_PRESSED)
             System.out.println(event.getCode());
+        gameContext.gameWindow.paintAll();
+
     }
 }
