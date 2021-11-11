@@ -22,4 +22,8 @@ public class GameContext{
         gameWindow.addEventHandler(MouseEvent.ANY, currentState::mouseEvent);
         gameWindow.addEventHandler(KeyEvent.ANY, currentState::keyboardEvent);
     }
+
+    public GameWindow getGameWindow(){
+        return gameWindow;
+    }
 }
