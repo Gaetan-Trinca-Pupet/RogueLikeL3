@@ -37,6 +37,8 @@ public class GameWindow extends Canvas {
     }
 
     public void paintAll(){
+        getGraphicsContext2D().clearRect(0,0,screenSize.x,screenSize.y);
+
         for (int i = background.size()-1 ; i >=0 ; --i){
             background.get(i).drawSelfOnto(getGraphicsContext2D(), screenCenter);
         }
