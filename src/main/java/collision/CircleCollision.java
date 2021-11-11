@@ -34,8 +34,15 @@ public class CircleCollision extends Collision {
         }
     }
 
+    @Override
     public void setPosition(Vector2D position){
-        this.position = position;
+        super.setPosition(position);
+        computeSegments();
+    }
+
+    @Override
+    public void translate(Vector2D position){
+        super.translate(position);
         computeSegments();
     }
 

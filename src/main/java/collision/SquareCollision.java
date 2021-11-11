@@ -5,7 +5,6 @@ import utilities.Vector2D;
 import java.security.PrivateKey;
 
 public class SquareCollision extends Collision {
-    private Vector2D position;
     private Vector2D size;
 
     private SegmentCollision top;
@@ -14,13 +13,20 @@ public class SquareCollision extends Collision {
     private SegmentCollision right;
 
     public SquareCollision(Vector2D position, Vector2D size){
-        this.position = position;
+        super(position);
         this.size = size;
         computeSegments();
     }
 
+    @Override
     public void setPosition(Vector2D position) {
-        this.position = position;
+        super.setPosition(position);
+        computeSegments();
+    }
+
+    @Override
+    public void translate(Vector2D position){
+        super.translate(position);
         computeSegments();
     }
 

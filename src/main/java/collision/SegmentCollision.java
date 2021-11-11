@@ -7,9 +7,14 @@ public class SegmentCollision extends Collision{
     public Vector2D start;
     public Vector2D end;
 
-    public SegmentCollision(Vector2D start, Vector2D end) {
+    public SegmentCollision(Vector2D position, Vector2D start, Vector2D end) {
+        super(position);
         this.start = start;
         this.end = end;
+    }
+
+    public SegmentCollision(Vector2D start, Vector2D end) {
+        this(new Vector2D(), start, end);
     }
 
     public void setStart(Vector2D start) {
@@ -20,6 +25,14 @@ public class SegmentCollision extends Collision{
         this.end = end;
     }
 
+    public Vector2D getRelativeStart(){
+        return new Vector2D(position).add(start);
+    }
+
+    public Vector2D getRelativeEnd(){
+        return new Vector2D(position).add(end);
+    }
+
     @Override
     public boolean isInside(Collision collision) {
         return collision.isInside(this);
@@ -27,19 +40,19 @@ public class SegmentCollision extends Collision{
 
     @Override
     public boolean isInside(SegmentCollision segmentCollision) {
-        return ccw(start,segmentCollision.start,segmentCollision.end) != ccw(end,segmentCollision.start,segmentCollision.end) && ccw(start,end,segmentCollision.start) != ccw(start,end,segmentCollision.end);
+        return ccw(getRelativeStart(), segmentCollision.getRelativeStart(), segmentCollision.getRelativeEnd()) != ccw(getRelativeEnd(), segmentCollision.getRelativeStart(), segmentCollision.getRelativeEnd()) && ccw(getRelativeStart(), getRelativeEnd(), segmentCollision.getRelativeStart()) != ccw(getRelativeStart(), getRelativeEnd(), segmentCollision.getRelativeEnd());
     }
 
     @Override
     public boolean isInside(Vector2D point) {
-        if ( Math.abs((point.y - start.y) * (end.x - start.x) - (point.x - start.x) * (end.y - start.y)) > Math.ulp(1.0) )
+        if ( Math.abs((point.y - getRelativeStart().y) * (getRelativeEnd().x - getRelativeStart().x) - (point.x - getRelativeStart().x) * (getRelativeEnd().y - getRelativeStart().y)) > Math.ulp(1.0) )
             return false;
 
-        float dotProduct = (float) ((point.x - start.x) * (end.x - start.x) + (point.y - start.y) * (end.y - start.y));
+        float dotProduct = (float) ((point.x - getRelativeStart().x) * (getRelativeEnd().x - getRelativeStart().x) + (point.y - getRelativeStart().y) * (getRelativeEnd().y - getRelativeStart().y));
         if (dotProduct < 0)
             return false;
 
-        float squareLength = (float) (Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+        float squareLength = (float) (Math.pow(getRelativeEnd().x - getRelativeStart().x, 2) + Math.pow(getRelativeEnd().y - getRelativeStart().y, 2));
         if (dotProduct > squareLength)
             return false;
 
