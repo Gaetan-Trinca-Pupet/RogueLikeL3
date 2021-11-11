@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import map.Map;
 import test.Square;
 import utilities.CompositeSprite;
 import utilities.Vector2D;
@@ -23,13 +24,8 @@ public class PlayState implements GameState{
     public void startGame(){
         //TODO
         //Exemple :
-        gameContext.gameWindow.getBackground().add(new Square(new Vector2D(0,0), new Vector2D(100,100), new Color(0.5, 0.5, 1, 1)));
-        CompositeSprite sprite = new CompositeSprite(new Vector2D(50, 50));
-        sprite.add(new Square(new Vector2D(0,0), new Vector2D(50,50), new Color(0, 1, 0, 1)));
-        sprite.add(new Square(new Vector2D(50,50), new Vector2D(50,50), new Color(0, 1, 0, 1)));
-        sprite.add(new Square(new Vector2D(100,100), new Vector2D(50,50), new Color(1, 1, 0, 1)));
-        gameContext.gameWindow.getForeground().add(sprite);
-
+        Map map = new Map();
+        gameContext.gameWindow.getBackground().add(map.getSprite());
         gameContext.gameWindow.paintAll();
     }
 
