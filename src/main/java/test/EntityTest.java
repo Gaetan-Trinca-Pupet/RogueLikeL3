@@ -8,7 +8,7 @@ import utilities.Vector2D;
 
 public class EntityTest extends Creature {
     public void mouseEvent(MouseEvent event) {
-        if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
+        if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
             this.getPosition().x = event.getX() - game.getGameWindow().getScreenCenter().x;
             this.getPosition().y = event.getY() - game.getGameWindow().getScreenCenter().y;
         }
