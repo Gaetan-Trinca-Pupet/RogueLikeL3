@@ -7,7 +7,6 @@ public abstract class Sprite {
     protected Vector2D position;
 
     public void drawSelfOnto(GraphicsContext graphicsContext, Vector2D parentPosition) {
-        System.out.println(position.x + parentPosition.x + " " + position.y + parentPosition.y);
         draw(graphicsContext, new Vector2D(position.x + parentPosition.x, position.y + parentPosition.y));
     }
 
