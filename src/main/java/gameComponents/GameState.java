@@ -3,6 +3,7 @@ package gameComponents;
 import javafx.event.Event;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.WindowEvent;
 
 public interface GameState {
     void update();

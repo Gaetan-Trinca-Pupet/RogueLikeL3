@@ -1,38 +1,29 @@
 package test;
 
+import Controller.RogueLikeController;
+import Controller.Touche;
 import entity.Creature;
+import javafx.event.Event;
+import javafx.event.EventTarget;
+import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import utilities.Vector2D;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class EntityTest extends Creature {
-    public void mouseEvent(MouseEvent event) {
-        if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
-            this.getPosition().x = event.getX() - game.getGameWindow().getScreenCenter().x;
-            this.getPosition().y = event.getY() - game.getGameWindow().getScreenCenter().y;
-        }
+    private RogueLikeController controller;
+
+    public EntityTest(RogueLikeController controller){
+        this.controller = controller;
     }
 
-    public void keyboardEvent(KeyEvent event) {
-        if (event.getEventType() == KeyEvent.KEY_PRESSED)
-        {
-            KeyCode keyPressed = event.getCode();
-
-            switch (keyPressed){
-                case Z:
-                    translate(new Vector2D(0, -5));
-                    break;
-                case Q:
-                    translate(new Vector2D(-5, 0));
-                    break;
-                case S:
-                    translate(new Vector2D(0, 5));
-                    break;
-                case D:
-                    translate(new Vector2D(5, 0));
-                    break;
-            }
-        }
+    public void update(){
+        this.getPosition().x += controller.getXTiltLeftJoystick() * 10;
+        this.getPosition().y += controller.getYTiltLeftJoystick() * 10;
     }
 }
