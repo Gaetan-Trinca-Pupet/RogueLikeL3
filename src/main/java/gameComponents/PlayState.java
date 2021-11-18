@@ -18,7 +18,7 @@ import test.Square;
 import utilities.CompositeSprite;
 import utilities.Vector2D;
 
-public class PlayState extends Thread implements GameState{
+public class PlayState implements GameState{
     private Stage primaryStage;
     private GameContext gameContext;
     private MouseAndKeyboardController controller;
@@ -50,29 +50,12 @@ public class PlayState extends Thread implements GameState{
 
         map.getSprite().setPosition(entityTest.getPosition());
         entityTest.setSprite(map.getSprite());
-
-        Thread thread = new Thread(this::loopUpdateAtFrequency);
-        thread.start();
-    }
-
-    private void loopUpdateAtFrequency(long hz){
-        float deltaTime = 1;
-        for(long chrono = System.currentTimeMillis() ; ; chrono = System.currentTimeMillis()){
-            update();
-            System.out.println(deltaTime);
-            while(System.currentTimeMillis() - chrono < 1000/hz);
-            deltaTime = (System.currentTimeMillis() - chrono) / (1000/hz);
-        }
-    }
-
-    private void loopUpdateAtFrequency(){
-        loopUpdateAtFrequency(60);
     }
 
     @Override
     public void update() {
-            entityTest.update();
-            gameContext.gameWindow.paintAll();
+        entityTest.update();
+        gameContext.gameWindow.paintAll();
     }
 
     @Override
