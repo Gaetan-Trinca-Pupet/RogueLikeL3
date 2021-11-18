@@ -74,4 +74,7 @@ public abstract class Entity implements Updatable {
     public Vector2D getPosition() {
         return position;
     }
+
+    public abstract void interactWith(Pickable)
+
 }

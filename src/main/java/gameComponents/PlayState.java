@@ -38,6 +38,7 @@ public class PlayState implements GameState{
 
 
     public PlayState(GameContext gameContext){
+        updatableList = new ArrayList<>();
         this.gameContext = gameContext;
         controller = new MouseAndKeyboardController();
         controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());

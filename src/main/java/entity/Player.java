@@ -36,4 +36,9 @@ public class Player extends Creature{
     private void move(){
         translate(new Vector2D(controller.getXTiltLeftJoystick() * speed, controller.getYTiltLeftJoystick() * speed));
     }
+
+    public void checkInteraction(){
+        for(Interactable interactable : interactableList)
+            interactable.interact(this);
+    }
 }
