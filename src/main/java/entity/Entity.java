@@ -4,9 +4,10 @@ import collision.Collision;
 import gameComponents.GameContext;
 import gameComponents.GameState;
 import sprite.Sprite;
+import utilities.Updatable;
 import utilities.Vector2D;
 
-public class Entity {
+public abstract class Entity implements Updatable {
     static protected GameContext game;
 
     public static void setGameContext(GameContext context){
@@ -25,7 +26,7 @@ public class Entity {
     }
 
     public void translate(Vector2D difference){
-        position.add(difference);
+        position = position.add(difference);
     }
 
     public void translateHitBox(Vector2D difference){

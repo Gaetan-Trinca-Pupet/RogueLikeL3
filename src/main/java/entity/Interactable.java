@@ -1,4 +1,5 @@
 package entity;
 
-public class Interactable extends Entity{
+public abstract class Interactable extends Entity{
+    public abstract void interact(Entity entity);
 }
