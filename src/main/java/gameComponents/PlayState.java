@@ -4,6 +4,7 @@ import Controller.MouseAndKeyboardController;
 import Controller.Touche;
 import collision.SquareCollision;
 import entity.Entity;
+import entity.Player;
 import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.input.InputEvent;
@@ -17,6 +18,7 @@ import sprite.Sprite;
 import test.EntityTest;
 import test.Square;
 import sprite.CompositeSprite;
+import utilities.Updatable;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class PlayState implements GameState{
     private MouseAndKeyboardController controller;
 
     private Map map;
-    private EntityTest entityTest;
+    private List<Updatable> updatableList;
 
     private List<Sprite> background;
     private List<Sprite> ground;
@@ -52,16 +54,16 @@ public class PlayState implements GameState{
         //Exemple :
         Entity.setGameContext(gameContext);
 
-        entityTest = new EntityTest(controller);
+        Player player = new Player(controller);
 
-        entityTest.setPosition(new Vector2D(0,0));
-        entityTest.setHitBox(new SquareCollision(entityTest.getPosition(), new Vector2D(100, 100)));
+        player.setPosition(new Vector2D(0,0));
+        player.setHitBox(new SquareCollision(player.getPosition(), new Vector2D(100, 100)));
+        player.setSprite(new Square(player.getPosition(), new Vector2D(100,100), new Color(1,0,1,1)));
+
 
         map = new Map();
         background.add(map.getSprite());
         paintAll();
-
-        entityTest.setSprite(map.getSprite());
     }
 
     private void paintAll() {
@@ -70,7 +72,9 @@ public class PlayState implements GameState{
 
     @Override
     public void update() {
-        entityTest.update();
+        System.out.println("updating......");
+        for(Updatable object : updatableList)
+            object.update();
         paintAll();
     }
 

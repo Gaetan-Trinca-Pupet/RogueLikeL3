@@ -26,11 +26,11 @@ public class SegmentCollision extends Collision{
     }
 
     public Vector2D getRelativeStart(){
-        return new Vector2D(position).add(start);
+        return position.add(start);
     }
 
     public Vector2D getRelativeEnd(){
-        return new Vector2D(position).add(end);
+        return position.add(end);
     }
 
     @Override
