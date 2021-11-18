@@ -20,12 +20,12 @@ public class Player extends Creature{
         this.controller = controller;
     }
 
-    public void addInterraction(Interactable... interactables){
-        interactableList.addAll(interactableList);
+    public void addInteraction(Interactable... interactables){
+        interactableList.addAll(List.of(interactables));
     }
 
-    public void removeInterraction(Interactable... interactables){
-        interactableList.removeAll(interactableList);
+    public void removeInteraction(Interactable... interactables){
+        interactableList.removeAll(List.of(interactables));
     }
 
     @Override
