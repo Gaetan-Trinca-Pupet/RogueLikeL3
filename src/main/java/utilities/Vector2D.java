@@ -18,30 +18,18 @@ public class Vector2D {
     }
 
     public Vector2D add(Vector2D vector2D){
-        this.x += vector2D.x;
-        this.y += vector2D.y;
-
-        return this;
+        return new Vector2D(this.x + vector2D.x, this.y + vector2D.y);
     }
 
     public Vector2D subtract(Vector2D vector2D){
-        this.x -= vector2D.x;
-        this.y -= vector2D.y;
-
-        return this;
+        return new Vector2D(this.x - vector2D.x, this.y - vector2D.y);
     }
 
     public Vector2D multiply(Vector2D vector2D){
-        this.x *= vector2D.x;
-        this.y *= vector2D.y;
-
-        return this;
+        return new Vector2D(this.x * vector2D.x, this.y * vector2D.y);
     }
 
     public Vector2D divideBy(Vector2D vector2D){
-        this.x /= vector2D.x;
-        this.y /= vector2D.y;
-
-        return this;
+        return new Vector2D(this.x / vector2D.x, this.y / vector2D.y);
     }
 }

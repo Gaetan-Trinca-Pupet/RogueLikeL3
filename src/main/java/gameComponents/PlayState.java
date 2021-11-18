@@ -13,23 +13,37 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import map.Map;
+import sprite.Sprite;
 import test.EntityTest;
 import test.Square;
-import utilities.CompositeSprite;
+import sprite.CompositeSprite;
 import utilities.Vector2D;
 
-public class PlayState extends Thread implements GameState{
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayState implements GameState{
     private Stage primaryStage;
     private GameContext gameContext;
     private MouseAndKeyboardController controller;
 
+    private Map map;
     private EntityTest entityTest;
+
+    private List<Sprite> background;
+    private List<Sprite> ground;
+    private List<Sprite> foreground;
 
 
     public PlayState(GameContext gameContext){
         this.gameContext = gameContext;
         controller = new MouseAndKeyboardController();
         controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
+
+        background = new ArrayList<>();
+        ground = new ArrayList<>();
+        foreground = new ArrayList<>();
+
         startGame();
     }
 
@@ -43,36 +57,21 @@ public class PlayState extends Thread implements GameState{
         entityTest.setPosition(new Vector2D(0,0));
         entityTest.setHitBox(new SquareCollision(entityTest.getPosition(), new Vector2D(100, 100)));
 
-        Map map = new Map();
-        gameContext.gameWindow.getBackground().add(map.getSprite());
-        gameContext.gameWindow.paintAll();
+        map = new Map();
+        background.add(map.getSprite());
+        paintAll();
 
-
-        map.getSprite().setPosition(entityTest.getPosition());
         entityTest.setSprite(map.getSprite());
-
-        Thread thread = new Thread(this::loopUpdateAtFrequency);
-        thread.start();
     }
 
-    private void loopUpdateAtFrequency(long hz){
-        float deltaTime = 1;
-        for(long chrono = System.currentTimeMillis() ; ; chrono = System.currentTimeMillis()){
-            update();
-            System.out.println(deltaTime);
-            while(System.currentTimeMillis() - chrono < 1000/hz);
-            deltaTime = (System.currentTimeMillis() - chrono) / (1000/hz);
-        }
-    }
-
-    private void loopUpdateAtFrequency(){
-        loopUpdateAtFrequency(60);
+    private void paintAll() {
+        gameContext.gameWindow.paintAll(background, ground, foreground);
     }
 
     @Override
     public void update() {
-            entityTest.update();
-            gameContext.gameWindow.paintAll();
+        entityTest.update();
+        paintAll();
     }
 
     @Override
