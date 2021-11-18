@@ -1,6 +1,7 @@
 package entity;
 
-public abstract class Creature extends Entity{
+public abstract class Creature extends Interactable{
     private int maxLife;
-    private int life;
+    private int currentLife;
+    private int force;
 }

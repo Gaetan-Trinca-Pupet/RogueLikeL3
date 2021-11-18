@@ -6,7 +6,7 @@ import utilities.Vector2D;
 
 public class ImageSprite extends Sprite {
     private Vector2D size;
-    public Image image;
+    private Image image;
 
     public ImageSprite(Image image, Vector2D position, Vector2D size) {
         super(position);
@@ -16,6 +16,22 @@ public class ImageSprite extends Sprite {
 
     public ImageSprite(Image image, Vector2D position) {
         this(image, position, new Vector2D(image.getWidth(), image.getHeight()));
+    }
+
+    public ImageSprite(Image image) {
+        this(image, new Vector2D());
+    }
+
+    public void setSize(Vector2D size){
+        this.size = size;
+    }
+
+    public Vector2D getSize(){
+        return size;
+    }
+
+    public Image getImage(){
+        return image;
     }
 
     @Override

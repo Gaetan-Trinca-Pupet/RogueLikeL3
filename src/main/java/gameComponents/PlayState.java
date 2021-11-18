@@ -1,28 +1,26 @@
 package gameComponents;
 
+import Consomable.Apple;
 import Controller.MouseAndKeyboardController;
-import Controller.Touche;
-import collision.SquareCollision;
+import EventManager.KeyEventManager;
+import EventManager.MouseEventManager;
+import Inventory.Stockable;
 import entity.Entity;
+import entity.Pickable;
 import entity.Player;
-import javafx.event.Event;
-import javafx.scene.control.Button;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import map.Map;
 import sprite.Sprite;
-import test.EntityTest;
-import test.Square;
-import sprite.CompositeSprite;
 import utilities.Updatable;
 import utilities.Vector2D;
+import windowManager.Ground;
+import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PlayState implements GameState{
     private Stage primaryStage;
@@ -31,21 +29,26 @@ public class PlayState implements GameState{
 
     private Map map;
     private List<Updatable> updatableList;
+    private List<KeyEventManager> keyEventList;
+    private List<MouseEventManager> mouseEventList;
 
-    private List<Sprite> background;
-    private List<Sprite> ground;
-    private List<Sprite> foreground;
+    private SpriteHandler spriteList;
 
+    private Thread mainLoopThread;
 
     public PlayState(GameContext gameContext){
         updatableList = new ArrayList<>();
+        keyEventList = new ArrayList<>();
+        mouseEventList = new ArrayList<>();
+
         this.gameContext = gameContext;
+
         controller = new MouseAndKeyboardController();
         controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
+        keyEventList.add(controller);
+        mouseEventList.add(controller);
 
-        background = new ArrayList<>();
-        ground = new ArrayList<>();
-        foreground = new ArrayList<>();
+        spriteList = new SpriteHandler();
 
         startGame();
     }
@@ -54,26 +57,35 @@ public class PlayState implements GameState{
         //TODO
         //Exemple :
         Entity.setGameContext(gameContext);
+        Entity.setSpriteHandler(spriteList);
 
         Player player = new Player(controller);
-
         player.setPosition(new Vector2D(0,0));
-        player.setHitBox(new SquareCollision(player.getPosition(), new Vector2D(100, 100)));
-        player.setSprite(new Square(player.getPosition(), new Vector2D(100,100), new Color(1,0,1,1)));
 
+        Pickable[] pommes = new Pickable[1000];
+        Random random = new Random();
+        for(Pickable pomme : pommes)
+        {
+            pomme = new Pickable(new Apple());
+            pomme.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+            player.addInteraction(pomme);
+        }
 
-        map = new Map();
-        background.add(map.getSprite());
+        updatableList.add(player);
+        mouseEventList.add(player);
+        keyEventList.add(player);
+
+        //map = new Map();
+        //background.add(map.getSprite());
         paintAll();
     }
 
     private void paintAll() {
-        gameContext.gameWindow.paintAll(background, ground, foreground);
+        gameContext.gameWindow.paintAll(spriteList);
     }
 
     @Override
     public void update() {
-        System.out.println("updating......");
         for(Updatable object : updatableList)
             object.update();
         paintAll();
@@ -81,17 +93,15 @@ public class PlayState implements GameState{
 
     @Override
     public void mouseEvent(MouseEvent event) {
-        controller.handleMouseEvent(event);
-//        if(event.getEventType() == MouseEvent.MOUSE_CLICKED)
-//            System.out.println("x : " + (event.getX() - gameContext.gameWindow.getScreenCenter().x) + " | y : " + (event.getY() - gameContext.gameWindow.getScreenCenter().y));
+        for(MouseEventManager object : mouseEventList)
+            object.mouseEvent(event);
         //update();
     }
 
     @Override
     public void keyboardEvent(KeyEvent event) {
-        controller.handleKeyEvent(event);
-//        if (event.getEventType() == KeyEvent.KEY_PRESSED)
-//            System.out.println(event.getCode());
+        for(KeyEventManager object : keyEventList)
+            object.keyboardEvent(event);
         //update();
     }
 }

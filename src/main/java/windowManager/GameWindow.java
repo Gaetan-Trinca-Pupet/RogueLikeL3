@@ -5,6 +5,7 @@ import sprite.Sprite;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameWindow extends Canvas {
@@ -27,14 +28,11 @@ public class GameWindow extends Canvas {
     }
 
 
-    @SafeVarargs
-    public final void paintAll(List<Sprite>... spriteGroups){
+    public final void paintAll(SpriteHandler spriteHandler){
         getGraphicsContext2D().clearRect(0,0,screenSize.x,screenSize.y);
-        for (List<Sprite> spriteGroup : spriteGroups) {
-            for (Sprite sprite : spriteGroup) {
-                sprite.drawSelfOnto(getGraphicsContext2D(), screenCenter);
-            }
-        }
+        for (Ground ground : Ground.values())
+            for (Sprite sprite : spriteHandler.getList(ground))
+                if(sprite != null) sprite.drawSelfOnto(getGraphicsContext2D(), screenCenter);
 
     }
 

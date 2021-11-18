@@ -17,12 +17,12 @@ public abstract class RogueLikeController {
 
     protected Joystick leftJoystick;
 
-    protected HashMap<Touche, Boolean> pressedButtons;
+    protected HashMap<Action, Boolean> pressedButtons;
 
     RogueLikeController(){
         leftJoystick = new Joystick();
         pressedButtons = new HashMap<>();
-        for(Touche value : Touche.values())
+        for(Action value : Action.values())
             pressedButtons.put(value, false);
     }
 
@@ -34,7 +34,7 @@ public abstract class RogueLikeController {
         return leftJoystick.yTilt;
     }
 
-    public boolean isPressed(Touche button){
+    public boolean isPressed(Action button){
         return pressedButtons.get(button);
     }
 
