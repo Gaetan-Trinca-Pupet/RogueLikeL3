@@ -7,18 +7,26 @@ import utilities.Vector2D;
 import java.util.ArrayList;
 
 public class AnimatedSprite extends Sprite {
-    ArrayList<Image> animation;
+    private ArrayList<Sprite> animation;
+    private int currentSprite;
+    private int delay;
+    private long chrono;
 
-    public AnimatedSprite(Vector2D position, ArrayList<Image> animation) {
+    public AnimatedSprite(Vector2D position, ArrayList<Sprite> animation, int delay) {
         super(position);
         this.animation = animation;
+        this.delay = delay;
+        currentSprite = 0;
+        chrono = System.currentTimeMillis();
     }
 
     @Override
     public void draw(GraphicsContext graphicsContext, Vector2D position) {
-        for (Image img:animation) {
-            graphicsContext.drawImage(img, position.x, position.y);
+        if(System.currentTimeMillis() - chrono >= chrono){
+            chrono = System.currentTimeMillis();
+            ++currentSprite;
+            if(currentSprite >= animation.size()) currentSprite = 0;
         }
+        animation.get(currentSprite).draw(graphicsContext, position);
     }
-
 }

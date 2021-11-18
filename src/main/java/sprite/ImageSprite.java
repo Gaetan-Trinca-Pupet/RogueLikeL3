@@ -8,6 +8,10 @@ public class ImageSprite extends Sprite {
     private Vector2D size;
     public Image image;
 
+    public ImageSprite(Image image) {
+        this(image, new Vector2D(), new Vector2D(image.getWidth(), image.getHeight()));
+    }
+
     public ImageSprite(Image image, Vector2D position, Vector2D size) {
         super(position);
         this.image = image;
