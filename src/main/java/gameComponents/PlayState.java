@@ -15,7 +15,7 @@ import javafx.stage.WindowEvent;
 import map.Map;
 import test.EntityTest;
 import test.Square;
-import utilities.CompositeSprite;
+import sprite.CompositeSprite;
 import utilities.Vector2D;
 
 public class PlayState implements GameState{

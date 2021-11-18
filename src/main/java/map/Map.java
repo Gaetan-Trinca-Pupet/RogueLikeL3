@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map {
-    private List<List<Room>> rooms;
+    private List<List<TestRoom>> rooms;
     private Vector2D currentRoomPosition;
 
     public Map() {
         rooms = new ArrayList<>();
         rooms.add(new ArrayList<>());
-        rooms.get(0).add(new Room());
+        rooms.get(0).add(new TestRoom());
         currentRoomPosition = new Vector2D(0, 0);
     }
 
