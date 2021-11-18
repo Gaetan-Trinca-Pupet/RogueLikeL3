@@ -5,13 +5,12 @@ import utilities.Vector2D;
 import static java.lang.Math.toRadians;
 
 public class CircleCollision extends Collision {
-    private Vector2D position;
     private long radius;
 
     private SegmentCollision[] segmentedCircle;
 
     public CircleCollision(Vector2D position, long radius){
-        this.position = position;
+        super(position);
         this.radius = radius;
 
         segmentedCircle = new SegmentCollision[100];
