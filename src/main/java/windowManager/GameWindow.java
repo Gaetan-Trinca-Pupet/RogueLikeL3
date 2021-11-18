@@ -26,7 +26,9 @@ public class GameWindow extends Canvas {
         this(0,0);
     }
 
-    public void paintAll(List<Sprite>... spriteGroups){
+
+    @SafeVarargs
+    public final void paintAll(List<Sprite>... spriteGroups){
         getGraphicsContext2D().clearRect(0,0,screenSize.x,screenSize.y);
         for (List<Sprite> spriteGroup : spriteGroups) {
             for (Sprite sprite : spriteGroup) {
