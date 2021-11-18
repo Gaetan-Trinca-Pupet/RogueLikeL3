@@ -7,18 +7,29 @@ import sprite.Sprite;
 import utilities.Updatable;
 import utilities.Vector2D;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Entity implements Updatable {
     static protected GameContext game;
+
+    public void setSpriteToGround(List<Sprite> sprites){
+        sprites.add(sprite);
+    }
+
+    public void removeSpriteToGround(List<Sprite> sprites){
+        sprites.remove(sprite);
+    }
 
     public static void setGameContext(GameContext context){
         game = context;
     }
 
-    private Collision hitBox;
+    protected Collision hitBox;
 
-    private Sprite sprite;
+    protected Sprite sprite;
 
-    private Vector2D position;
+    protected Vector2D position;
 
 
     public boolean collideWith(Entity entity){
@@ -26,7 +37,8 @@ public abstract class Entity implements Updatable {
     }
 
     public void translate(Vector2D difference){
-        position = position.add(difference);
+        position.x += difference.x;
+        position.y += difference.y;
     }
 
     public void translateHitBox(Vector2D difference){
@@ -74,7 +86,4 @@ public abstract class Entity implements Updatable {
     public Vector2D getPosition() {
         return position;
     }
-
-    public abstract void interactWith(Pickable)
-
 }

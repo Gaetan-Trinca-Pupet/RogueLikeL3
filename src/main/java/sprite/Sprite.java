@@ -25,6 +25,7 @@ public abstract class Sprite {
     }
 
     public void translate(Vector2D difference) {
-        this.position.add(difference);
+        position.x += difference.x;
+        position.y += difference.y;
     }
 }
