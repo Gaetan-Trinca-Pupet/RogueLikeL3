@@ -40,7 +40,13 @@ public class SegmentCollision extends Collision{
 
     @Override
     public boolean isInside(SegmentCollision segmentCollision) {
-        return ccw(getRelativeStart(), segmentCollision.getRelativeStart(), segmentCollision.getRelativeEnd()) != ccw(getRelativeEnd(), segmentCollision.getRelativeStart(), segmentCollision.getRelativeEnd()) && ccw(getRelativeStart(), getRelativeEnd(), segmentCollision.getRelativeStart()) != ccw(getRelativeStart(), getRelativeEnd(), segmentCollision.getRelativeEnd());
+        Vector2D A, B, C, D;
+        A = getRelativeStart();
+        B = getRelativeEnd();
+        C = segmentCollision.getRelativeStart();
+        D = segmentCollision.getRelativeEnd();
+
+        return ccw(A,C,D) != ccw(B,C,D) && ccw(A,B,C) != ccw(A,B,D);
     }
 
     @Override
