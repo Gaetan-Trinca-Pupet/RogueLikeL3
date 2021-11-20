@@ -31,5 +31,7 @@ public class SpriteHandler {
         return spriteList;
     }
 
-
+    public void clean(Ground ground){
+        spriteList.replace(ground, new ArrayList<>());
+    }
 }

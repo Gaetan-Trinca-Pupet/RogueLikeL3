@@ -28,11 +28,12 @@ public class GameWindow extends Canvas {
     }
 
 
-    public final void paintAll(SpriteHandler spriteHandler){
+    public final void paintAll(SpriteHandler... spriteHandlers){
         getGraphicsContext2D().clearRect(0,0,screenSize.x,screenSize.y);
-        for (Ground ground : Ground.values())
-            for (Sprite sprite : spriteHandler.getList(ground))
-                if(sprite != null) sprite.drawSelfOnto(getGraphicsContext2D(), screenCenter);
+        for(SpriteHandler spriteHandler : spriteHandlers)
+            for (Ground ground : Ground.values())
+                for (Sprite sprite : spriteHandler.getList(ground))
+                    if(sprite != null) sprite.drawSelfOnto(getGraphicsContext2D(), screenCenter);
 
     }
 
@@ -46,5 +47,9 @@ public class GameWindow extends Canvas {
 
     private void removeFromList(ArrayList<Sprite> spriteList, Sprite... sprites){
         spriteList.removeAll(List.of(sprites));
+    }
+
+    public Vector2D getScreenSize(){
+        return screenSize;
     }
 }

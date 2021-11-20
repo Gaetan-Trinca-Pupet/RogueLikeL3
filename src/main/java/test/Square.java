@@ -6,8 +6,8 @@ import sprite.Sprite;
 import utilities.Vector2D;
 
 public class Square extends Sprite {
-    Vector2D size;
-    Color color;
+    private Vector2D size;
+    private Color color;
 
     @Override
     public void draw(GraphicsContext graphicsContext, Vector2D position) {

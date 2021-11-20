@@ -5,6 +5,7 @@ import Controller.Action;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
 import Inventory.Inventory;
+import Inventory.Equipment;
 import collision.CircleCollision;
 import collision.Collision;
 import collision.SegmentCollision;
@@ -33,9 +34,9 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     private float speed = 2;
     private Vector2D size;
     private Vector2D facing = new Vector2D();
-    private Inventory inventory;
 
     public Player(MouseAndKeyboardController controller){
+        super(100, 50, 5);
         this.controller = controller;
         this.interactableList = new ArrayList<Interactable>();
         this.inventory = new Inventory();
@@ -48,8 +49,9 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
         float sizeDivider = (float) (Math.min(image.getHeight(), image.getWidth()) / size);
         this.size = new Vector2D(image.getWidth() / sizeDivider, image.getWidth() / sizeDivider);
         sprite = new ImageSprite(image, position.subtract(this.size.divideBy(new Vector2D(2,2))), this.size);
-        addSpriteTo(Ground.GROUND);
+        addSpriteTo(Ground.FOREGROUND);
     }
+
 
     @Override
     public void setPosition(Vector2D position){
@@ -64,10 +66,6 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
 
     public void removeInteraction(Interactable... interactables){
         interactableList.removeAll(of(interactables));
-    }
-
-    public Inventory getInventory(){
-        return inventory;
     }
 
     @Override

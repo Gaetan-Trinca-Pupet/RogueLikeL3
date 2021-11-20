@@ -1,5 +1,6 @@
 package Inventory;
 
+import entity.Creature;
 import javafx.scene.image.Image;
 import ressourceManager.ImageManager;
 import sprite.Sprite;
@@ -24,4 +25,5 @@ public abstract class Stockable {
     }
 
     public abstract String info();
+    public abstract void use(Creature creature);
 }

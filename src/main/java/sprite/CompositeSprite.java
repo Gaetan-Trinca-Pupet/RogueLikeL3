@@ -15,6 +15,10 @@ public class CompositeSprite extends Sprite{
         sprites = new ArrayList<>();
     }
 
+    public CompositeSprite() {
+        this(new Vector2D());
+    }
+
     public void add(Sprite sprite) {
         sprites.add(sprite);
     }

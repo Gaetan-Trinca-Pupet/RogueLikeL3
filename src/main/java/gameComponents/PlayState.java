@@ -1,6 +1,7 @@
 package gameComponents;
 
 import Consomable.Apple;
+import Controller.Action;
 import Controller.MouseAndKeyboardController;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
@@ -25,35 +26,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PlayState implements GameState{
-    private Stage primaryStage;
-    private GameContext gameContext;
-    private MouseAndKeyboardController controller;
-
+public class PlayState extends GameState{
     private Map map;
-    private List<Updatable> updatableList;
-    private List<KeyEventManager> keyEventList;
-    private List<MouseEventManager> mouseEventList;
 
     private SpriteHandler spriteList;
 
-    private Thread mainLoopThread;
+    private InventoryState inventoryState;
 
-    public PlayState(GameContext gameContext){
+    public PlayState(GameContext gameContext, GameState gameState){
+        super(gameContext, gameState);
+
         updatableList = new ArrayList<>();
         keyEventList = new ArrayList<>();
         mouseEventList = new ArrayList<>();
 
-        this.gameContext = gameContext;
-
-        controller = new MouseAndKeyboardController();
-        controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
         keyEventList.add(controller);
         mouseEventList.add(controller);
 
         spriteList = new SpriteHandler();
 
         startGame();
+    }
+
+    public PlayState(GameContext gameContext){
+        this(gameContext, null);
     }
 
     public void startGame(){
@@ -73,6 +69,10 @@ public class PlayState implements GameState{
             player.addInteraction(pomme);
         }
 
+        Pickable epee = new Pickable(new Sword());
+        epee.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+        player.addInteraction(epee);
+
         updatableList.add(player);
         mouseEventList.add(player);
         keyEventList.add(player);
@@ -80,6 +80,8 @@ public class PlayState implements GameState{
         //map = new Map();
         //background.add(map.getSprite());
         paintAll();
+
+        inventoryState = new InventoryState(player, gameContext, this);
     }
 
     private void paintAll() {
@@ -105,6 +107,11 @@ public class PlayState implements GameState{
     public void keyboardEvent(KeyEvent event) {
         for(KeyEventManager object : keyEventList)
             object.keyboardEvent(event);
+
+        if(event.getEventType() == KeyEvent.KEY_PRESSED){
+            if(event.getCode() == controller.keyCodeForAction(Action.INVENTORY))
+                gameContext.setState(inventoryState);
+        }
         //update();
     }
 }

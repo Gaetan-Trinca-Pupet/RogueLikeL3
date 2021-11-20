@@ -1,5 +1,6 @@
 package gameComponents;
 
+import Controller.MouseAndKeyboardController;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
 import javafx.event.Event;
@@ -42,5 +43,16 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
         this(gameContext, null);
     }
 
-public interface GameState extends Updatable, MouseEventManager, KeyEventManager {
+    public GameState(){
+        this(null);
+    }
+
+    public void setController(MouseAndKeyboardController controller){
+        this.controller = controller;
+        this.controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
+    }
+
+    public void backToLastContext(){
+        gameContext.setState(lastState);
+    }
 }

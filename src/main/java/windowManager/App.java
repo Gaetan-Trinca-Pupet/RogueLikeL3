@@ -29,7 +29,7 @@ public class App extends Application {
 
         root.getChildren().add(window);
         primaryStage.setScene(new Scene(root));
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
         primaryStage.show();
         primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, gameContext::closeGame);
     }

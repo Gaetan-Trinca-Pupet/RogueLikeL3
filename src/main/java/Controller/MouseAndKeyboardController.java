@@ -53,7 +53,7 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
 
     private Vector2D centerScreen;
 
-    public MouseAndKeyboardController(Vector2D centerScreen, KeyCode up, KeyCode left, KeyCode down, KeyCode right, KeyCode interact, MouseButton leftMouse, MouseButton rightMouse){
+    public MouseAndKeyboardController(Vector2D centerScreen, KeyCode up, KeyCode left, KeyCode down, KeyCode right, KeyCode interact, KeyCode inventory, KeyCode escape, MouseButton leftMouse, MouseButton rightMouse){
         super();
         this.centerScreen = centerScreen;
 
@@ -70,12 +70,14 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
 
         keyMapping = new HashMap<>();
         keyMapping.put(Action.INTERACT, interact);
+        keyMapping.put(Action.INVENTORY, inventory);
+        keyMapping.put(Action.ESCAPE, escape);
 
         mouse = new Mouse(leftMouse, rightMouse);
     }
 
     public MouseAndKeyboardController(){
-        this(new Vector2D(0,0), KeyCode.Z, KeyCode.Q, KeyCode.S, KeyCode.D, KeyCode.F, MouseButton.PRIMARY, MouseButton.SECONDARY);
+        this(new Vector2D(0,0), KeyCode.Z, KeyCode.Q, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.I, KeyCode.ESCAPE, MouseButton.PRIMARY, MouseButton.SECONDARY);
     }
 
     public void setCenterScreen(Vector2D centerScreen){

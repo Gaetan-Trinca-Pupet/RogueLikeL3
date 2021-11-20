@@ -1,5 +1,5 @@
 package Controller;
 
 public enum Action {
-    INTERACT, ATTACK
+    INTERACT, ATTACK, INVENTORY, ESCAPE
 }

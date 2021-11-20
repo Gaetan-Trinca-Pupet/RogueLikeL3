@@ -1,6 +1,7 @@
 package Consomable;
 
 import Inventory.Consomable;
+import entity.Creature;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import sprite.ImageSprite;
@@ -18,5 +19,10 @@ public class Apple extends Consomable {
     @Override
     public String info() {
         return "Restore 20HP";
+    }
+
+    @Override
+    public void use(Creature creature){
+        creature.addToLife(20);
     }
 }

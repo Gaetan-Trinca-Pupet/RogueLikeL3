@@ -14,7 +14,7 @@ import java.util.EventListenerProxy;
 import java.util.EventObject;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class GameContext extends Thread{
+public class GameContext{
     private boolean isGameRunning;
     private GameState currentState;
     GameWindow gameWindow;
@@ -35,6 +35,10 @@ public class GameContext extends Thread{
         gameWindow.addEventHandler(MouseEvent.ANY, currentState::mouseEvent);
         gameWindow.addEventHandler(KeyEvent.ANY, currentState::keyboardEvent);
         //gameWindow.addEventHandler(Event.ANY, currentState::update);
+    }
+
+    public GameState getState(){
+        return currentState;
     }
 
     public GameWindow getGameWindow(){
