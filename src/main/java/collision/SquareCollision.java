@@ -36,10 +36,10 @@ public class SquareCollision extends Collision {
     }
 
     private void computeSegments(){
-        top = new SegmentCollision(new Vector2D(position), new Vector2D(position).add(new Vector2D(size.x, 0)));
-        bottom = new SegmentCollision(new Vector2D(position).add(new Vector2D(0, size.y)), new Vector2D(position).add(size));
-        left = new SegmentCollision(new Vector2D(position), new Vector2D(position).add(new Vector2D(0, size.y)));
-        right = new SegmentCollision(new Vector2D(position).add(new Vector2D(size.x, 0)), new Vector2D(position).add(size));
+        top = new SegmentCollision(new Vector2D(position), position.add(new Vector2D(size.x, 0)));
+        bottom = new SegmentCollision(position.add(new Vector2D(0, size.y)), position.add(size));
+        left = new SegmentCollision(new Vector2D(position), position.add(new Vector2D(0, size.y)));
+        right = new SegmentCollision(position.add(new Vector2D(size.x, 0)), position.add(size));
     }
 
     @Override

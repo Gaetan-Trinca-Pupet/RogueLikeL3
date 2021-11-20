@@ -1,5 +1,5 @@
 package Controller;
 
-public enum Touche {
+public enum Action {
     INTERACT, ATTACK
 }

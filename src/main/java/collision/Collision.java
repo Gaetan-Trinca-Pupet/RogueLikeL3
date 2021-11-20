@@ -22,7 +22,8 @@ public abstract class Collision {
     }
 
     public void translate(Vector2D difference) {
-        position = position.add(difference);
+        position.x += difference.x;
+        position.y += difference.y;
     }
 
     public boolean intersect(Collision collision){

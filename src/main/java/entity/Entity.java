@@ -3,22 +3,34 @@ package entity;
 import collision.Collision;
 import gameComponents.GameContext;
 import gameComponents.GameState;
+import ressourceManager.ImageManager;
 import sprite.Sprite;
 import utilities.Updatable;
 import utilities.Vector2D;
+import windowManager.Ground;
+import windowManager.SpriteHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Entity implements Updatable {
     static protected GameContext game;
+    static protected SpriteHandler spriteHandler = new SpriteHandler();
+    static protected ImageManager imageManager = new ImageManager();
 
     public static void setGameContext(GameContext context){
         game = context;
     }
 
-    private Collision hitBox;
+    public static void setSpriteHandler(SpriteHandler handler) {
+        spriteHandler = handler;
+    }
 
-    private Sprite sprite;
+    protected Collision hitBox;
 
-    private Vector2D position;
+    protected Sprite sprite;
+
+    protected Vector2D position;
 
 
     public boolean collideWith(Entity entity){
@@ -26,7 +38,8 @@ public abstract class Entity implements Updatable {
     }
 
     public void translate(Vector2D difference){
-        position = position.add(difference);
+        position.x += difference.x;
+        position.y += difference.y;
     }
 
     public void translateHitBox(Vector2D difference){
@@ -56,7 +69,8 @@ public abstract class Entity implements Updatable {
     }
 
     public void setPosition(Vector2D position) {
-        this.position = position;
+        this.position.x = position.x;
+        this.position.y = position.y;
     }
 
 
@@ -73,5 +87,14 @@ public abstract class Entity implements Updatable {
 
     public Vector2D getPosition() {
         return position;
+    }
+
+
+    protected void addSpriteTo(Ground ground){
+        spriteHandler.addSpriteTo(ground, sprite);
+    }
+
+    protected void removeSpriteTo(Ground ground){
+        spriteHandler.removeSpriteTo(ground, sprite);
     }
 }
