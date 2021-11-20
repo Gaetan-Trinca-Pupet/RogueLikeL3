@@ -8,10 +8,13 @@ import Inventory.Stockable;
 import entity.Entity;
 import entity.Pickable;
 import entity.Player;
+import equipment.Sword;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import map.Map;
+import sprite.ImageSprite;
 import sprite.Sprite;
 import utilities.Updatable;
 import utilities.Vector2D;
@@ -61,8 +64,7 @@ public class PlayState implements GameState{
 
         Player player = new Player(controller);
         player.setPosition(new Vector2D(0,0));
-
-        Pickable[] pommes = new Pickable[1000];
+        Pickable[] pommes = new Pickable[200];
         Random random = new Random();
         for(Pickable pomme : pommes)
         {
@@ -86,8 +88,9 @@ public class PlayState implements GameState{
 
     @Override
     public void update() {
-        for(Updatable object : updatableList)
+        for(Updatable object : updatableList) {
             object.update();
+        }
         paintAll();
     }
 

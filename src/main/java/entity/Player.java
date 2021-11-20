@@ -44,7 +44,7 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
         int size = 60;
         hitBox = new CircleCollision(position, size);
 
-        Image image = new Image("file:src/resources/player/player.png");
+        Image image = new Image("file:src/resources/character/test/test.png");
         float sizeDivider = (float) (Math.min(image.getHeight(), image.getWidth()) / size);
         this.size = new Vector2D(image.getWidth() / sizeDivider, image.getWidth() / sizeDivider);
         sprite = new ImageSprite(image, position.subtract(this.size.divideBy(new Vector2D(2,2))), this.size);

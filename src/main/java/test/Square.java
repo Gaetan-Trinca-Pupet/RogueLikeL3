@@ -20,4 +20,12 @@ public class Square extends Sprite {
         this.size = size;
         this.color = color;
     }
+
+    public Square(Vector2D position, Vector2D size){
+        this(position, size, new Color(0,0,0,1));
+    }
+
+    public Square(){
+        this(new Vector2D(), new Vector2D());
+    }
 }

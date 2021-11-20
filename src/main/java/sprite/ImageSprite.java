@@ -22,9 +22,9 @@ public class ImageSprite extends Sprite {
         this(image, position, new Vector2D(image.getWidth(), image.getHeight()));
     }
 
-    public ImageSprite(Image image) {
-        this(image, new Vector2D());
-    }
+//    public ImageSprite(Image image) {
+//        this(image, new Vector2D());
+//    }
 
     public void setSize(Vector2D size){
         this.size = size;
