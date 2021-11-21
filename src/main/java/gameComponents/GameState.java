@@ -55,4 +55,8 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
     public void backToLastContext(){
         gameContext.setState(lastState);
     }
+
+    public SpriteHandler getSpriteList(){
+        return spriteList;
+    }
 }

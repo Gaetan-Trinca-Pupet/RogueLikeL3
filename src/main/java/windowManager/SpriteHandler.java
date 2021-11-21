@@ -15,6 +15,22 @@ public class SpriteHandler {
             spriteList.put(ground, new ArrayList<>());
     }
 
+    public SpriteHandler(SpriteHandler spriteHandler){
+        spriteList = new HashMap<>();
+        for(Ground ground : Ground.values()){
+            spriteList.put(ground, new ArrayList<Sprite>());
+            for(Sprite sprite : spriteHandler.getList(ground))
+                addSpriteTo(ground, sprite);
+        }
+    }
+
+    public void add(SpriteHandler... spriteHandlers){
+        for(SpriteHandler spriteHandler : spriteHandlers)
+            for(Ground ground : Ground.values())
+                for(Sprite sprite : spriteHandler.spriteList.get(ground))
+                    addSpriteTo(ground, sprite);
+    }
+
     public void addSpriteTo(Ground ground, Sprite sprite){
         spriteList.get(ground).add(sprite);
     }
@@ -27,7 +43,7 @@ public class SpriteHandler {
         return spriteList.get(ground);
     }
 
-    public HashMap<Ground, List<Sprite>> Map(Ground ground){
+    public HashMap<Ground, List<Sprite>> getSpriteList(){
         return spriteList;
     }
 

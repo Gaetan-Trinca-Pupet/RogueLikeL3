@@ -28,7 +28,7 @@ public class Inventory implements Updatable, MouseEventManager {
     private SpriteHandler spriteHandler;
 
     private final int sizeItem = 100;
-    private final Vector2D sizeInventory = new Vector2D(600,600);
+    public final Vector2D sizeInventory = new Vector2D(600,600);
 
     public Inventory(){
         entities = new ArrayList<Entity>();
@@ -57,6 +57,9 @@ public class Inventory implements Updatable, MouseEventManager {
 
             double posX = (-sizeInventory.x/2) + sizeItem/nColumn + ((sizeItem + (sizeItem/nColumn)) * column);
             double posY = (-sizeInventory.y/2) + sizeItem/nRow + ((sizeItem + (sizeItem/nColumn)) * row);
+
+            posX += inventory.get(i).size.x / 2;
+            posY += inventory.get(i).size.y / 2;
 
             CompositeSprite sprite = new CompositeSprite(new Vector2D(posX, posY).subtract(inventory.get(i).getSprite().getPosition()));
 

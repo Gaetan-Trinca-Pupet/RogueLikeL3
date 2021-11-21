@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import map.Map;
+import sprite.Sprite;
 import test.Square;
 import utilities.Vector2D;
 import windowManager.Ground;
@@ -14,9 +15,9 @@ import windowManager.SpriteHandler;
 public class InventoryState extends GameState{
     private Player player;
 
-    private Map map;
+    private SpriteHandler backScreen;
 
-    private SpriteHandler backGround;
+    private Map map;
 
     public InventoryState(Player player, GameContext gameContext, GameState lastState){
         super(gameContext, lastState);
@@ -25,11 +26,20 @@ public class InventoryState extends GameState{
         keyEventList.add(controller);
         mouseEventList.add(controller);
 
-        backGround = new SpriteHandler();
-        Vector2D screenSize = gameContext.gameWindow.getScreenSize();
-        backGround.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(2,2)),screenSize, new Color(0,0,0,0.2)));
+        spriteList = this.player.getInventory().getSpriteHandler();
 
-        spriteList = player.getInventory().getSpriteHandler();
+        backScreen = new SpriteHandler();
+        Vector2D screenSize = gameContext.gameWindow.getScreenSize();
+        backScreen.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
+
+        Vector2D size = new Vector2D(this.player.getInventory().sizeInventory);
+        Vector2D pos = new Vector2D(size).divideBy(new Vector2D(-2, -2));
+        Sprite border = new Square(pos.subtract(new Vector2D(10,10)), size.add(new Vector2D(20,20)), new Color(1,1,1,1));
+        Sprite centerSquare = new Square(pos, size, new Color(0,0,0,1));
+
+        backScreen.addSpriteTo(Ground.GROUND, border);
+        backScreen.addSpriteTo(Ground.FOREGROUND, centerSquare);
+
     }
 
     public void quitInventory(){
@@ -37,7 +47,7 @@ public class InventoryState extends GameState{
     }
 
     public void paintInventory(){
-        gameContext.gameWindow.paintAll(lastState.spriteList, backGround, spriteList);
+        gameContext.gameWindow.paintAll(lastState.getSpriteList(), backScreen, spriteList);
     }
 
     @Override
