@@ -20,6 +20,7 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
     private HashMap<Direction, Boolean> directionKeyPressed;
 
     private HashMap<Action, KeyCode> keyMapping;
+    private HashMap<KeyCode, Action> keyAction;
 
 
 
@@ -74,6 +75,10 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
         keyMapping.put(Action.ESCAPE, escape);
         keyMapping.put(Action.MAP, map);
 
+        keyAction = new HashMap<>();
+        for(Action action : keyMapping.keySet())
+            keyAction.put(keyMapping.get(action), action);
+
         mouse = new Mouse(leftMouse, rightMouse);
     }
 
@@ -89,10 +94,13 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
         return keyMapping.get(action);
     }
 
+    public Vector2D getMousePosition(){
+        return mouse.position;
+    }
+
     @Override
     protected void computeButtons() {
         pressedButtons.replace(Action.ATTACK, mouse.buttonPressed.get(Mouse.ButtonMouse.LEFT));
-        pressedButtons.replace(Action.INTERACT, mouse.buttonPressed.get(Mouse.ButtonMouse.RIGHT));
     }
 
     @Override
@@ -108,13 +116,21 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
 
     @Override
     public void keyboardEvent(KeyEvent event) {
-        if(event.getEventType() == KeyEvent.KEY_PRESSED)
-            if(directionKey.containsKey(event.getCode()))
+        if(event.getEventType() == KeyEvent.KEY_PRESSED) {
+            if (directionKey.containsKey(event.getCode()))
                 directionKeyPressed.replace(directionKey.get(event.getCode()), true);
 
-        if(event.getEventType() == KeyEvent.KEY_RELEASED)
+            if (keyAction.containsKey(event.getCode()))
+                pressedButtons.replace(keyAction.get(event.getCode()), true);
+        }
+
+        if(event.getEventType() == KeyEvent.KEY_RELEASED) {
             if (directionKey.containsKey(event.getCode()))
                 directionKeyPressed.replace(directionKey.get(event.getCode()), false);
+
+            if (keyAction.containsKey(event.getCode()))
+                pressedButtons.replace(keyAction.get(event.getCode()), false);
+        }
 
 
         computeButtons();
@@ -133,11 +149,10 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
 
         if(event.getEventType() == MouseEvent.MOUSE_MOVED)
         {
-            mouse.position.x = event.getX();
-            mouse.position.y = event.getY();
+            mouse.position.x = event.getX() - centerScreen.x;
+            mouse.position.y = event.getY() - centerScreen.y;
         }
 
         computeButtons();
-        computeJoystick();
     }
 }
