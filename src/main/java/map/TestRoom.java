@@ -1,11 +1,24 @@
 package map;
 
+import collision.CollisionType;
 import javafx.scene.paint.Color;
 import utilities.Vector2D;
 
 import java.util.List;
 
 public class TestRoom extends Room{
+    boolean exitTop;
+    boolean exitRight;
+    boolean exitBottom;
+    boolean exitLeft;
+    public TestRoom (boolean exitTop, boolean exitRight, boolean exitBottom, boolean exitLeft) {
+        this.exitTop = exitTop;
+        this.exitRight = exitRight;
+        this.exitBottom = exitBottom;
+        this.exitLeft = exitLeft;
+        generate();
+    }
+
     @Override
     protected void generateRoom() {
         setWalls();
@@ -29,6 +42,25 @@ public class TestRoom extends Room{
                     new Vector2D((int) ROOM_SIZE.x -1, y), TILE_SIZE)
             );
         }
+        if (exitTop) {
+            setDoor(new Vector2D(0, ROOM_SIZE.x/2-1), CollisionType.UP);
+            setDoor(new Vector2D(0, ROOM_SIZE.x/2), CollisionType.UP);
+        }
+        if (exitBottom) {
+            setDoor(new Vector2D(ROOM_SIZE.y-1, ROOM_SIZE.x/2-1), CollisionType.DOWN);
+            setDoor(new Vector2D(ROOM_SIZE.y-1, ROOM_SIZE.x/2), CollisionType.DOWN);}
+        if (exitLeft) {
+            setDoor(new Vector2D(ROOM_SIZE.y/2-1, 0), CollisionType.LEFT);
+            setDoor(new Vector2D(ROOM_SIZE.y/2, 0), CollisionType.LEFT);
+        }
+        if (exitRight) {
+            setDoor(new Vector2D(ROOM_SIZE.y/2-1, ROOM_SIZE.x-1), CollisionType.LEFT);
+            setDoor(new Vector2D(ROOM_SIZE.y/2, ROOM_SIZE.x-1), CollisionType.LEFT);
+        }
+    }
+
+    private void setDoor(Vector2D position, CollisionType collisionType) {
+        tiles.get((int) position.x).set((int) position.y, new Door(position, TILE_SIZE, collisionType));
     }
 
 
