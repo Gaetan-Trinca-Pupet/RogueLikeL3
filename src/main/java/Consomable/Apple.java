@@ -18,7 +18,7 @@ public class Apple extends Consomable {
 
     @Override
     public String info() {
-        return "Restore 20HP";
+        return "+20HP";
     }
 
     @Override
