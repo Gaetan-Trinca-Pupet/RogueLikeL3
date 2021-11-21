@@ -26,7 +26,8 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
 
     protected SpriteHandler spriteList;
 
-    public GameState(GameContext gameContext, GameState gameState){
+    public GameState(GameContext gameContext, GameState gameState, MouseAndKeyboardController controller){
+        this.controller = controller;
         this.gameContext = gameContext;
         this.lastState = gameState;
 
@@ -39,6 +40,10 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
         setController(new MouseAndKeyboardController());
     }
 
+    public GameState(GameContext gameContext, GameState gameState){
+        this(gameContext, gameState, new MouseAndKeyboardController());
+    }
+
     public GameState(GameContext gameContext){
         this(gameContext, null);
     }
@@ -48,8 +53,14 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
     }
 
     public void setController(MouseAndKeyboardController controller){
+        keyEventList.remove(this.controller);
+        mouseEventList.remove(this.controller);
+
         this.controller = controller;
         if(gameContext != null) this.controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
+
+        keyEventList.add(this.controller);
+        mouseEventList.add(this.controller);
     }
 
     public void backToLastContext(){
@@ -57,6 +68,20 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
     }
 
     public SpriteHandler getSpriteList(){
-        return spriteList;
+        SpriteHandler list = new SpriteHandler();
+        if(lastState != null)
+            list.add(lastState.getSpriteList());
+        list.add(spriteList);
+        return list;
+    }
+
+    public void keyboardEventHandler(KeyEvent event){
+        controller.keyboardEvent(event);
+        this.keyboardEvent(event);
+    }
+
+    public void mouseEventHandler(MouseEvent event){
+        controller.mouseEvent(event);
+        this.mouseEvent(event);
     }
 }
