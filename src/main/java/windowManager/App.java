@@ -2,14 +2,21 @@ package windowManager;
 
 import gameComponents.GameContext;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import test.TimeEvent;
 import utilities.Vector2D;
+
+import static javafx.stage.WindowEvent.ANY;
+import static test.TimeEvent.TIME_PASSES;
 
 public class App extends Application {
     private GameContext gameContext;
@@ -34,7 +41,17 @@ public class App extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCodeCombination.NO_MATCH);
 
         primaryStage.show();
-        primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, gameContext::closeGame);
+        primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, this::endLoop);
+
+        TimeEvent timeEvent = new TimeEvent(TIME_PASSES);
+        TimeEvent.setCanvas(window);
+
+        Thread time = new Thread(timeEvent::loop);
+        time.start();
+    }
+
+    public void endLoop(WindowEvent event){
+        TimeEvent.loop = false;
     }
 
 

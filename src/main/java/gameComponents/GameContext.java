@@ -1,41 +1,32 @@
 package gameComponents;
 
-import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import test.Square;
-import utilities.Vector2D;
+import test.TimeEvent;
 import windowManager.GameWindow;
 
-import java.util.EventListenerProxy;
-import java.util.EventObject;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class GameContext{
-    private boolean isGameRunning;
     private GameState currentState;
     GameWindow gameWindow;
 
-    private Thread mainLoopThread;
-
     public GameContext(GameWindow gameWindow) {
-        isGameRunning = true;
         this.gameWindow = gameWindow;
         currentState = new NullState();
         setState(new PlayState(this, currentState));
-
-        mainLoopThread = new Thread(this::loopUpdateAtFrequency);
-        mainLoopThread.start();
     }
 
     public void setState(GameState newState) {
         currentState = newState;
 
-        gameWindow.setEventHandlerTo(MouseEvent.ANY, currentState::mouseEvent);
-        gameWindow.setEventHandlerTo(KeyEvent.ANY, currentState::keyboardEvent);
+        gameWindow.setEventHandlerTo(MouseEvent.ANY, currentState::mouseEventHandler);
+        gameWindow.setEventHandlerTo(KeyEvent.ANY, currentState::keyboardEventHandler);
+        gameWindow.setEventHandlerTo(TimeEvent.TIME_PASSES, this::update);
+    }
+
+    public void update(TimeEvent event){
+        currentState.update();
     }
 
     public GameState getState(){
@@ -44,23 +35,5 @@ public class GameContext{
 
     public GameWindow getGameWindow(){
         return gameWindow;
-    }
-
-    private void loopUpdateAtFrequency(long hz){
-        float deltaTime = 1;
-        for(long chrono = System.currentTimeMillis() ; isGameRunning ; chrono = System.currentTimeMillis()){
-            currentState.update();
-            while(System.currentTimeMillis() - chrono < 1000/hz);
-            deltaTime = (System.currentTimeMillis() - chrono) / (1000/hz);
-        }
-    }
-
-    private void loopUpdateAtFrequency(){
-        loopUpdateAtFrequency(60);
-    }
-
-    public void closeGame(WindowEvent event){
-        System.out.println(event.getEventType());
-        isGameRunning = false;
     }
 }
