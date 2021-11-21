@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import utilities.Updatable;
 import windowManager.GameWindow;
+import windowManager.Ground;
 import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
@@ -70,8 +71,8 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
     public SpriteHandler getSpriteList(){
         SpriteHandler list = new SpriteHandler();
         if(lastState != null)
-            list.add(lastState.getSpriteList());
-        list.add(spriteList);
+            list.addHandlerToGround(Ground.GROUND, lastState.getSpriteList());
+        list.addHandlerToGround(Ground.GROUND, spriteList);
         return list;
     }
 
