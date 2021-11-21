@@ -50,4 +50,10 @@ public class SpriteHandler {
     public void clean(Ground ground){
         spriteList.replace(ground, new ArrayList<>());
     }
+
+    public void addHandlerToGround(Ground ground, SpriteHandler spriteHandler){
+        for(Ground where : Ground.values())
+            for(Sprite sprite : spriteHandler.spriteList.get(where))
+                addSpriteTo(ground, sprite);
+    }
 }
