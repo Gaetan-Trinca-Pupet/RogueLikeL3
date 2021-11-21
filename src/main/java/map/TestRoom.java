@@ -1,5 +1,6 @@
 package map;
 
+import javafx.scene.paint.Color;
 import utilities.Vector2D;
 
 import java.util.List;
@@ -39,5 +40,10 @@ public class TestRoom extends Room{
                 ));
             }
         }
+    }
+
+    @Override
+    public Color getMinimapColor() {
+        return Color.BLUEVIOLET;
     }
 }

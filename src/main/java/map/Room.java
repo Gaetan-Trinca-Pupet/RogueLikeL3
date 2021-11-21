@@ -1,7 +1,10 @@
 package map;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import sprite.Sprite;
 import sprite.CompositeSprite;
+import test.Square;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
@@ -33,6 +36,8 @@ public abstract class Room {
     }
 
     protected abstract void generateRoom();
+
+    public abstract Color getMinimapColor();
 
     private void generateSprite() {
         for (int y = 0; y < ROOM_SIZE.y; ++y) {

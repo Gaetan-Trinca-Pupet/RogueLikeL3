@@ -2,28 +2,21 @@ package gameComponents;
 
 import Consomable.Apple;
 import Controller.Action;
-import Controller.MouseAndKeyboardController;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
-import Inventory.Stockable;
 import entity.Entity;
 import entity.Pickable;
 import entity.Player;
 import equipment.Sword;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import map.Map;
-import sprite.ImageSprite;
-import sprite.Sprite;
 import utilities.Updatable;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PlayState extends GameState{
@@ -32,6 +25,7 @@ public class PlayState extends GameState{
     private SpriteHandler spriteList;
 
     private InventoryState inventoryState;
+    private MapState mapState;
 
     public PlayState(GameContext gameContext, GameState gameState){
         super(gameContext, gameState);
@@ -77,11 +71,13 @@ public class PlayState extends GameState{
         mouseEventList.add(player);
         keyEventList.add(player);
 
-        //map = new Map();
-        //background.add(map.getSprite());
+        map = new Map();
+        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
+
         paintAll();
 
         inventoryState = new InventoryState(player, gameContext, this);
+        mapState = new MapState(map, gameContext, this);
     }
 
     private void paintAll() {
@@ -111,6 +107,8 @@ public class PlayState extends GameState{
         if(event.getEventType() == KeyEvent.KEY_PRESSED){
             if(event.getCode() == controller.keyCodeForAction(Action.INVENTORY))
                 gameContext.setState(inventoryState);
+            if(event.getCode() == controller.keyCodeForAction(Action.MAP))
+                gameContext.setState(mapState);
         }
         //update();
     }
