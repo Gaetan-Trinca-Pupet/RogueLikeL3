@@ -10,7 +10,7 @@ import utilities.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Room {
+public abstract class Room{
     protected List<List<Tile>> tiles;
     private CompositeSprite sprite;
 
@@ -19,6 +19,10 @@ public abstract class Room {
     private final Vector2D SPRITE_POSITION = new Vector2D(-284, -224);
 
     public Room() {
+        generate();
+    }
+
+    protected void generate() {
         sprite = new CompositeSprite(SPRITE_POSITION);
         tiles = new ArrayList<>();
         for (int y = 0; y < ROOM_SIZE.y; ++y) {
