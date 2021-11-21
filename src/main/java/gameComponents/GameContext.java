@@ -24,7 +24,8 @@ public class GameContext{
     public GameContext(GameWindow gameWindow) {
         isGameRunning = true;
         this.gameWindow = gameWindow;
-        setState(new PlayState(this));
+        currentState = new NullState();
+        setState(new PlayState(this, currentState));
 
         mainLoopThread = new Thread(this::loopUpdateAtFrequency);
         mainLoopThread.start();
@@ -32,9 +33,9 @@ public class GameContext{
 
     public void setState(GameState newState) {
         currentState = newState;
-        gameWindow.addEventHandler(MouseEvent.ANY, currentState::mouseEvent);
-        gameWindow.addEventHandler(KeyEvent.ANY, currentState::keyboardEvent);
-        //gameWindow.addEventHandler(Event.ANY, currentState::update);
+
+        gameWindow.setEventHandlerTo(MouseEvent.ANY, currentState::mouseEvent);
+        gameWindow.setEventHandlerTo(KeyEvent.ANY, currentState::keyboardEvent);
     }
 
     public GameState getState(){

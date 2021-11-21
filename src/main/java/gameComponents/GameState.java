@@ -49,7 +49,7 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
 
     public void setController(MouseAndKeyboardController controller){
         this.controller = controller;
-        this.controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
+        if(gameContext != null) this.controller.setCenterScreen(gameContext.gameWindow.getScreenCenter());
     }
 
     public void backToLastContext(){

@@ -1,6 +1,10 @@
 package windowManager;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
 import sprite.Sprite;
 import utilities.Vector2D;
 
@@ -51,5 +55,9 @@ public class GameWindow extends Canvas {
 
     public Vector2D getScreenSize(){
         return screenSize;
+    }
+
+    public <T extends Event> void setEventHandlerTo(final EventType<T> eventType, final EventHandler<? super T> eventHandler){
+        setEventHandler(eventType, eventHandler);
     }
 }
