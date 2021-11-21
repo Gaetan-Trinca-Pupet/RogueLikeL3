@@ -4,16 +4,15 @@ import Consomable.Apple;
 import Controller.Action;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
-import entity.Entity;
-import entity.Pickable;
-import entity.Player;
+import entity.*;
+import Monster.Wolf;
+import equipment.RogueBoots;
 import equipment.Sword;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import map.Map;
 import utilities.Updatable;
 import utilities.Vector2D;
-import windowManager.Ground;
 import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
@@ -21,8 +20,6 @@ import java.util.Random;
 
 public class PlayState extends GameState{
     private Map map;
-
-    private SpriteHandler spriteList;
 
     private InventoryState inventoryState;
     private MapState mapState;
@@ -33,9 +30,6 @@ public class PlayState extends GameState{
         updatableList = new ArrayList<>();
         keyEventList = new ArrayList<>();
         mouseEventList = new ArrayList<>();
-
-        keyEventList.add(controller);
-        mouseEventList.add(controller);
 
         spriteList = new SpriteHandler();
 
@@ -54,6 +48,7 @@ public class PlayState extends GameState{
 
         Player player = new Player(controller);
         player.setPosition(new Vector2D(0,0));
+
         Pickable[] pommes = new Pickable[200];
         Random random = new Random();
         for(Pickable pomme : pommes)
@@ -67,17 +62,26 @@ public class PlayState extends GameState{
         epee.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
         player.addInteraction(epee);
 
+        Pickable botte = new Pickable(new RogueBoots());
+        botte.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+        player.addInteraction(botte);
+
+        Creature loup = new Monster(new Wolf());
+        loup.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+        player.addInteraction(loup);
+
+
         updatableList.add(player);
         mouseEventList.add(player);
         keyEventList.add(player);
 
-        map = new Map();
-        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
+        //map = new Map();
+        //spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
 
         paintAll();
 
         inventoryState = new InventoryState(player, gameContext, this);
-        mapState = new MapState(map, gameContext, this);
+        //mapState = new MapState(map, gameContext, this);
     }
 
     private void paintAll() {

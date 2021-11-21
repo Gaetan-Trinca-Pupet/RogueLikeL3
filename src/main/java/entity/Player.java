@@ -4,27 +4,17 @@ import Controller.MouseAndKeyboardController;
 import Controller.Action;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
-import Inventory.Inventory;
-import Inventory.Equipment;
 import collision.CircleCollision;
 import collision.Collision;
-import collision.SegmentCollision;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import sprite.AnimatedSprite;
 import sprite.ImageSprite;
-import sprite.Sprite;
 import utilities.Vector2D;
 import windowManager.Ground;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-import static java.util.Arrays.*;
 import static java.util.List.*;
 
 public class Player extends Creature implements KeyEventManager, MouseEventManager {
@@ -32,21 +22,18 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     private ArrayList<Interactable> interactableList;
     
     private float speed = 2;
-    private Vector2D size;
     private Vector2D facing = new Vector2D();
 
     public Player(MouseAndKeyboardController controller){
         super(100, 50, 5);
         this.controller = controller;
         this.interactableList = new ArrayList<Interactable>();
-        this.inventory = new Inventory();
 
-        position = new Vector2D();
-        int size = 60;
-        hitBox = new CircleCollision(position, size);
+        size = new Vector2D(60,60);
+        hitBox = new CircleCollision(position, (long) size.x);
 
         Image image = new Image("file:src/resources/character/test/test.png");
-        float sizeDivider = (float) (Math.min(image.getHeight(), image.getWidth()) / size);
+        float sizeDivider = (float) (Math.min(image.getHeight(), image.getWidth()) / size.x);
         this.size = new Vector2D(image.getWidth() / sizeDivider, image.getWidth() / sizeDivider);
         sprite = new ImageSprite(image, position.subtract(this.size.divideBy(new Vector2D(2,2))), this.size);
         addSpriteTo(Ground.FOREGROUND);
