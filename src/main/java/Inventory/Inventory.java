@@ -55,11 +55,12 @@ public class Inventory implements Updatable, MouseEventManager {
             int column = i % nColumn;
             int row = i / nColumn;
 
-            double posX = (-sizeInventory.x/2) + sizeItem/nColumn + ((sizeItem + (sizeItem/nColumn)) * column);
-            double posY = (-sizeInventory.y/2) + sizeItem/nRow + ((sizeItem + (sizeItem/nColumn)) * row);
+            // -300 + 50
+            double posX = (-sizeInventory.x/2) + sizeItem/2 + ((sizeItem + (sizeItem/nColumn)) * column);
+            double posY = (-sizeInventory.y/2) + sizeItem/2 + ((sizeItem + (sizeItem/nRow)) * row);
 
-            posX += inventory.get(i).size.x / 2;
-            posY += inventory.get(i).size.y / 2;
+            posX -= inventory.get(i).size.x / 2;
+            posY -= inventory.get(i).size.y / 2;
 
             CompositeSprite sprite = new CompositeSprite(new Vector2D(posX, posY).subtract(inventory.get(i).getSprite().getPosition()));
 
