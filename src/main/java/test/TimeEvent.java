@@ -12,15 +12,27 @@ public class TimeEvent extends Event {
     public static final EventType<TimeEvent> TIME_PASSES = new EventType<>(Event.ANY, "TIME_PASSES");
     public static boolean loop = true;
 
-    private static Canvas canvas;
+    private Canvas canvas;
 
     public TimeEvent(EventType<? extends Event> eventType) {
         super(eventType);
         canvas = new Canvas();
     }
 
-    public static void setCanvas(Canvas canvas) {
-        TimeEvent.canvas = canvas;
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+    private int frequency = 1;
+
+    public void setFrequency(int hz){
+        frequency = hz;
+    }
+
+    private float deltaTime = 0;
+
+    public float getDeltaTime(){
+        return deltaTime;
     }
 
     public TimeEvent(Object source, EventTarget target, EventType<? extends Event> eventType) {
@@ -28,12 +40,11 @@ public class TimeEvent extends Event {
     }
 
     public void loop(){
-        int hz = 60;
-        float deltaTime = 1;
         for(long chrono = System.currentTimeMillis() ; loop ; chrono = System.currentTimeMillis()){
             fireEvent(canvas, this);
-            while(System.currentTimeMillis() - chrono < 1000/hz);
-            deltaTime = (System.currentTimeMillis() - chrono) / (1000/hz);
+            System.out.println("running....");
+            while(System.currentTimeMillis() - chrono < 1000/frequency);
+            deltaTime = (System.currentTimeMillis() - chrono) / 1000;
         }
     }
 }

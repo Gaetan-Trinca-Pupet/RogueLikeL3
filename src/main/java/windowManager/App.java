@@ -43,11 +43,6 @@ public class App extends Application {
         primaryStage.show();
         primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, this::endLoop);
 
-        TimeEvent timeEvent = new TimeEvent(TIME_PASSES);
-        TimeEvent.setCanvas(window);
-
-        Thread time = new Thread(timeEvent::loop);
-        time.start();
     }
 
     public void endLoop(WindowEvent event){

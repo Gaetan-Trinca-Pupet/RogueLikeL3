@@ -6,6 +6,7 @@ import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import sprite.Sprite;
+import test.TimeEvent;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
@@ -21,6 +22,13 @@ public class GameWindow extends Canvas {
         super(screenSize.x, screenSize.y);
         this.screenSize = screenSize;
         screenCenter = new Vector2D(screenSize.x/2, screenSize.y/2);
+
+        TimeEvent timeEvent = new TimeEvent(TimeEvent.TIME_PASSES);
+        timeEvent.setCanvas(this);
+        timeEvent.setFrequency(60);
+
+        Thread timeEventThread = new Thread(timeEvent::loop);
+        timeEventThread.start();
     }
 
     public GameWindow(double width, double height) {
@@ -36,8 +44,9 @@ public class GameWindow extends Canvas {
         getGraphicsContext2D().clearRect(0,0,screenSize.x,screenSize.y);
         for(SpriteHandler spriteHandler : spriteHandlers)
             for (Ground ground : Ground.values())
-                for (Sprite sprite : spriteHandler.getList(ground))
+                for (Sprite sprite : spriteHandler.getList(ground)){
                     if(sprite != null) sprite.drawSelfOnto(getGraphicsContext2D(), screenCenter);
+                }
 
     }
 
