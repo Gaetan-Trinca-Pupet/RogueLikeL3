@@ -22,7 +22,7 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     private MouseAndKeyboardController controller;
     private ArrayList<Interactable> interactableList;
     
-    private final float speed = 75;
+    private final float speed = 200;
     private Vector2D facing = new Vector2D();
 
     public Player(MouseAndKeyboardController controller){
