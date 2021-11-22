@@ -8,6 +8,8 @@ import entity.Creature;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import sprite.CompositeSprite;
+import sprite.LabelSprite;
 import sprite.Sprite;
 import test.Square;
 import utilities.Vector2D;
@@ -18,13 +20,20 @@ public class FightState extends GameState{
     private Creature player;
     private Creature monster;
 
+    private SquareCollision attackCollision;
+    private SquareCollision inventoryCollision;
+
     public FightState(GameContext gameContext, GameState lastState, Creature player, Creature monster){
         super(gameContext, lastState);
 
         this.player = player;
         this.monster = monster;
 
+        spriteList = new SpriteHandler();
+        Vector2D screenSize = gameContext.gameWindow.getScreenSize();
+        spriteList.addSpriteTo(Ground.GROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
 
+        // Main box
         Vector2D size = new Vector2D(1200,800);
         Vector2D pos = new Vector2D(size).divideBy(new Vector2D(-2, -2));
         Sprite border = new Square(pos.subtract(new Vector2D(10,10)), size.add(new Vector2D(20,20)), new Color(1,1,1,1));
