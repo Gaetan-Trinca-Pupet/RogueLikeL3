@@ -15,14 +15,21 @@ public class GameContext{
         this.gameWindow = gameWindow;
         currentState = new NullState();
         setState(new PlayState(this, currentState));
+
+        gameWindow.setEventHandlerTo(MouseEvent.ANY, this::mouseEventHandler);
+        gameWindow.setEventHandlerTo(KeyEvent.ANY, this::keyboardEventHandler);
+        gameWindow.setEventHandlerTo(TimeEvent.TIME_PASSES, this::update);
     }
 
     public void setState(GameState newState) {
         currentState = newState;
+    }
 
-        gameWindow.setEventHandlerTo(MouseEvent.ANY, currentState::mouseEventHandler);
-        gameWindow.setEventHandlerTo(KeyEvent.ANY, currentState::keyboardEventHandler);
-        gameWindow.setEventHandlerTo(TimeEvent.TIME_PASSES, this::update);
+    public void mouseEventHandler(MouseEvent event) {
+        currentState.mouseEventHandler(event);
+    }
+    public void keyboardEventHandler(KeyEvent event) {
+        currentState.keyboardEventHandler(event);
     }
 
     public void update(TimeEvent event){
