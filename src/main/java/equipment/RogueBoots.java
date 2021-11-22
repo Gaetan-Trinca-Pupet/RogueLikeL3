@@ -14,6 +14,6 @@ public class RogueBoots extends Equipment {
 
     @Override
     public String info() {
-        return "+75 atk";
+        return "-50 HP\n+500 ATK\n-10 DEF";
     }
 }
