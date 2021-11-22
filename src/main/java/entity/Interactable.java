@@ -1,5 +1,5 @@
 package entity;
 
 public abstract class Interactable extends Entity{
-    public abstract void interact(Player player);
+    public abstract void interact(Creature creature);
 }

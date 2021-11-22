@@ -14,7 +14,7 @@ public class GameContext implements KeyEventManager, MouseEventManager, UpdateOn
 
     public GameContext(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
-        currentState = new NullState();
+        currentState = new NullState(this);
         setState(new PlayState(this, currentState));
 
         gameWindow.setEventHandlerTo(MouseEvent.ANY, this::mouseEvent);

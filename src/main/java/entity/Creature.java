@@ -2,8 +2,14 @@ package entity;
 
 import Inventory.Equipment;
 import Inventory.Inventory;
+import collision.CircleCollision;
+import collision.Collision;
 import equipment.EquipmentNull;
 import utilities.Vector2D;
+
+import java.util.ArrayList;
+
+import static java.util.List.of;
 
 public abstract class Creature extends Interactable{
     protected int baseMaxLife;
@@ -22,10 +28,14 @@ public abstract class Creature extends Interactable{
     protected Inventory inventory;
     protected Equipment equipped;
 
+    private ArrayList<Interactable> interactableList;
+    protected Vector2D facing = new Vector2D();
+
     public Creature(int baseMaxLife, int baseForce, int baseDefense){
+        this.interactableList = new ArrayList<Interactable>();
         this.baseMaxLife = baseMaxLife;
         this.maxLife = baseMaxLife;
-        this.currentLife = baseMaxLife/2;
+        this.currentLife = baseMaxLife;
         this.baseForce = baseForce;
         this.force = baseForce;
         this.baseDefense = baseDefense;
@@ -92,5 +102,24 @@ public abstract class Creature extends Interactable{
         this.position = position;
         sprite.setPosition(this.position);
         hitBox.setPosition(this.position);
+    }
+
+    public void addInteraction(Interactable... interactables){
+        interactableList.addAll(of(interactables));
+    }
+
+    public void removeInteraction(Interactable... interactables){
+        interactableList.removeAll(of(interactables));
+    }
+
+
+    public void checkInteraction(){
+        Collision collision = new CircleCollision(position.add(new Vector2D(facing.x, facing.y).multiply(new Vector2D(30,30))),20);
+        ArrayList<Interactable> interactables = new ArrayList<>(interactableList);
+        for(Interactable interactable : interactables)
+            if(collision.intersect(interactable.hitBox)) {
+                interactable.interact(this);
+                break;
+            }
     }
 }

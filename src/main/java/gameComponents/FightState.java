@@ -24,6 +24,9 @@ public class FightState extends GameState{
     private SquareCollision attackCollision;
     private SquareCollision inventoryCollision;
 
+    private LabelSprite HPplayer;
+    private LabelSprite HPmonster;
+
     public FightState(GameContext gameContext, GameState lastState, Creature player, Creature monster){
         super(gameContext, lastState);
 
@@ -45,7 +48,7 @@ public class FightState extends GameState{
 
         // Buttons
         Vector2D sizeButton = new Vector2D(200, 100);
-        Sprite label;
+        LabelSprite label;
 
         // Attack button
         Vector2D posAttackButton = new Vector2D(sizeButton.x * -2, 0);
@@ -54,8 +57,8 @@ public class FightState extends GameState{
 
         border = new Square(new Vector2D(-10, -10), sizeButton.add(new Vector2D(20,20)), new Color(1,1,1,1));
         centerSquare = new Square(new Vector2D(), sizeButton, new Color(0,0,0,1));
-        label = new LabelSprite("Attaquer", new Color(1,1,1,1), new Vector2D(10,10));
-
+        label = new LabelSprite("Attaquer", new Color(1,1,1,1), sizeButton.divideBy(new Vector2D(3,2)));
+        label.setSize(20);
 
         attackButton.add(border);
         attackButton.add(centerSquare);
@@ -63,12 +66,13 @@ public class FightState extends GameState{
 
         // Inventory button
         Vector2D posInventoryButton = new Vector2D(sizeButton.x, 0);
-        inventoryCollision = new SquareCollision(new Vector2D(posAttackButton), sizeButton);
+        inventoryCollision = new SquareCollision(new Vector2D(posInventoryButton), sizeButton);
         CompositeSprite inventoryButton = new CompositeSprite(posInventoryButton);
 
         border = new Square(new Vector2D(-10, -10), sizeButton.add(new Vector2D(20,20)), new Color(1,1,1,1));
         centerSquare = new Square(new Vector2D(), sizeButton, new Color(0,0,0,1));
-        label = new LabelSprite("Inventaire", new Color(1,1,1,1), new Vector2D(10,10));
+        label = new LabelSprite("Inventaire", new Color(1,1,1,1), sizeButton.divideBy(new Vector2D(3,2)));
+        label.setSize(20);
 
         inventoryButton.add(border);
         inventoryButton.add(centerSquare);
@@ -76,10 +80,12 @@ public class FightState extends GameState{
 
         // Buttons
         CompositeSprite buttons = new CompositeSprite(size.multiply(new Vector2D(0, 0.25)));
-        attackCollision.getPosition().add(buttons.getPosition());
-        inventoryCollision.getPosition().add(buttons.getPosition());
+        attackCollision.getPosition().y += buttons.getPosition().y;
+        inventoryCollision.getPosition().y += buttons.getPosition().y;
         buttons.add(attackButton);
         buttons.add(inventoryButton);
+
+        System.out.println(attackButton.getPosition() + " | " + inventoryButton.getPosition());
 
         spriteList.addSpriteTo(Ground.FOREGROUND, buttons);
 
@@ -88,15 +94,23 @@ public class FightState extends GameState{
         // Player
         CompositeSprite playerSprite = new CompositeSprite(player.getSprite().getPosition().multiply(new Vector2D(-1,-1)));
         playerSprite.add(player.getSprite());
-        playerSprite.setPosition(playerSprite.getPosition().add(new Vector2D()));
+        playerSprite.setPosition(playerSprite.getPosition().add(attackButton.getPosition().subtract(new Vector2D(0,  200))));
         spriteList.addSpriteTo(Ground.FOREGROUND, playerSprite);
+        HPplayer = new LabelSprite("HP : " + player.getCurrentLife() + " / " + player.getMaxLife(), Color.WHITE, playerSprite.getPosition().add(new Vector2D(0,200).add(player.getSprite().getPosition())));
+        spriteList.addSpriteTo(Ground.GROUND, HPplayer);
 
         // Monster
-        Sprite monsterSprite = monster.getSprite();
-        monsterSprite.setPosition(new Vector2D(size).divideBy(new Vector2D(-8,-4)));
+        CompositeSprite monsterSprite = new CompositeSprite(monster.getSprite().getPosition().multiply(new Vector2D(-1,-1)));
+        monsterSprite.add(monster.getSprite());
+        monsterSprite.setPosition(monsterSprite.getPosition().add(inventoryButton.getPosition().subtract(new Vector2D(0,  200))));
         spriteList.addSpriteTo(Ground.FOREGROUND, monsterSprite);
+        HPmonster = new LabelSprite("HP : " + monster.getCurrentLife() + " / " + monster.getMaxLife(), Color.WHITE, monsterSprite.getPosition().add(new Vector2D(0,200).add(monster.getSprite().getPosition())));
+        spriteList.addSpriteTo(Ground.FOREGROUND, HPmonster);
 
         spriteList.addHandlerToGround(Ground.BACKGROUND, lastState.getSpriteList());
+
+        HPplayer.setSize(20);
+        HPmonster.setSize(20);
     }
 
     @Override
@@ -112,16 +126,45 @@ public class FightState extends GameState{
 
     @Override
     public void mouseEvent(MouseEvent event) {
-        if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
-            player.getInventory().eventController(controller);
+        if(event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+            if(attackCollision.isInside(controller.getMousePosition())){
+                turn(Turn.ATTACK);
+            }
+            if(inventoryCollision.isInside(controller.getMousePosition())){
+                turn(Turn.INVENTORY);
+            }
+        }
         for(MouseEventManager mouseEvent : mouseEventList)
             mouseEvent.mouseEvent(event);
-        System.out.println(attackCollision.isInside(controller.getMousePosition()));
-        System.out.println(inventoryCollision.isInside(controller.getMousePosition()));
     }
 
     @Override
     public void updateOnTimeEvent(TimeEvent event) {
+        HPplayer.setText("HP : " + player.getCurrentLife() + " / " + player.getMaxLife());
+        HPmonster.setText("HP : " + monster.getCurrentLife() + " / " + monster.getMaxLife());
         gameContext.gameWindow.paintAll(spriteList);
+    }
+
+    private enum Turn{
+        ATTACK, INVENTORY
+    }
+
+    public void turn(Turn action){
+        switch (action){
+            case ATTACK :
+                player.attack(monster);
+                break;
+            case INVENTORY :
+                InventoryState inventoryState = new InventoryState(player, gameContext, this);
+                inventoryState.setCanUseMultipleItem(false);
+                gameContext.setState(inventoryState);
+                break;
+        }
+        if(monster.getCurrentLife() > 0) monster.attack(player);
+        else {
+            backToLastContext();
+        }
+        if(player.getCurrentLife() < 0)
+            gameContext.setState(new GameOverState(gameContext, this));
     }
 }

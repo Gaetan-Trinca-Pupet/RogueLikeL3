@@ -6,6 +6,7 @@ import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
 import entity.*;
 import Monster.Wolf;
+import Monster.Bear;
 import equipment.RogueBoots;
 import equipment.Sword;
 import javafx.scene.input.KeyEvent;
@@ -51,7 +52,7 @@ public class PlayState extends GameState{
         Player player = new Player(controller);
         player.setPosition(new Vector2D(0,0));
 
-        Pickable[] pommes = new Pickable[200];
+        Pickable[] pommes = new Pickable[2000];
         Random random = new Random();
         for(Pickable pomme : pommes)
         {
@@ -71,6 +72,11 @@ public class PlayState extends GameState{
         Creature loup = new Monster(new Wolf());
         loup.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
         player.addInteraction(loup);
+
+        Creature ours = new Monster(new Bear());
+        ours.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+        player.addInteraction(ours);
+        spriteList.addSpriteTo(Ground.GROUND, ours.getSprite());
 
 
         updatableList.add(player);

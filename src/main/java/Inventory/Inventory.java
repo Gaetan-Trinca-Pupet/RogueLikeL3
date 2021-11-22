@@ -61,7 +61,8 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
 
         CompositeSprite box = new CompositeSprite(new Vector2D(0,0));
         String str = "PV : " + possessor.getCurrentLife() + " / " + possessor.getMaxLife();
-        Sprite text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
+        LabelSprite text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
+        text.setSize(15);
         Sprite rectangle = new Square(new Vector2D(10,10), new Vector2D(rectW,rectH));
         Sprite outRectangle = new Square(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
         box.add(outRectangle);
@@ -72,6 +73,7 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
         box = new CompositeSprite(new Vector2D(0,rectH));
         str = "Force : " + possessor.getForce();
         text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
+        text.setSize(15);
         rectangle = new Square(new Vector2D(10,10), new Vector2D(rectW,rectH));
         outRectangle = new Square(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
         box.add(outRectangle);
@@ -82,6 +84,7 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
         box = new CompositeSprite(new Vector2D(0,rectH * 2));
         str = "Defense : " + possessor.getDefense();
         text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
+        text.setSize(15);
         rectangle = new Square(new Vector2D(10,10), new Vector2D(rectW,rectH));
         outRectangle = new Square(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
         box.add(outRectangle);
@@ -123,6 +126,7 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
 
             LabelSprite label = new LabelSprite(inventory.get(i).info(), new Color(1,1,1,1));
             label.setPosition(inventory.get(i).getSprite().getPosition().add(new Vector2D(0,sizeItem)));
+            label.setSize(15);
 
             sprite.add(label);
 
@@ -175,12 +179,14 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
 //        collision.isInside(new Vector2D(event.getX(), event.getY()));
     }
 
-    public void eventController(MouseAndKeyboardController controller){
+    public boolean eventController(MouseAndKeyboardController controller){
         Stockable item = getClickedItem(new Vector2D(controller.getMousePosition()));
         if(item != null) {
             item.use(possessor);
             inventory.remove(item);
             computeSpriteHandler();
+            return true;
         }
+        return false;
     }
 }

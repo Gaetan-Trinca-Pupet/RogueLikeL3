@@ -2,7 +2,6 @@ package test;
 
 import Controller.RogueLikeController;
 import entity.Creature;
-import entity.Player;
 
 public class EntityTest extends Creature {
     private RogueLikeController controller;
@@ -17,6 +16,6 @@ public class EntityTest extends Creature {
     }
 
     @Override
-    public void interact(Player player) {
+    public void interact(Creature creature) {
     }
 }

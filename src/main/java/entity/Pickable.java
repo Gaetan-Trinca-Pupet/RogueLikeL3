@@ -27,9 +27,9 @@ public class Pickable extends Interactable {
         hitBox.setPosition(this.position);
     }
 
-    public void interact(Player player){
-        self.addSelfToInventory(player.getInventory());
-        player.removeInteraction(this);
+    public void interact(Creature creature){
+        self.addSelfToInventory(creature.getInventory());
+        creature.removeInteraction(this);
         removeSpriteTo(Ground.GROUND);
     }
 

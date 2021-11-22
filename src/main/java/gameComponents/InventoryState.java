@@ -18,6 +18,12 @@ public class InventoryState extends GameState{
 
     private Map map;
 
+    private boolean canUseMultipleItem = true;
+
+    public void setCanUseMultipleItem(boolean canUseMultipleItem) {
+        this.canUseMultipleItem = canUseMultipleItem;
+    }
+
     public InventoryState(Creature creature, GameContext gameContext, GameState lastState){
         super(gameContext, lastState);
         this.creature = creature;
@@ -55,7 +61,8 @@ public class InventoryState extends GameState{
     @Override
     public void mouseEvent(MouseEvent event) {
         if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
-            creature.getInventory().eventController(controller);
+            if(creature.getInventory().eventController(controller) && ! canUseMultipleItem)
+                backToLastContext();
         for(MouseEventManager mouseEvent : mouseEventList)
             mouseEvent.mouseEvent(event);
     }

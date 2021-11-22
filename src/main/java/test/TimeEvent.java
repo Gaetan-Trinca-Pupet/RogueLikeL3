@@ -44,7 +44,6 @@ public class TimeEvent extends Event {
             fireEvent(canvas, this);
             while(System.currentTimeMillis() - chrono < 1000/frequency);
             deltaTime =(float) (System.currentTimeMillis() - chrono) / 1000;
-            System.out.println(deltaTime);
         }
     }
 }

@@ -1,5 +1,6 @@
 package windowManager;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -24,10 +25,11 @@ public class GameWindow extends Canvas {
         screenCenter = new Vector2D(screenSize.x/2, screenSize.y/2);
 
         TimeEvent timeEvent = new TimeEvent(TimeEvent.TIME_PASSES);
-        //getEventDispatcher().dispatchEvent()
+        //getEventDispatcher().dispatchEvent(timeEvent, );
+        //setEventDispatcher(getEventDispatcher());
 
         timeEvent.setCanvas(this);
-        timeEvent.setFrequency(60);
+        timeEvent.setFrequency(30);
 
         Thread timeEventThread = new Thread(timeEvent::loop);
         timeEventThread.start();
@@ -70,5 +72,10 @@ public class GameWindow extends Canvas {
 
     public <T extends Event> void setEventHandlerTo(final EventType<T> eventType, final EventHandler<? super T> eventHandler){
         setEventHandler(eventType, eventHandler);
+    }
+
+    public void closeWindow(){
+        TimeEvent.loop = false;
+        Platform.exit();
     }
 }

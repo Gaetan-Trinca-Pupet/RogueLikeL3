@@ -19,8 +19,8 @@ public class Monster extends Creature {
     }
 
     @Override
-    public void interact(Player player) {
-        game.setState(new FightState(game, game.getState(), player, this));
+    public void interact(Creature creature) {
+        game.setState(new FightState(game, game.getState(), creature, this));
     }
 
     @Override

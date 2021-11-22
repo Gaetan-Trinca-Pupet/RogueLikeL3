@@ -112,6 +112,11 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
         if(directionKeyPressed.get(Direction.RIGHT)) leftJoystick.xTilt += 1;
         if(directionKeyPressed.get(Direction.UP)) leftJoystick.yTilt -= 1;
         if(directionKeyPressed.get(Direction.DOWN)) leftJoystick.yTilt += 1;
+
+        if(leftJoystick.xTilt != 0 && leftJoystick.yTilt != 0) {
+            leftJoystick.xTilt *= Math.sqrt(2) / 2;
+            leftJoystick.yTilt *= Math.sqrt(2) / 2;
+        }
     }
 
     @Override
