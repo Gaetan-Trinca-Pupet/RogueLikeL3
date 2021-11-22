@@ -14,6 +14,7 @@ import map.Map;
 import test.TimeEvent;
 import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
+import windowManager.Ground;
 import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
@@ -76,13 +77,13 @@ public class PlayState extends GameState{
         mouseEventList.add(player);
         keyEventList.add(player);
 
-        //map = new Map();
-        //spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
+        map = new Map();
+        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
 
         paintAll();
 
         inventoryState = new InventoryState(player, gameContext, this);
-        //mapState = new MapState(map, gameContext, this);
+        mapState = new MapState(map, gameContext, this);
     }
 
     private void paintAll() {

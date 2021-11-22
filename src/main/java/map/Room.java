@@ -18,10 +18,6 @@ public abstract class Room{
     protected final Vector2D TILE_SIZE = new Vector2D(32, 32);
     private final Vector2D SPRITE_POSITION = new Vector2D(-284, -224);
 
-    public Room() {
-        generate();
-    }
-
     protected void generate() {
         sprite = new CompositeSprite(SPRITE_POSITION);
         tiles = new ArrayList<>();
@@ -41,7 +37,7 @@ public abstract class Room{
 
     protected abstract void generateRoom();
 
-    public abstract Color getMinimapColor();
+    public abstract Sprite getMinimapSprite(Vector2D position, Vector2D size);
 
     private void generateSprite() {
         for (int y = 0; y < ROOM_SIZE.y; ++y) {
