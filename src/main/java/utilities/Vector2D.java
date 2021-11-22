@@ -37,4 +37,10 @@ public class Vector2D {
     public String toString(){
         return "[ "+ x + " ; " + y + " ]";
     }
+
+
+    public static final Vector2D TOP = new Vector2D(0, -1);
+    public static final Vector2D RIGHT = new Vector2D(1, 0);
+    public static final Vector2D BOTTOM = new Vector2D(0, 1);
+    public static final Vector2D LEFT = new Vector2D(-1, 0);
 }
