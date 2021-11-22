@@ -11,7 +11,7 @@ public class EntityTest extends Creature {
         this.controller = controller;
     }
 
-    public void update(){
+    public void updateOnTimeEvent(TimeEvent event){
         this.getPosition().x += controller.getXTiltLeftJoystick() * 10;
         this.getPosition().y += controller.getYTiltLeftJoystick() * 10;
     }

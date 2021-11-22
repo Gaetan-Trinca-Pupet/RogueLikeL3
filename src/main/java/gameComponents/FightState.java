@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sprite.Sprite;
 import test.Square;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -53,7 +54,7 @@ public class FightState extends GameState{
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
         gameContext.gameWindow.paintAll(spriteList);
     }
 }

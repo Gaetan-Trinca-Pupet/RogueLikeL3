@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import map.Map;
 import sprite.CompositeSprite;
 import test.Square;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -54,7 +55,7 @@ public class MapState extends GameState {
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
         paint();
     }
 

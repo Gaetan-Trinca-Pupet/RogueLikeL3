@@ -2,8 +2,7 @@ package entity;
 
 import Inventory.Stockable;
 import collision.SquareCollision;
-import javafx.scene.paint.Color;
-import sprite.ImageSprite;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 
@@ -35,7 +34,7 @@ public class Pickable extends Interactable {
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
 
     }
 }

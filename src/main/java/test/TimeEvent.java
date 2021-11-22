@@ -42,9 +42,9 @@ public class TimeEvent extends Event {
     public void loop(){
         for(long chrono = System.currentTimeMillis() ; loop ; chrono = System.currentTimeMillis()){
             fireEvent(canvas, this);
-            System.out.println("running....");
             while(System.currentTimeMillis() - chrono < 1000/frequency);
-            deltaTime = (System.currentTimeMillis() - chrono) / 1000;
+            deltaTime =(float) (System.currentTimeMillis() - chrono) / 1000;
+            System.out.println(deltaTime);
         }
     }
 }

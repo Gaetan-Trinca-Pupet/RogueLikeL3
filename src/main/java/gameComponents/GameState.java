@@ -3,25 +3,23 @@ package gameComponents;
 import Controller.MouseAndKeyboardController;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
-import javafx.event.Event;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.WindowEvent;
-import utilities.Updatable;
-import windowManager.GameWindow;
+import test.TimeEvent;
+import utilities.UpdateOnTimeEvent;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GameState implements Updatable, MouseEventManager, KeyEventManager {
+public abstract class GameState implements UpdateOnTimeEvent, MouseEventManager, KeyEventManager {
     protected GameContext gameContext;
     protected GameState lastState;
 
     protected MouseAndKeyboardController controller;
 
-    protected List<Updatable> updatableList;
+    protected List<UpdateOnTimeEvent> updatableList;
     protected List<KeyEventManager> keyEventList;
     protected List<MouseEventManager> mouseEventList;
 
@@ -84,5 +82,9 @@ public abstract class GameState implements Updatable, MouseEventManager, KeyEven
     public void mouseEventHandler(MouseEvent event){
         controller.mouseEvent(event);
         this.mouseEvent(event);
+    }
+
+    public void timeEventHandler(TimeEvent event){
+        this.updateOnTimeEvent(event);
     }
 }

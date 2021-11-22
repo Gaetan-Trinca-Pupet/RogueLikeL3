@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import map.Map;
 import test.Square;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -22,12 +23,8 @@ public class InventoryState extends GameState{
         this.creature = creature;
 
 
-        Vector2D screenSize = gameContext.gameWindow.getScreenSize();
 
         spriteList = new SpriteHandler();
-        spriteList.addHandlerToGround(Ground.BACKGROUND, lastState.getSpriteList());
-
-        spriteList.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
 
 
         mouseEventList.add(creature.getInventory());
@@ -38,7 +35,11 @@ public class InventoryState extends GameState{
     }
 
     public void paintInventory(){
-        spriteList.clean(Ground.FOREGROUND);
+        Vector2D screenSize = gameContext.gameWindow.getScreenSize();
+        spriteList = new SpriteHandler();
+
+        spriteList.addHandlerToGround(Ground.BACKGROUND, lastState.getSpriteList());
+        spriteList.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
         spriteList.addHandlerToGround(Ground.FOREGROUND, creature.getInventory().getSpriteHandler());
         gameContext.gameWindow.paintAll(spriteList);
     }
@@ -60,7 +61,7 @@ public class InventoryState extends GameState{
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
         paintInventory();
     }
 }

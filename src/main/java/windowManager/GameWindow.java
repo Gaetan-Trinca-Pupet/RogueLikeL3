@@ -24,6 +24,8 @@ public class GameWindow extends Canvas {
         screenCenter = new Vector2D(screenSize.x/2, screenSize.y/2);
 
         TimeEvent timeEvent = new TimeEvent(TimeEvent.TIME_PASSES);
+        //getEventDispatcher().dispatchEvent()
+
         timeEvent.setCanvas(this);
         timeEvent.setFrequency(60);
 

@@ -2,6 +2,7 @@ package gameComponents;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import test.TimeEvent;
 
 public class NullState extends GameState{
     public NullState(){
@@ -19,7 +20,7 @@ public class NullState extends GameState{
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
 
     }
 }

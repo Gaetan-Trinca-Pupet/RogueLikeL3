@@ -3,6 +3,7 @@ package entity;
 import collision.SquareCollision;
 import gameComponents.FightState;
 import Monster.Fightable;
+import test.TimeEvent;
 import windowManager.Ground;
 
 public class Monster extends Creature {
@@ -23,7 +24,7 @@ public class Monster extends Creature {
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
 
     }
 }
