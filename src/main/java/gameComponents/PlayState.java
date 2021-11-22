@@ -11,8 +11,10 @@ import equipment.Sword;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import map.Map;
-import utilities.Updatable;
+import test.TimeEvent;
+import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
+import windowManager.Ground;
 import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
@@ -75,13 +77,13 @@ public class PlayState extends GameState{
         mouseEventList.add(player);
         keyEventList.add(player);
 
-        //map = new Map();
-        //spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
+        map = new Map();
+        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
 
         paintAll();
 
         inventoryState = new InventoryState(player, gameContext, this);
-        //mapState = new MapState(map, gameContext, this);
+        mapState = new MapState(map, gameContext, this);
     }
 
     private void paintAll() {
@@ -89,9 +91,9 @@ public class PlayState extends GameState{
     }
 
     @Override
-    public void update() {
-        for(Updatable object : updatableList) {
-            object.update();
+    public void updateOnTimeEvent(TimeEvent event) {
+        for(UpdateOnTimeEvent object : updatableList) {
+            object.updateOnTimeEvent(event);
         }
         paintAll();
     }

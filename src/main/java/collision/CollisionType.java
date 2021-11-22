@@ -1,5 +1,5 @@
 package collision;
 
 public enum CollisionType {
-    BLOCK, NONE, RIGHT, LEFT, UP, DOWN
+    BLOCK, NONE, EXIT_RIGHT, EXIT_LEFT, EXIT_TOP, EXIT_BOTTOM
 }

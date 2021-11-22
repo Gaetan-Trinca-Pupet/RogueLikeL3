@@ -2,20 +2,32 @@ package map;
 
 import collision.CollisionType;
 import javafx.scene.paint.Color;
+import sprite.CompositeSprite;
+import sprite.Sprite;
+import test.Square;
 import utilities.Vector2D;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 public class TestRoom extends Room{
-    boolean exitTop;
-    boolean exitRight;
-    boolean exitBottom;
-    boolean exitLeft;
+    Map <Vector2D, Boolean> exits;
+    Map <Vector2D, CollisionType> collisionTypes;
     public TestRoom (boolean exitTop, boolean exitRight, boolean exitBottom, boolean exitLeft) {
-        this.exitTop = exitTop;
-        this.exitRight = exitRight;
-        this.exitBottom = exitBottom;
-        this.exitLeft = exitLeft;
+        System.out.println("nik");
+        exits = new HashMap<>();
+        exits.put(Vector2D.TOP, exitTop);
+        exits.put(Vector2D.RIGHT, exitRight);
+        exits.put(Vector2D.BOTTOM, exitBottom);
+        exits.put(Vector2D.LEFT, exitLeft);
+
+        collisionTypes = new HashMap<>();
+        collisionTypes.put(new Vector2D(0, -1), CollisionType.EXIT_TOP);
+        collisionTypes.put(new Vector2D(1, 0), CollisionType.EXIT_RIGHT);
+        collisionTypes.put(new Vector2D(0, 1), CollisionType.EXIT_BOTTOM);
+        collisionTypes.put(new Vector2D(-1, 0), CollisionType.EXIT_LEFT);
         generate();
     }
 
@@ -42,20 +54,21 @@ public class TestRoom extends Room{
                     new Vector2D((int) ROOM_SIZE.x -1, y), TILE_SIZE)
             );
         }
-        if (exitTop) {
-            setDoor(new Vector2D(0, ROOM_SIZE.x/2-1), CollisionType.UP);
-            setDoor(new Vector2D(0, ROOM_SIZE.x/2), CollisionType.UP);
+
+        if (exits.get(Vector2D.TOP)) {
+            setDoor(new Vector2D(0, ROOM_SIZE.x/2-1), CollisionType.EXIT_TOP);
+            setDoor(new Vector2D(0, ROOM_SIZE.x/2), CollisionType.EXIT_TOP);
         }
-        if (exitBottom) {
-            setDoor(new Vector2D(ROOM_SIZE.y-1, ROOM_SIZE.x/2-1), CollisionType.DOWN);
-            setDoor(new Vector2D(ROOM_SIZE.y-1, ROOM_SIZE.x/2), CollisionType.DOWN);}
-        if (exitLeft) {
-            setDoor(new Vector2D(ROOM_SIZE.y/2-1, 0), CollisionType.LEFT);
-            setDoor(new Vector2D(ROOM_SIZE.y/2, 0), CollisionType.LEFT);
+        if (exits.get(Vector2D.BOTTOM)) {
+            setDoor(new Vector2D(ROOM_SIZE.y-1, ROOM_SIZE.x/2-1), CollisionType.EXIT_BOTTOM);
+            setDoor(new Vector2D(ROOM_SIZE.y-1, ROOM_SIZE.x/2), CollisionType.EXIT_BOTTOM);}
+        if (exits.get(Vector2D.LEFT)) {
+            setDoor(new Vector2D(ROOM_SIZE.y/2-1, 0), CollisionType.EXIT_LEFT);
+            setDoor(new Vector2D(ROOM_SIZE.y/2, 0), CollisionType.EXIT_LEFT);
         }
-        if (exitRight) {
-            setDoor(new Vector2D(ROOM_SIZE.y/2-1, ROOM_SIZE.x-1), CollisionType.LEFT);
-            setDoor(new Vector2D(ROOM_SIZE.y/2, ROOM_SIZE.x-1), CollisionType.LEFT);
+        if (exits.get(Vector2D.RIGHT)) {
+            setDoor(new Vector2D(ROOM_SIZE.y/2-1, ROOM_SIZE.x-1), CollisionType.EXIT_RIGHT);
+            setDoor(new Vector2D(ROOM_SIZE.y/2, ROOM_SIZE.x-1), CollisionType.EXIT_RIGHT);
         }
     }
 
@@ -75,7 +88,17 @@ public class TestRoom extends Room{
     }
 
     @Override
-    public Color getMinimapColor() {
-        return Color.BLUEVIOLET;
+    public Sprite getMinimapSprite(Vector2D position, Vector2D size) {
+        Vector2D vectorThird = new Vector2D(3, 3);
+        CompositeSprite sprite = new CompositeSprite(position);
+        sprite.add(new Square(new Vector2D(), size, Color.POWDERBLUE));
+
+        sprite.add(new Square(size.divideBy(vectorThird), size.divideBy(vectorThird), Color.BLACK));
+        for (Map.Entry<Vector2D, Boolean> exit : exits.entrySet()) {
+            if (exit.getValue()) {
+                sprite.add(new Square(size.multiply(exit.getKey()).divideBy(vectorThird), size.divideBy(vectorThird), Color.BLACK));
+            }
+        }
+        return sprite;
     }
 }

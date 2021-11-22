@@ -2,18 +2,14 @@ package entity;
 
 import collision.Collision;
 import gameComponents.GameContext;
-import gameComponents.GameState;
 import ressourceManager.ImageManager;
 import sprite.Sprite;
-import utilities.Updatable;
+import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class Entity implements Updatable {
+public abstract class Entity implements UpdateOnTimeEvent {
     static protected GameContext game;
     static protected SpriteHandler spriteHandler = new SpriteHandler();
     static protected ImageManager imageManager = new ImageManager();

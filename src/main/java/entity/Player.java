@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import sprite.ImageSprite;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 
@@ -21,7 +22,7 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     private MouseAndKeyboardController controller;
     private ArrayList<Interactable> interactableList;
     
-    private float speed = 2;
+    private final float speed = 200;
     private Vector2D facing = new Vector2D();
 
     public Player(MouseAndKeyboardController controller){
@@ -56,12 +57,12 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     }
 
     @Override
-    public void update() {
-        move();
+    public void updateOnTimeEvent(TimeEvent event) {
+        move(event);
     }
 
-    private void move() {
-        Vector2D translate = new Vector2D(controller.getXTiltLeftJoystick() * speed, controller.getYTiltLeftJoystick() * speed);
+    private void move(TimeEvent event) {
+        Vector2D translate = new Vector2D(controller.getXTiltLeftJoystick() * speed * event.getDeltaTime(), controller.getYTiltLeftJoystick() * speed * event.getDeltaTime());
         translate(translate);
         translateSprite(translate);
         if (controller.getXTiltLeftJoystick() != 0 || controller.getYTiltLeftJoystick() != 0) {

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import map.Map;
 import sprite.CompositeSprite;
 import test.Square;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -16,7 +17,7 @@ public class MapState extends GameState {
     private CompositeSprite sprite;
     private SpriteHandler backGround;
 
-    private final Vector2D ROOM_DISPLAY_SIZE = new Vector2D(16, 16);
+    private final Vector2D ROOM_DISPLAY_SIZE = new Vector2D(64, 64);
 
     public MapState(Map map, GameContext gameContext, GameState lastState) {
         super(gameContext, lastState);
@@ -32,7 +33,7 @@ public class MapState extends GameState {
         for (int y = 0; y < map.getMapSize().y; ++y) {
             for (int x = 0; x < map.getMapSize().x; ++x) {
                 if (map.getRooms().get(x).get(y) != null) {
-                    sprite.add(new Square(new Vector2D(x, y).multiply(ROOM_DISPLAY_SIZE), ROOM_DISPLAY_SIZE, map.getRooms().get(x).get(y).getMinimapColor()));
+                    sprite.add(map.getRooms().get(x).get(y).getMinimapSprite(ROOM_DISPLAY_SIZE.multiply(new Vector2D(x, y)), ROOM_DISPLAY_SIZE));
                 }
             }
         }
@@ -54,7 +55,7 @@ public class MapState extends GameState {
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
         paint();
     }
 
