@@ -11,7 +11,8 @@ import equipment.Sword;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import map.Map;
-import utilities.Updatable;
+import test.TimeEvent;
+import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
 import windowManager.SpriteHandler;
 
@@ -89,9 +90,9 @@ public class PlayState extends GameState{
     }
 
     @Override
-    public void update() {
-        for(Updatable object : updatableList) {
-            object.update();
+    public void updateOnTimeEvent(TimeEvent event) {
+        for(UpdateOnTimeEvent object : updatableList) {
+            object.updateOnTimeEvent(event);
         }
         paintAll();
     }

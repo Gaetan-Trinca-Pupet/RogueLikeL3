@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import map.Map;
 import test.Square;
+import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -60,7 +61,7 @@ public class InventoryState extends GameState{
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
         paintInventory();
     }
 }

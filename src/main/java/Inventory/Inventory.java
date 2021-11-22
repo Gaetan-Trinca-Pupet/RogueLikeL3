@@ -12,7 +12,8 @@ import sprite.CompositeSprite;
 import sprite.LabelSprite;
 import sprite.Sprite;
 import test.Square;
-import utilities.Updatable;
+import test.TimeEvent;
+import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -20,7 +21,7 @@ import windowManager.SpriteHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory implements Updatable, MouseEventManager {
+public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
     private ArrayList<Stockable> inventory;
     private ArrayList<Entity> entities;
 
@@ -162,7 +163,7 @@ public class Inventory implements Updatable, MouseEventManager {
     }
 
     @Override
-    public void update() {
+    public void updateOnTimeEvent(TimeEvent event) {
         //for(Entity entity : entities)
         //    entity.update();
     }
