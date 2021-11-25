@@ -5,13 +5,14 @@ import javafx.scene.paint.Color;
 import sprite.Sprite;
 import sprite.CompositeSprite;
 import test.Square;
+import utilities.Grid;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Room{
-    protected List<List<Tile>> tiles;
+    protected Grid<Tile> tiles;
     private CompositeSprite sprite;
 
     protected final Vector2D ROOM_SIZE = new Vector2D(16, 16);
@@ -20,13 +21,8 @@ public abstract class Room{
 
     protected void generate() {
         sprite = new CompositeSprite(SPRITE_POSITION);
-        tiles = new ArrayList<>();
-        for (int y = 0; y < ROOM_SIZE.y; ++y) {
-            tiles.add(new ArrayList<>());
-            for (int x = 0; x < ROOM_SIZE.x; ++x) {
-                tiles.get(y).add(null);
-            }
-        }
+        tiles = new Grid<Tile>((int) ROOM_SIZE.x, (int) ROOM_SIZE.y);
+
         generateRoom();
         generateSprite();
     }
@@ -40,8 +36,8 @@ public abstract class Room{
     public abstract Sprite getMinimapSprite(Vector2D position, Vector2D size);
 
     private void generateSprite() {
-        for (int y = 0; y < ROOM_SIZE.y; ++y) {
-            for (int x = 0; x < ROOM_SIZE.x; ++x) {
+        for (int y = 0; y < tiles.getSizeWidth(); ++y) {
+            for (int x = 0; x < tiles.getSizeHeight(); ++x) {
                 sprite.add(tiles.get(y).get(x).getSprite());
             }
         }
