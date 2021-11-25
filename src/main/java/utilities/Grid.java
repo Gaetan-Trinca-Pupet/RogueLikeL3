@@ -3,13 +3,16 @@ package utilities;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Grid<T> implements Iterable{
+public class Grid<T> implements Iterable<T>{
     private ArrayList<ArrayList<T>> grid;
 
     public Grid(int initialWidth, int initialHeight){
         grid = new ArrayList<ArrayList<T>>(initialWidth);
-        for(ArrayList<T> list : grid){
-            list = new ArrayList<T>(initialHeight);
+        for(int i = 0 ; i < initialWidth ; ++i){
+            grid.add(new ArrayList<>());
+            for(int j = 0 ; j < initialHeight ; ++j){
+                grid.get(i).add(null);
+            }
         }
 
     }
@@ -19,6 +22,8 @@ public class Grid<T> implements Iterable{
     }
 
     public T get(int i, int j){
+        if(i >= getSizeWidth() || j >= getSizeHeight()) return null;
+        if(grid.get(i) == null) return null;
         return grid.get(i).get(j);
     }
 

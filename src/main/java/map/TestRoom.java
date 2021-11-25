@@ -14,20 +14,8 @@ import java.util.Queue;
 
 public class TestRoom extends Room{
     Map <Vector2D, Boolean> exits;
-    Map <Vector2D, CollisionType> collisionTypes;
-    public TestRoom (boolean exitTop, boolean exitRight, boolean exitBottom, boolean exitLeft) {
-        System.out.println("nik");
-        exits = new HashMap<>();
-        exits.put(Vector2D.TOP, exitTop);
-        exits.put(Vector2D.RIGHT, exitRight);
-        exits.put(Vector2D.BOTTOM, exitBottom);
-        exits.put(Vector2D.LEFT, exitLeft);
 
-        collisionTypes = new HashMap<>();
-        collisionTypes.put(new Vector2D(0, -1), CollisionType.EXIT_TOP);
-        collisionTypes.put(new Vector2D(1, 0), CollisionType.EXIT_RIGHT);
-        collisionTypes.put(new Vector2D(0, 1), CollisionType.EXIT_BOTTOM);
-        collisionTypes.put(new Vector2D(-1, 0), CollisionType.EXIT_LEFT);
+    public TestRoom(){
         generate();
     }
 

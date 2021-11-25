@@ -6,27 +6,21 @@ import utilities.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Map {
     private Grid<Room> rooms;
     private Vector2D currentRoomPosition;
     private Sprite sprite;
+    private int maxSize;
 
     public Map() {
         generateMap(50);
-//        rooms = new ArrayList<>();
-//        rooms.add(new ArrayList<>());
-//        rooms.get(0).add(new TestRoom(false, true, true, false));
-//        rooms.get(0).add(new TestRoom(false, false, false, true));
-//        rooms.add(new ArrayList<>());
-//        rooms.get(1).add(new TestRoom(true, true, false, false));
-//        rooms.get(1).add(new TestRoom(false, false, false, true));
-        currentRoomPosition = new Vector2D(0, 0);
         actualizeSprite();
     }
 
     private void actualizeSprite() {
-        sprite = rooms.get((int) currentRoomPosition.x).get((int) currentRoomPosition.y).getSprite();
+        sprite = rooms.get((int) currentRoomPosition.x, (int) currentRoomPosition.y).getSprite();
     }
 
     public Sprite getSprite() {
@@ -50,49 +44,34 @@ public class Map {
         rooms = new Grid<Room>(nbRoom/5, nbRoom/5);
         ArrayList<Vector2D> roomToProcess = new ArrayList<Vector2D>();
         ArrayList<Vector2D> roomCreated = new ArrayList<Vector2D>();
+        roomCreated.add(new Vector2D(rooms.getSizeWidth()/2, rooms.getSizeHeight()/2));
+        rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new TestRoom());
+        currentRoomPosition = roomCreated.get(0);
 
-        roomToProcess.add(new Vector2D(rooms.getSizeWidth(), rooms.getSizeHeight()));
-        while(roomCreated.size() < nbRoom){
-            while(roomToProcess.size() != 0){
-                int i = (int) roomToProcess.get(0).x;
-                int j = (int) roomToProcess.get(0).y;
-                roomToProcess.remove(0);
-                roomToProcess.addAll(processRoom(i, j, roomCreated, nbRoom));
-            }
-            roomToProcess = new ArrayList<>(roomCreated);
+        while(roomCreated.size() < nbRoom) {
+            Vector2D processedRoom = roomCreated.get(rand.nextInt(roomCreated.size()));
+            Vector2D direction = Vector2D.DIRECTIONS.get(rand.nextInt(Vector2D.DIRECTIONS.size()));
+            Vector2D newRoom = processedRoom.add(direction);
+
+            if( ! isRoomPositionValid(newRoom)) continue;
+
+            roomCreated.add(newRoom);
+            rooms.set((int) newRoom.x ,(int) newRoom.y, new TestRoom());
+            rooms.get((int) processedRoom.x, (int) processedRoom.y).addExit(direction);
+            rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(direction));
+
         }
 
     }
 
-    private ArrayList<Vector2D> processRoom(int i, int j, ArrayList<Vector2D> roomCreated, int nbRoom){
-        ArrayList<Vector2D> result = new ArrayList<>();
-        //TODO decommenter et faire les rooms
-//
-//        if(roomCreated.size() >= nbRoom) return new ArrayList<>();
-//        if(setRoomToGrid(i, j, /*new Room()*/)){
-//            result.add(new Vector2D(i, j));
-//            roomCreated.add(new Vector2D(i, j));
-//        }
-//
-//
-//        for(int k = -1 ; k <= 1 ; ++k){
-//            if(k == 0)continue;
-//            for(int l = -1 ; l <= 1 ; ++l){
-//                if(l == 0) continue;
-//
-//                if(roomCreated.size() >= nbRoom) return new ArrayList<>();
-//                if(setRoomToGrid(i - k, j - l, /*new Room()*/)){
-//                    result.add(new Vector2D(i - k, j - l));
-//                    roomCreated.add(new Vector2D(i - k, j - l));
-//                }
-//            }
-//        }
-        return result;
+    private boolean isRoomPositionValid(Vector2D v) {
+        return (v.x >= 0 && v.y >= 0 && v.x < rooms.getSizeWidth() && v.y < rooms.getSizeHeight() && !isThereRoomAt(v));
+    }
+    private boolean isThereRoomAt(Vector2D v){
+        return (rooms.get((int) v.x, (int) v.y) != null);
     }
 
-    private boolean setRoomToGrid(int i, int j, Room room){
-        if(rooms.get(i, j) != null) return false;
-        rooms.set(i, j, room);
-        return true;
+    public int getMaxSize(){
+        return maxSize;
     }
 }

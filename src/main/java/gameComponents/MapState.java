@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import map.Map;
 import sprite.CompositeSprite;
+import sprite.Sprite;
 import test.Square;
 import test.TimeEvent;
 import utilities.Vector2D;
@@ -15,7 +16,6 @@ import windowManager.SpriteHandler;
 
 public class MapState extends GameState {
     private CompositeSprite sprite;
-    private SpriteHandler backGround;
 
     private final Vector2D ROOM_DISPLAY_SIZE = new Vector2D(64, 64);
 
@@ -25,11 +25,23 @@ public class MapState extends GameState {
         keyEventList.add(controller);
         mouseEventList.add(controller);
 
-        backGround = new SpriteHandler();
+        spriteList = new SpriteHandler();
         Vector2D screenSize = gameContext.gameWindow.getScreenSize();
-        backGround.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(2,2)),screenSize, new Color(0,0,0,0.2)));
+        spriteList.addHandlerToGround(Ground.BACKGROUND, lastState.getSpriteList());
+        spriteList.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
 
-        sprite = new CompositeSprite();
+
+        Vector2D mapSize = new Vector2D(ROOM_DISPLAY_SIZE.x * map.getMaxSize(), ROOM_DISPLAY_SIZE.y * map.getMaxSize());
+        sprite = new CompositeSprite(mapSize.divideBy(new Vector2D(-2,-2)));
+
+        Vector2D size = mapSize.add(new Vector2D(100,100));
+        Vector2D pos = new Vector2D(size).divideBy(new Vector2D(-2, -2));
+        Sprite border = new Square(pos.subtract(new Vector2D(10,10)), size.add(new Vector2D(20,20)), new Color(1,1,1,1));
+        Sprite centerSquare = new Square(pos, size, new Color(0,0,0,1));
+
+        spriteList.addSpriteTo(Ground.GROUND, border);
+        spriteList.addSpriteTo(Ground.GROUND, centerSquare);
+
         for (int y = 0; y < map.getMapSize().y; ++y) {
             for (int x = 0; x < map.getMapSize().x; ++x) {
                 if (map.getRooms().get(x).get(y) != null) {

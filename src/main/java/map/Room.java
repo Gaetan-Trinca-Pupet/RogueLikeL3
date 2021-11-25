@@ -21,7 +21,7 @@ public abstract class Room{
 
     protected void generate() {
         sprite = new CompositeSprite(SPRITE_POSITION);
-        tiles = new Grid<Tile>((int) ROOM_SIZE.x, (int) ROOM_SIZE.y);
+        tiles = new Grid<>((int) ROOM_SIZE.x, (int) ROOM_SIZE.y);
 
         generateRoom();
         generateSprite();
