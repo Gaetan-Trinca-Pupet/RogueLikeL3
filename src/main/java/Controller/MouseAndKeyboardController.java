@@ -152,11 +152,8 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
             if(mouse.buttonMap.containsKey(event.getButton()))
                 mouse.buttonPressed.replace(mouse.buttonMap.get(event.getButton()), false);
 
-        if(event.getEventType() == MouseEvent.MOUSE_MOVED)
-        {
-            mouse.position.x = event.getX() - centerScreen.x;
-            mouse.position.y = event.getY() - centerScreen.y;
-        }
+        mouse.position.x = event.getX() - centerScreen.x;
+        mouse.position.y = event.getY() - centerScreen.y;
 
         computeButtons();
     }

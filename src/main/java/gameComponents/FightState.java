@@ -116,11 +116,6 @@ public class FightState extends GameState{
     @Override
     public void keyboardEvent(KeyEvent event) {
         if(event.getEventType() == KeyEvent.KEY_PRESSED){
-            if(event.getCode() == controller.keyCodeForAction(Action.ESCAPE))
-                backToLastContext();
-
-            if(event.getCode() == controller.keyCodeForAction(Action.INVENTORY))
-                gameContext.setState(new InventoryState(player, gameContext, this));
         }
     }
 

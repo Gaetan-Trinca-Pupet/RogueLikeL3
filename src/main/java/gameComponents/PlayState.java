@@ -52,7 +52,7 @@ public class PlayState extends GameState{
         Player player = new Player(controller);
         player.setPosition(new Vector2D(0,0));
 
-        Pickable[] pommes = new Pickable[2000];
+        Pickable[] pommes = new Pickable[200];
         Random random = new Random();
         for(Pickable pomme : pommes)
         {
