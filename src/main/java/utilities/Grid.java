@@ -71,14 +71,14 @@ public class Grid<T> implements Iterable<T>{
 
             @Override
             public boolean hasNext() {
-                return iteratorT.hasNext() && iteratorList.hasNext();
+                return iteratorT.hasNext() || iteratorList.hasNext();
             }
 
             @Override
             public T next() {
                 if( ! iteratorT.hasNext())
                     iteratorT = iteratorList.next().iterator();
-                return iteratorT.next();
+                return (T) iteratorT.next();
             }
         };
     }

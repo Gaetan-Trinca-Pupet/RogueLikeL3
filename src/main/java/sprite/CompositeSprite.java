@@ -27,6 +27,10 @@ public class CompositeSprite extends Sprite{
         sprites.remove(sprite);
     }
 
+    public void clear() {
+        sprites.clear();
+    }
+
     @Override
     public void draw(GraphicsContext graphicsContext, Vector2D position) {
         for (Sprite sprite : sprites) {

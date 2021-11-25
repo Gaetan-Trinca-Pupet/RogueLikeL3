@@ -14,9 +14,9 @@ public abstract class Tile implements Collidable{
     private Vector2D position;
     private Collision collision;
 
-    public Tile (Vector2D position, Vector2D size, Sprite sprite) {
+    public Tile (Vector2D position, Vector2D size, Sprite sprite, Vector2D parentPosition) {
         this.position = position;
-        this.collision = new SquareCollision(position, size);
+        this.collision = new SquareCollision(position.multiply(size).add(parentPosition), size);
         this.sprite = sprite;
     }
 
@@ -24,9 +24,6 @@ public abstract class Tile implements Collidable{
         return sprite;
     }
 
-    public boolean hasCollisions() {
-        return true;
-    }
 
     public Vector2D getPosition() {
         return position;

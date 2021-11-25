@@ -1,5 +1,7 @@
 package map;
 
+import collision.Collidable;
+import sprite.CompositeSprite;
 import sprite.Sprite;
 import utilities.Grid;
 import utilities.Vector2D;
@@ -11,16 +13,20 @@ import java.util.Random;
 public class Map {
     private Grid<Room> rooms;
     private Vector2D currentRoomPosition;
-    private Sprite sprite;
+    private CompositeSprite sprite;
+    private List<Collidable> collidables;
     private int maxSize;
 
     public Map() {
         generateMap(50);
+        sprite = new CompositeSprite();
         actualizeSprite();
+        actualizeCollidables();
     }
 
     private void actualizeSprite() {
-        sprite = rooms.get((int) currentRoomPosition.x, (int) currentRoomPosition.y).getSprite();
+        sprite.clear();
+        sprite.add(rooms.get((int) currentRoomPosition.x, (int) currentRoomPosition.y).getSprite());
     }
 
     public Sprite getSprite() {
@@ -31,13 +37,24 @@ public class Map {
         return rooms;
     }
 
+    public List<Collidable> getCollidables ()
+    {
+        return collidables;
+    }
+
+    private void actualizeCollidables() {
+        collidables = rooms.get((int) currentRoomPosition.x).get((int) currentRoomPosition.y).getCollidables();
+    }
+
     public Vector2D getMapSize() {
         return new Vector2D(rooms.getSizeWidth(), rooms.getSizeHeight());
     }
 
-    public void moveRoom(Vector2D direction){
+    public Vector2D moveRoom(Vector2D direction){
         currentRoomPosition = currentRoomPosition.add(direction);
         actualizeSprite();
+        actualizeCollidables();
+        return new Vector2D();
     }
 
     private void generateMap(final int nbRoom){

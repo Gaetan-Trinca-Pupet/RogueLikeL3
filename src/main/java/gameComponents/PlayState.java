@@ -49,7 +49,10 @@ public class PlayState extends GameState{
         Entity.setGameContext(gameContext);
         Entity.setSpriteHandler(spriteList);
 
-        Player player = new Player(controller);
+        map = new Map();
+        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
+
+        Player player = new Player(controller, map);
         player.setPosition(new Vector2D(0,0));
 
         Pickable[] pommes = new Pickable[200];
@@ -82,9 +85,6 @@ public class PlayState extends GameState{
         updatableList.add(player);
         mouseEventList.add(player);
         keyEventList.add(player);
-
-        map = new Map();
-        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
 
         paintAll();
 

@@ -14,8 +14,14 @@ import java.util.Queue;
 
 public class TestRoom extends Room{
     Map <Vector2D, Boolean> exits;
-
-    public TestRoom(){
+    Map <Vector2D, CollisionType> collisionTypes;
+    public TestRoom () {
+        exits = new HashMap<>();
+        collisionTypes = new HashMap<>();
+        collisionTypes.put(new Vector2D(0, -1), CollisionType.EXIT_TOP);
+        collisionTypes.put(new Vector2D(1, 0), CollisionType.EXIT_RIGHT);
+        collisionTypes.put(new Vector2D(0, 1), CollisionType.EXIT_BOTTOM);
+        collisionTypes.put(new Vector2D(-1, 0), CollisionType.EXIT_LEFT);
         generate();
     }
 
@@ -33,18 +39,18 @@ public class TestRoom extends Room{
     private void setWalls() {
         for (int x = 0; x < ROOM_SIZE.x; ++x) {
             tiles.get(x).set(0, new Wall(
-                    new Vector2D(x, 0), TILE_SIZE)
+                    new Vector2D(x, 0), TILE_SIZE, SPRITE_POSITION)
             );
             tiles.get(x).set((int) ROOM_SIZE.y -1, new Wall(
-                    new Vector2D(x, (int) ROOM_SIZE.y -1), TILE_SIZE)
+                    new Vector2D(x, (int) ROOM_SIZE.y -1), TILE_SIZE, SPRITE_POSITION)
             );
         }
         for (int y = 0; y < ROOM_SIZE.y; ++y) {
             tiles.get(0).set(y, new Wall(
-                    new Vector2D(0, y), TILE_SIZE)
+                    new Vector2D(0, y), TILE_SIZE, SPRITE_POSITION)
             );
             tiles.get((int) ROOM_SIZE.x-1).set(y, new Wall(
-                    new Vector2D((int) ROOM_SIZE.x -1, y), TILE_SIZE)
+                    new Vector2D((int) ROOM_SIZE.x -1, y), TILE_SIZE, SPRITE_POSITION)
             );
         }
     }
@@ -53,7 +59,7 @@ public class TestRoom extends Room{
         for (int y = 1; y < ROOM_SIZE.y-1; ++y) {
             for (int x = 1; x < ROOM_SIZE.x-1; ++x) {
                 tiles.get(x).set(y, new Floor(
-                        new Vector2D(x, y), TILE_SIZE
+                        new Vector2D(x, y), TILE_SIZE, SPRITE_POSITION
                 ));
             }
         }
@@ -79,7 +85,8 @@ public class TestRoom extends Room{
     }
 
     private void setDoor(Vector2D position, CollisionType collisionType) {
-        tiles.set((int) position.x, (int) position.y, new Door(position, TILE_SIZE, collisionType));
+        tiles.set((int) position.x, (int) position.y, new Door(position, TILE_SIZE, collisionType, SPRITE_POSITION));
+        tiles.get((int) position.x).set((int) position.y, new Door(position, TILE_SIZE, collisionType, SPRITE_POSITION));
     }
 
     @Override

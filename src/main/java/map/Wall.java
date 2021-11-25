@@ -9,8 +9,8 @@ import sprite.Sprite;
 import utilities.Vector2D;
 
 public class Wall extends Tile{
-    public Wall (Vector2D position, Vector2D size) {
-        super(position, size, ImageSpriteFromTilemapFactory.construct("map/roguelikeDungeon_transparent.png", 1, 11, position.multiply(size), size));
+    public Wall (Vector2D position, Vector2D size, Vector2D parentPosition) {
+        super(position, size, ImageSpriteFromTilemapFactory.construct("map/roguelikeDungeon_transparent.png", 1, 11, position.multiply(size), size), parentPosition);
     }
 
     @Override
