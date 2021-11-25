@@ -80,8 +80,6 @@ public class TestRoom extends Room{
             setDoor(new Vector2D(ROOM_SIZE.y / 2, 0), CollisionType.EXIT_LEFT);
         }
         exits.put(direction, true);
-        System.out.println(exits);
-
     }
 
     private void setDoor(Vector2D position, CollisionType collisionType) {

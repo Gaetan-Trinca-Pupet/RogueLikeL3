@@ -18,7 +18,7 @@ public class Map {
     private int maxSize;
 
     public Map() {
-        generateMap(50);
+        generateMap(10);
         sprite = new CompositeSprite();
         actualizeSprite();
         actualizeCollidables();
@@ -62,10 +62,10 @@ public class Map {
 
         Random rand = new Random();
         maxSize = (int) (Math.sqrt(nbRoom) * 2);
-        rooms = new Grid<Room>(maxSize, maxSize);
+        rooms = new Grid<>(maxSize, maxSize);
 
-        ArrayList<Vector2D> roomCreated = new ArrayList<Vector2D>();
-        roomCreated.add(new Vector2D(rooms.getSizeWidth()/2, rooms.getSizeHeight()/2));
+        ArrayList<Vector2D> roomCreated = new ArrayList<>();
+        roomCreated.add(new Vector2D((double)rooms.getSizeWidth()/2, (double)rooms.getSizeHeight()/2));
         rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new TestRoom());
         currentRoomPosition = roomCreated.get(0);
 
