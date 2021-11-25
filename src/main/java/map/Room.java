@@ -43,6 +43,8 @@ public abstract class Room{
         }
     }
 
+    public abstract void addExit(Vector2D direction);
+
     public Sprite getSprite() {
         return sprite;
     }

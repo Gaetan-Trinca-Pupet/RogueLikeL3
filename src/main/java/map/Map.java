@@ -41,8 +41,12 @@ public class Map {
     }
 
     private void generateMap(final int nbRoom){
-        rooms = new Grid<Room>(nbRoom/5, nbRoom/5);
-        ArrayList<Vector2D> roomToProcess = new ArrayList<Vector2D>();
+        System.out.println("Generating map...");
+
+        Random rand = new Random();
+        maxSize = (int) (Math.sqrt(nbRoom) * 2);
+        rooms = new Grid<Room>(maxSize, maxSize);
+
         ArrayList<Vector2D> roomCreated = new ArrayList<Vector2D>();
         roomCreated.add(new Vector2D(rooms.getSizeWidth()/2, rooms.getSizeHeight()/2));
         rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new TestRoom());
