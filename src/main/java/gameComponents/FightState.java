@@ -1,10 +1,14 @@
 package gameComponents;
 
+import Consomable.Apple;
 import Controller.Action;
 import EventManager.MouseEventManager;
 import collision.Collision;
 import collision.SquareCollision;
 import entity.Creature;
+import entity.Pickable;
+import equipment.RogueBoots;
+import equipment.Sword;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -16,6 +20,8 @@ import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
+
+import java.util.Random;
 
 public class FightState extends GameState{
     private Creature player;
@@ -46,7 +52,7 @@ public class FightState extends GameState{
         spriteList.addSpriteTo(Ground.GROUND, border);
         spriteList.addSpriteTo(Ground.GROUND, centerSquare);
 
-        // Buttons
+        // Buttons size and label
         Vector2D sizeButton = new Vector2D(200, 100);
         LabelSprite label;
 
@@ -157,7 +163,26 @@ public class FightState extends GameState{
         }
         if(monster.getCurrentLife() > 0) monster.attack(player);
         else {
+
+            Random random = new Random();
+            if (random.nextInt(2) == 0) { // 1 chance sur 2 pour le monstre de drop une pomme
+                Pickable pom = new Pickable(new Apple());
+                pom.setPosition(monster.getPosition());
+                player.addInteraction(pom);
+            }
+            else if (random.nextInt(3) == 0) { // 1 chance sur 3 pour le monstre de drop une épée
+                Pickable epee = new Pickable(new Sword());
+                epee.setPosition(monster.getPosition());
+                player.addInteraction(epee);
+            }
+            else if (random.nextInt(10) == 0) { // 1 chance sur 10 pour le monstre de drop LES BOTTES
+                Pickable boots = new Pickable(new RogueBoots());
+                boots.setPosition(monster.getPosition());
+                player.addInteraction(boots);
+            }
+
             backToLastContext();
+
         }
         if(player.getCurrentLife() < 0)
             gameContext.setState(new GameOverState(gameContext, this));
