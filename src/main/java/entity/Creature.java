@@ -4,8 +4,13 @@ import Inventory.Equipment;
 import Inventory.Inventory;
 import collision.CircleCollision;
 import collision.Collision;
+import collision.SquareCollision;
 import equipment.EquipmentNull;
+import javafx.scene.paint.Color;
+import sprite.Sprite;
+import test.Square;
 import utilities.Vector2D;
+import windowManager.Ground;
 
 import java.util.ArrayList;
 
@@ -29,7 +34,7 @@ public abstract class Creature extends Interactable{
     protected Equipment equipped;
 
     private ArrayList<Interactable> interactableList;
-    protected Vector2D facing = new Vector2D();
+    protected Vector2D facing;
 
     public Creature(int baseMaxLife, int baseForce, int baseDefense){
         this.interactableList = new ArrayList<Interactable>();
@@ -42,6 +47,7 @@ public abstract class Creature extends Interactable{
         this.defense = baseDefense;
 
         position = new Vector2D();
+        facing = new Vector2D(0,1);
 
         this.inventory = new Inventory(this);
 
@@ -114,7 +120,15 @@ public abstract class Creature extends Interactable{
 
 
     public void checkInteraction(){
-        Collision collision = new CircleCollision(position.add(new Vector2D(facing.x, facing.y).multiply(new Vector2D(30,30))),20);
+        Vector2D centerPos = position.add(size.divideBy(new Vector2D(2,2)));
+        Vector2D sizeCollision = new Vector2D(size);
+        Vector2D posCollision = centerPos.add(sizeCollision.multiply(new Vector2D(facing.x, facing.y))).subtract(sizeCollision.divideBy(new Vector2D(2,2)));
+        System.out.println(facing);
+        SquareCollision collision = new SquareCollision(posCollision, sizeCollision);
+
+        Sprite rect = new Square(posCollision, sizeCollision, Color.RED);
+        spriteHandler.addSpriteTo(Ground.FOREGROUND, rect);
+
         ArrayList<Interactable> interactables = new ArrayList<>(interactableList);
         for(Interactable interactable : interactables)
             if(collision.intersect(interactable.hitBox)) {

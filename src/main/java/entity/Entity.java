@@ -33,9 +33,11 @@ public abstract class Entity implements UpdateOnTimeEvent {
         return hitBox.intersect(entity.hitBox);
     }
 
-    public void translate(Vector2D difference){
+    public Vector2D translate(Vector2D difference){
         position.x += difference.x;
         position.y += difference.y;
+
+        return position;
     }
 
     public void translateHitBox(Vector2D difference){

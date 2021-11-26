@@ -4,9 +4,7 @@ import Controller.MouseAndKeyboardController;
 import Controller.Action;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
-import collision.CircleCollision;
-import collision.Collidable;
-import collision.Collision;
+import collision.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,7 +23,6 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     private MouseAndKeyboardController controller;
     
     private final float speed = 200;
-    private Vector2D facing = new Vector2D();
     private Map map;
 
     public Player(MouseAndKeyboardController controller, Map map){
@@ -34,12 +31,12 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
         this.map = map;
 
         size = new Vector2D(30,30);
-        hitBox = new CircleCollision(position, (long) size.x/2);
+        hitBox = new SquareCollision(position, size);
 
         Image image = imageManager.getRessource("file:src/resources/character/player.png", this);
         float sizeDivider = (float) (Math.min(image.getHeight(), image.getWidth()) / size.x);
         this.size = new Vector2D(image.getWidth() / sizeDivider, image.getWidth() / sizeDivider);
-        sprite = new ImageSprite(image, position.subtract(this.size.divideBy(new Vector2D(2,2))), this.size);
+        sprite = new ImageSprite(image, position, this.size);
         addSpriteTo(Ground.FOREGROUND);
     }
 
@@ -47,7 +44,7 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     @Override
     public void setPosition(Vector2D position){
         this.position = position;
-        sprite.setPosition(this.position.subtract(size.divideBy(new Vector2D(2,2))));
+        sprite.setPosition(this.position);
         hitBox.setPosition(this.position);
     }
 
@@ -57,35 +54,24 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     }
 
     private void move(TimeEvent event) {
-        Collision collision = new CircleCollision(position.add(new Vector2D(facing.x, facing.y).multiply(new Vector2D(30,30))),20);
+        //Collision collision = new CircleCollision(position.add(new Vector2D(facing.x, facing.y).multiply(new Vector2D(30,30))),20);
+
+        Vector2D translation = new Vector2D(controller.getXTiltLeftJoystick() * speed * event.getDeltaTime(), controller.getYTiltLeftJoystick() * speed * event.getDeltaTime());
+        Vector2D lastPos = new Vector2D(position);
+        translate(translation);
+
         List<Collidable> collidables = map.getCollidables();
         for(Collidable collidable : collidables) {
-            if (collision.intersect(collidable.getHitbox())) {
-                switch (collidable.collide()) {
-                    case BLOCK :
-                        return;
-                    case EXIT_BOTTOM :
-                        setPosition(map.moveRoom(Vector2D.BOTTOM));
-                        return;
-                    case EXIT_TOP :
-                        setPosition(map.moveRoom(Vector2D.TOP));
-                        return;
-                    case EXIT_LEFT :
-                        setPosition(map.moveRoom(Vector2D.LEFT));
-                        return;
-                    case EXIT_RIGHT :
-                        setPosition(map.moveRoom(Vector2D.RIGHT));
-                        return;
-                }
-            }
+            if( ! hitBox.intersect(collidable.getHitbox())) continue;
+            CollisionType collisionType = collidable.collide();
+
+            if(collisionType == CollisionType.BLOCK) setPosition(lastPos);
+            if(collisionType == CollisionType.EXIT_BOTTOM) setPosition(map.moveRoom(Vector2D.BOTTOM));
+            if(collisionType == CollisionType.EXIT_LEFT) setPosition(map.moveRoom(Vector2D.LEFT));
+            if(collisionType == CollisionType.EXIT_RIGHT) setPosition(map.moveRoom(Vector2D.RIGHT));
+            if(collisionType == CollisionType.EXIT_TOP) setPosition(map.moveRoom(Vector2D.TOP));
         }
-        Vector2D translate = new Vector2D(controller.getXTiltLeftJoystick() * speed * event.getDeltaTime(), controller.getYTiltLeftJoystick() * speed * event.getDeltaTime());
-        translate(translate);
-        translateSprite(translate);
-        if (controller.getXTiltLeftJoystick() != 0 || controller.getYTiltLeftJoystick() != 0) {
-            facing.x = controller.getXTiltLeftJoystick();
-            facing.y = controller.getYTiltLeftJoystick();
-        }
+
     }
 
     @Override
@@ -93,6 +79,10 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
         if(event.getEventType() == KeyEvent.KEY_PRESSED){
             if(controller.keyCodeForAction(Action.INTERACT) == event.getCode()){
                 checkInteraction();
+            }
+            if (controller.getXTiltLeftJoystick() != 0 || controller.getYTiltLeftJoystick() != 0) {
+                facing.x = controller.getXTiltLeftJoystick();
+                facing.y = controller.getYTiltLeftJoystick();
             }
         }
     }
