@@ -1,11 +1,8 @@
 package map;
 
 import collision.Collidable;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import sprite.Sprite;
 import sprite.CompositeSprite;
-import test.Square;
 import utilities.Grid;
 import utilities.Vector2D;
 
@@ -27,8 +24,7 @@ public abstract class Room{
         tiles = new Grid<>((int) ROOM_SIZE.x, (int) ROOM_SIZE.y);
         collidables = new ArrayList<>();
         generateRoom();
-        generateSprite();
-        for (Tile tile : tiles) collidables.add(tile);
+        actualizeSprite();
     }
 
     protected Vector2D getTilePxPosition(Vector2D position) {
@@ -39,7 +35,7 @@ public abstract class Room{
 
     public abstract Sprite getMinimapSprite(Vector2D position, Vector2D size);
 
-    private void generateSprite() {
+    protected void actualizeSprite() {
         sprite.clear();
         for (int y = 0; y < tiles.getSizeWidth(); ++y) {
             for (int x = 0; x < tiles.getSizeHeight(); ++x) {

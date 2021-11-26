@@ -66,7 +66,7 @@ public class Map {
 
         ArrayList<Vector2D> roomCreated = new ArrayList<>();
         roomCreated.add(new Vector2D((double)rooms.getSizeWidth()/2, (double)rooms.getSizeHeight()/2));
-        rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new TestRoom());
+        rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new NormalRoom());
         currentRoomPosition = roomCreated.get(0);
 
         while(roomCreated.size() < nbRoom) {
@@ -77,8 +77,10 @@ public class Map {
             if( ! isRoomPositionValid(newRoom)) continue;
 
             roomCreated.add(newRoom);
-            rooms.set((int) newRoom.x ,(int) newRoom.y, new TestRoom());
+            rooms.set((int) newRoom.x ,(int) newRoom.y, new NormalRoom());
+            System.out.println("Room at : " + processedRoom);
             rooms.get((int) processedRoom.x, (int) processedRoom.y).addExit(direction);
+            System.out.println("Room at : " + newRoom);
             rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(direction));
 
         }
