@@ -23,7 +23,9 @@ public abstract class Tile implements Collidable{
     public Sprite getSprite() {
         return sprite;
     }
-
+    public void setSprite(Sprite sprite) {
+         this.sprite = sprite;
+    }
 
     public Vector2D getPosition() {
         return position;

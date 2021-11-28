@@ -55,31 +55,31 @@ public class PlayState extends GameState{
         Player player = new Player(controller, map);
         player.setPosition(new Vector2D(0,0));
 
-        Pickable[] pommes = new Pickable[200];
+//        Pickable[] pommes = new Pickable[200];
         Random random = new Random();
-        for(Pickable pomme : pommes)
-        {
-            pomme = new Pickable(new Apple());
-            pomme.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-            player.addInteraction(pomme);
-        }
+//        for(Pickable pomme : pommes)
+//        {
+//            pomme = new Pickable(new Apple());
+//            pomme.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+//            player.addInteraction(pomme);
+//        }
 
-        Pickable epee = new Pickable(new Sword());
-        epee.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-        player.addInteraction(epee);
-
-        Pickable botte = new Pickable(new RogueBoots());
-        botte.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-        player.addInteraction(botte);
-
+//        Pickable epee = new Pickable(new Sword());
+//        epee.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+//        player.addInteraction(epee);
+//
+//        Pickable botte = new Pickable(new RogueBoots());
+//        botte.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+//        player.addInteraction(botte);
+//
         Creature loup = new Monster(new Wolf());
-        loup.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
+        loup.setPosition(new Vector2D(random.nextInt(500), random.nextInt(500)));
         player.addInteraction(loup);
 
-        Creature ours = new Monster(new Bear());
-        ours.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-        player.addInteraction(ours);
-        spriteList.addSpriteTo(Ground.GROUND, ours.getSprite());
+//        Creature ours = new Monster(new Bear());
+//        ours.setPosition(new Vector2D(random.nextInt(1000)-800, random.nextInt(1000)-800));
+//        player.addInteraction(ours);
+//        spriteList.addSpriteTo(Ground.GROUND, ours.getSprite());
 
 
         updatableList.add(player);

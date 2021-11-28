@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import map.Map;
+import map.Trap;
 import sprite.ImageSprite;
 import test.TimeEvent;
 import utilities.Vector2D;
@@ -70,6 +71,12 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
             if(collisionType == CollisionType.EXIT_LEFT) setPosition(map.moveRoom(Vector2D.LEFT));
             if(collisionType == CollisionType.EXIT_RIGHT) setPosition(map.moveRoom(Vector2D.RIGHT));
             if(collisionType == CollisionType.EXIT_TOP) setPosition(map.moveRoom(Vector2D.TOP));
+
+            if(collisionType == CollisionType.DAMAGING && collidable instanceof Trap && !((Trap) collidable).wasActivated()) {
+                ((Trap) collidable).Activate();
+                this.addToLife(-((Trap) collidable).getDamage());
+            }
+
         }
 
     }

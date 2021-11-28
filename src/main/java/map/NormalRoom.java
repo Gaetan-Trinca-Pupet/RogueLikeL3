@@ -7,10 +7,8 @@ import sprite.Sprite;
 import test.Square;
 import utilities.Vector2D;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
-import java.util.Queue;
 
 public class NormalRoom extends Room{
     Map <Vector2D, Boolean> exits;
@@ -42,9 +40,11 @@ public class NormalRoom extends Room{
     }
 
     private void setFloors() {
+        Random rand = new Random();
         for (int y = 1; y < ROOM_SIZE.y-1; ++y) {
             for (int x = 1; x < ROOM_SIZE.x-1; ++x) {
-                setFloor(x, y);
+                if (rand.nextInt(100) == 0) setTrap(x, y);
+                else setFloor(x, y);
             }
         }
     }
@@ -69,6 +69,12 @@ public class NormalRoom extends Room{
 
     private void setFloor (int x, int y) {
         tiles.set(x, y, new Floor(new Vector2D(x, y), TILE_SIZE, SPRITE_POSITION));
+    }
+
+    private void setTrap (int x, int y) {
+        Tile newTile = new Trap(new Vector2D(x, y), TILE_SIZE, SPRITE_POSITION, 10);
+        tiles.set(x, y, newTile);
+        getCollidables().add(newTile);
     }
 
     private void setWall (int x, int y) {

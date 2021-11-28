@@ -15,6 +15,6 @@ public class Wall extends Tile{
 
     @Override
     public CollisionType collide() {
-        return CollisionType.BLOCK;
+        return CollisionType.DAMAGING;
     }
 }
