@@ -118,22 +118,11 @@ public abstract class Creature extends Interactable{
         interactableList.removeAll(of(interactables));
     }
 
+    public Vector2D getFacing(){
+        return facing;
+    }
 
-    public void checkInteraction(){
-        Vector2D centerPos = position.add(size.divideBy(new Vector2D(2,2)));
-        Vector2D sizeCollision = new Vector2D(size);
-        Vector2D posCollision = centerPos.add(sizeCollision.multiply(new Vector2D(facing.x, facing.y))).subtract(sizeCollision.divideBy(new Vector2D(2,2)));
-        System.out.println(facing);
-        SquareCollision collision = new SquareCollision(posCollision, sizeCollision);
-
-        Sprite rect = new Square(posCollision, sizeCollision, Color.RED);
-        spriteHandler.addSpriteTo(Ground.FOREGROUND, rect);
-
-        ArrayList<Interactable> interactables = new ArrayList<>(interactableList);
-        for(Interactable interactable : interactables)
-            if(collision.intersect(interactable.hitBox)) {
-                interactable.interact(this);
-                break;
-            }
+    public Vector2D getSize(){
+        return size;
     }
 }

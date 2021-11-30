@@ -52,17 +52,25 @@ public class NormalRoom extends Room{
     public void addExit(Vector2D direction) {
         exits.put(direction, true);
         if (direction == Vector2D.TOP) {
-            setDoor(0, (int) (ROOM_SIZE.x / 2) - 1, CollisionType.EXIT_TOP);
-            setDoor(0, (int) (ROOM_SIZE.x / 2), CollisionType.EXIT_TOP);
+            setDoor((int) (ROOM_SIZE.x / 2 ) - 1,0, CollisionType.EXIT_TOP);
+            setDoor((int) (ROOM_SIZE.x / 2 ),0, CollisionType.EXIT_TOP);
+            //setDoor(0, (int) (ROOM_SIZE.y / 2) - 1, CollisionType.EXIT_TOP);
+            //setDoor(0, (int) (ROOM_SIZE.y / 2), CollisionType.EXIT_TOP);
         } else if (direction == Vector2D.RIGHT) {
-            setDoor((int) (ROOM_SIZE.y / 2) - 1, (int) ROOM_SIZE.x - 1, CollisionType.EXIT_RIGHT);
-            setDoor((int) (ROOM_SIZE.y / 2), (int) ROOM_SIZE.x - 1, CollisionType.EXIT_RIGHT);
+            setDoor((int) ROOM_SIZE.x - 1,(int) (ROOM_SIZE.y / 2 ) - 1, CollisionType.EXIT_RIGHT);
+            setDoor((int) ROOM_SIZE.x - 1, (int) (ROOM_SIZE.y / 2 ), CollisionType.EXIT_RIGHT);
+            //setDoor((int) (ROOM_SIZE.x / 2) - 1, (int) ROOM_SIZE.x - 1, CollisionType.EXIT_RIGHT);
+            //setDoor((int) (ROOM_SIZE.x / 2), (int) ROOM_SIZE.x - 1, CollisionType.EXIT_RIGHT);
         } else if (direction == Vector2D.BOTTOM) {
-            setDoor((int) ROOM_SIZE.y - 1, (int) (ROOM_SIZE.x / 2) - 1, CollisionType.EXIT_BOTTOM);
-            setDoor((int) ROOM_SIZE.y - 1, (int) (ROOM_SIZE.x / 2), CollisionType.EXIT_BOTTOM);
+            setDoor((int) (ROOM_SIZE.x / 2 ) - 1,(int) ROOM_SIZE.y - 1, CollisionType.EXIT_BOTTOM);
+            setDoor((int) (ROOM_SIZE.x / 2 ),(int) ROOM_SIZE.y - 1, CollisionType.EXIT_BOTTOM);
+            //setDoor((int) ROOM_SIZE.y - 1, (int) (ROOM_SIZE.x / 2) - 1, CollisionType.EXIT_BOTTOM);
+            //setDoor((int) ROOM_SIZE.y - 1, (int) (ROOM_SIZE.x / 2), CollisionType.EXIT_BOTTOM);
         } else if (direction == Vector2D.LEFT) {
-            setDoor((int) (ROOM_SIZE.y / 2) - 1, 0, CollisionType.EXIT_LEFT);
-            setDoor((int) (ROOM_SIZE.y / 2), 0, CollisionType.EXIT_LEFT);
+            setDoor(0,(int) (ROOM_SIZE.y / 2 ) - 1, CollisionType.EXIT_LEFT);
+            setDoor(0, (int) (ROOM_SIZE.y / 2 ), CollisionType.EXIT_LEFT);
+            //setDoor((int) (ROOM_SIZE.x / 2) - 1, 0, CollisionType.EXIT_LEFT);
+            //setDoor((int) (ROOM_SIZE.x / 2), 0, CollisionType.EXIT_LEFT);
         }
         actualizeSprite();
     }

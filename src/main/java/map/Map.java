@@ -52,9 +52,18 @@ public class Map {
 
     public Vector2D moveRoom(Vector2D direction){
         currentRoomPosition = currentRoomPosition.add(direction);
+        Room current = rooms.get((int) currentRoomPosition.x, (int) currentRoomPosition.y);
+
+        Vector2D mapSize = current.ROOM_SIZE.multiply(current.TILE_SIZE).multiply(new Vector2D(0.7,0.7));
+        Vector2D nextDoorPosition = new Vector2D();
+        nextDoorPosition.x += mapSize.x / 2 * - direction.x;
+        nextDoorPosition.y += mapSize.y / 2 * - direction.y;
+
+
         actualizeSprite();
         actualizeCollidables();
-        return new Vector2D();
+
+        return nextDoorPosition;
     }
 
     private void generateMap(final int nbRoom){

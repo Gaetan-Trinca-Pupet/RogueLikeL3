@@ -1,17 +1,27 @@
 package map;
 
 import collision.Collidable;
+import collision.SquareCollision;
+import entity.Creature;
+import entity.Interactable;
 import sprite.Sprite;
 import sprite.CompositeSprite;
+import test.TimeEvent;
 import utilities.Grid;
+import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public abstract class Room{
+public abstract class Room implements UpdateOnTimeEvent {
     protected Grid<Tile> tiles;
     private CompositeSprite sprite;
+
+    private List<UpdateOnTimeEvent> updateOnTimeEventList;
+    private HashMap<Creature, List<Interactable>> interactionList;
+
     private List<Collidable> collidables;
     private Vector2D position;
 
@@ -22,6 +32,8 @@ public abstract class Room{
     protected void generate() {
         sprite = new CompositeSprite(SPRITE_POSITION);
         tiles = new Grid<>((int) ROOM_SIZE.x, (int) ROOM_SIZE.y);
+        updateOnTimeEventList = new ArrayList<>();
+        interactionList = new HashMap<>();
         collidables = new ArrayList<>();
         generateRoom();
         actualizeSprite();
@@ -52,5 +64,56 @@ public abstract class Room{
 
     public List<Collidable> getCollidables() {
         return collidables;
+    }
+
+    public void addInterractionTo(Creature creature, Interactable interactable){
+        if( ! interactionList.containsKey(creature))
+            interactionList.put(creature, new ArrayList<>());
+
+        interactionList.get(creature).add(interactable);
+    }
+
+    public void removeInteractionFrom(Creature creature, Interactable interactable){
+        if( ! interactionList.containsKey(creature))
+            return;
+
+        interactionList.get(creature).remove(interactable);
+    }
+
+    public void checkInteractionForCreature(Creature creature){
+        double minSize = Math.min(creature.getSize().x, creature.getSize().y);
+
+        Vector2D centerPos = creature.getPosition().add(creature.getSize().divideBy(new Vector2D(2,2)));
+
+        Vector2D sizeCollision = new Vector2D(minSize, minSize);
+        Vector2D posCollision = centerPos.add(sizeCollision.multiply(creature.getFacing()).subtract(sizeCollision.divideBy(new Vector2D(2,2))));
+        SquareCollision collision = new SquareCollision(posCollision, sizeCollision);
+
+        ArrayList<Interactable> interactables = new ArrayList<>(interactionList.get(creature));
+        for(Interactable interactable : interactables)
+            if(collision.intersect(interactable.getHitBox())) {
+                interactable.interact(creature);
+                break;
+            }
+    }
+
+    public void checkAllInteraction(){
+        for(Creature creature : interactionList.keySet()){
+            checkInteractionForCreature(creature);
+        }
+    }
+
+    public void addToUpdateList(UpdateOnTimeEvent updatable){
+        updateOnTimeEventList.add(updatable);
+    }
+
+    public void removeFromUpdateList(UpdateOnTimeEvent updatable){
+        updateOnTimeEventList.remove(updatable);
+    }
+
+    @Override
+    public void updateOnTimeEvent(TimeEvent event) {
+        for(UpdateOnTimeEvent updatable : updateOnTimeEventList)
+            updatable.updateOnTimeEvent(event);
     }
 }
