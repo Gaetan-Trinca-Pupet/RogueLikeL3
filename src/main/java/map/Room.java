@@ -25,7 +25,7 @@ public abstract class Room implements UpdateOnTimeEvent {
 
     private SpriteHandler spriteHandler;
 
-    private List<Entity> updatableEntity;
+    protected List<Entity> updatableEntity;
     private HashMap<Creature, List<Interactable>> interactionList;
 
     private List<Collidable> collidables;

@@ -16,14 +16,21 @@ import windowManager.SpriteHandler;
 
 public class MapState extends GameState {
     private CompositeSprite sprite;
+    private Map map;
 
     private final Vector2D ROOM_DISPLAY_SIZE = new Vector2D(64, 64);
 
     public MapState(Map map, GameContext gameContext, GameState lastState) {
         super(gameContext, lastState);
-
+        this.map = map;
         keyEventList.add(controller);
         mouseEventList.add(controller);
+
+        computeMinimap();
+    }
+
+    public void computeMinimap(){
+
 
         spriteList = new SpriteHandler();
         Vector2D screenSize = gameContext.gameWindow.getScreenSize();
@@ -68,6 +75,7 @@ public class MapState extends GameState {
 
     @Override
     public void updateOnTimeEvent(TimeEvent event) {
+        computeMinimap();
         paint();
     }
 

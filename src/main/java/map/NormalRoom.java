@@ -1,6 +1,10 @@
 package map;
 
 import collision.CollisionType;
+import entity.Entity;
+import entity.Monster;
+import entity.Pickable;
+import entity.Player;
 import javafx.scene.paint.Color;
 import sprite.CompositeSprite;
 import sprite.Sprite;
@@ -103,10 +107,21 @@ public class NormalRoom extends Room{
         CompositeSprite sprite = new CompositeSprite(position);
         sprite.add(new Square(new Vector2D(), size, Color.POWDERBLUE));
 
-        sprite.add(new Square(size.divideBy(vectorThree), size.divideBy(vectorThree), Color.BLACK));
+        Color color = Color.BLACK;
+        if(updatableEntity.isEmpty()) color = Color.DARKGREEN;
+        else {
+            int hierarchy = Integer.MAX_VALUE;
+            for (Entity entity : updatableEntity) {
+                if (hierarchy > 0 && entity instanceof Player) { color = Color.BLUE; hierarchy = 0 ; }
+                else if (hierarchy > 1 && entity instanceof Pickable) { color = Color.YELLOW; hierarchy = 1 ; }
+                else if (hierarchy > 2 && entity instanceof Monster) { color = Color.RED; hierarchy = 2 ; }
+            }
+        }
+
+        sprite.add(new Square(size.divideBy(vectorThree), size.divideBy(vectorThree), color));
         for (Map.Entry<Vector2D, Boolean> exit : exits.entrySet()) {
             if (exit.getValue()) {
-                sprite.add(new Square(size.multiply(exit.getKey().add(new Vector2D(1, 1))).divideBy(vectorThree), size.divideBy(vectorThree), Color.BLACK));
+                sprite.add(new Square(size.multiply(exit.getKey().add(new Vector2D(1, 1))).divideBy(vectorThree), size.divideBy(vectorThree), Color.GRAY));
             }
         }
         return sprite;
