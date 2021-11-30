@@ -5,6 +5,7 @@ import Controller.Action;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
 import collision.*;
+import gameComponents.GameOverState;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;

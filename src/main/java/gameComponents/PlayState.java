@@ -114,6 +114,9 @@ public class PlayState extends GameState{
         HPplayer.setText("HP : " + player.getCurrentLife() + " / " + player.getMaxLife());
         if(player.getCurrentLife() <= 0) gameContext.setState(new GameOverState(gameContext, this));
         paintAll();
+
+
+        if(player.getCurrentLife() <= 0) gameContext.setState(new GameOverState(gameContext, this));
     }
 
     @Override
