@@ -25,6 +25,14 @@ public class LabelSprite extends Sprite{
         this.text = text;
     }
 
+    public LabelSprite(String text, Color color, Vector2D position, int size){
+        super(position);
+        this.text = text;
+        this.color = color;
+        strokeColor = null;
+        this.size = size;
+    }
+
     public LabelSprite(String text, Color color, Vector2D position){
         super(position);
         this.text = text;
