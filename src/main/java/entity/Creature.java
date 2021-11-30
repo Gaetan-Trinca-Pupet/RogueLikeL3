@@ -33,11 +33,9 @@ public abstract class Creature extends Interactable{
     protected Inventory inventory;
     protected Equipment equipped;
 
-    private ArrayList<Interactable> interactableList;
     protected Vector2D facing;
 
     public Creature(int baseMaxLife, int baseForce, int baseDefense){
-        this.interactableList = new ArrayList<Interactable>();
         this.baseMaxLife = baseMaxLife;
         this.maxLife = baseMaxLife;
         this.currentLife = baseMaxLife;
@@ -108,14 +106,6 @@ public abstract class Creature extends Interactable{
         this.position = position;
         sprite.setPosition(this.position);
         hitBox.setPosition(this.position);
-    }
-
-    public void addInteraction(Interactable... interactables){
-        interactableList.addAll(of(interactables));
-    }
-
-    public void removeInteraction(Interactable... interactables){
-        interactableList.removeAll(of(interactables));
     }
 
     public Vector2D getFacing(){

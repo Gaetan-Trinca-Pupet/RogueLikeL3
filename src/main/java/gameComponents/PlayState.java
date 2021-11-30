@@ -49,11 +49,11 @@ public class PlayState extends GameState{
         Entity.setGameContext(gameContext);
         Entity.setSpriteHandler(spriteList);
 
-        map = new Map();
-        spriteList.addSpriteTo(Ground.BACKGROUND, map.getSprite());
+        map = new Map(controller);
+        spriteList.addHandlerToGround(Ground.GROUND, map.getSpriteHandler());
 
-        Player player = new Player(controller, map);
-        player.setPosition(new Vector2D(0,0));
+        //Player player = new Player(controller, map);
+        //player.setPosition(new Vector2D(0,0));
 
 //        Pickable[] pommes = new Pickable[200];
         Random random = new Random();
@@ -74,7 +74,7 @@ public class PlayState extends GameState{
 //
         Creature loup = new Monster(new Wolf());
         loup.setPosition(new Vector2D(random.nextInt(500), random.nextInt(500)));
-        player.addInteraction(loup);
+        //player.addInteraction(loup);
 
 //        Creature ours = new Monster(new Bear());
 //        ours.setPosition(new Vector2D(random.nextInt(1000)-800, random.nextInt(1000)-800));
@@ -82,17 +82,18 @@ public class PlayState extends GameState{
 //        spriteList.addSpriteTo(Ground.GROUND, ours.getSprite());
 
 
-        updatableList.add(player);
-        mouseEventList.add(player);
-        keyEventList.add(player);
+        //updatableList.add(map);
+        keyEventList.add(map.getPlayer());
 
         paintAll();
 
-        inventoryState = new InventoryState(player, gameContext, this);
+        inventoryState = new InventoryState(map.getPlayer(), gameContext, this);
         mapState = new MapState(map, gameContext, this);
     }
 
     private void paintAll() {
+        spriteList.clean(Ground.GROUND);
+        spriteList.addHandlerToGround(Ground.GROUND, map.getCurrentRoom().getSpriteHandler());
         gameContext.gameWindow.paintAll(spriteList);
     }
 
@@ -101,6 +102,7 @@ public class PlayState extends GameState{
         for(UpdateOnTimeEvent object : updatableList) {
             object.updateOnTimeEvent(event);
         }
+        map.getCurrentRoom().updateOnTimeEvent(event);
         paintAll();
     }
 
@@ -108,7 +110,6 @@ public class PlayState extends GameState{
     public void mouseEvent(MouseEvent event) {
         for(MouseEventManager object : mouseEventList)
             object.mouseEvent(event);
-        //update();
     }
 
     @Override
@@ -122,6 +123,5 @@ public class PlayState extends GameState{
             if(event.getCode() == controller.keyCodeForAction(Action.MAP))
                 gameContext.setState(mapState);
         }
-        //update();
     }
 }

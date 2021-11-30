@@ -1,8 +1,10 @@
 package map;
 
+import EventManager.KeyEventManager;
 import collision.Collidable;
 import collision.SquareCollision;
 import entity.Creature;
+import entity.Entity;
 import entity.Interactable;
 import sprite.Sprite;
 import sprite.CompositeSprite;
@@ -10,6 +12,8 @@ import test.TimeEvent;
 import utilities.Grid;
 import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
+import windowManager.Ground;
+import windowManager.SpriteHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +23,9 @@ public abstract class Room implements UpdateOnTimeEvent {
     protected Grid<Tile> tiles;
     private CompositeSprite sprite;
 
-    private List<UpdateOnTimeEvent> updateOnTimeEventList;
+    private SpriteHandler spriteHandler;
+
+    private List<Entity> updatableEntity;
     private HashMap<Creature, List<Interactable>> interactionList;
 
     private List<Collidable> collidables;
@@ -32,11 +38,13 @@ public abstract class Room implements UpdateOnTimeEvent {
     protected void generate() {
         sprite = new CompositeSprite(SPRITE_POSITION);
         tiles = new Grid<>((int) ROOM_SIZE.x, (int) ROOM_SIZE.y);
-        updateOnTimeEventList = new ArrayList<>();
+        spriteHandler = new SpriteHandler();
+        updatableEntity = new ArrayList<>();
         interactionList = new HashMap<>();
         collidables = new ArrayList<>();
         generateRoom();
         actualizeSprite();
+        spriteHandler.addSpriteTo(Ground.BACKGROUND, sprite);
     }
 
     protected Vector2D getTilePxPosition(Vector2D position) {
@@ -103,17 +111,25 @@ public abstract class Room implements UpdateOnTimeEvent {
         }
     }
 
-    public void addToUpdateList(UpdateOnTimeEvent updatable){
-        updateOnTimeEventList.add(updatable);
+    public void addEntity(Entity entity){
+        entity.setRoom(this);
+        spriteHandler.addSpriteTo(Ground.FOREGROUND, entity.getSprite());
+        updatableEntity.add(entity);
     }
 
-    public void removeFromUpdateList(UpdateOnTimeEvent updatable){
-        updateOnTimeEventList.remove(updatable);
+    public void removeEntity(Entity entity){
+        spriteHandler.removeSpriteTo(Ground.FOREGROUND, entity.getSprite());
+        updatableEntity.remove(entity);
     }
 
     @Override
     public void updateOnTimeEvent(TimeEvent event) {
-        for(UpdateOnTimeEvent updatable : updateOnTimeEventList)
-            updatable.updateOnTimeEvent(event);
+        for(int i = 0 ; i < updatableEntity.size() ; ++i)
+            updatableEntity.get(i).updateOnTimeEvent(event);
+
+    }
+
+    public SpriteHandler getSpriteHandler(){
+        return spriteHandler;
     }
 }

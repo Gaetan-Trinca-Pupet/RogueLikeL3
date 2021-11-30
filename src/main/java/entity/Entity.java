@@ -2,6 +2,7 @@ package entity;
 
 import collision.Collision;
 import gameComponents.GameContext;
+import map.Room;
 import ressourceManager.ImageManager;
 import sprite.Sprite;
 import utilities.UpdateOnTimeEvent;
@@ -21,6 +22,18 @@ public abstract class Entity implements UpdateOnTimeEvent {
     public static void setSpriteHandler(SpriteHandler handler) {
         spriteHandler = handler;
     }
+
+    protected Room inWhatRoom;
+
+    public void setRoom(Room room){
+        inWhatRoom = room;
+    }
+
+    public Room getCurrentRoom(){
+        return inWhatRoom;
+    }
+
+    protected SpriteHandler selfSpriteHandler;
 
     protected Collision hitBox;
 
@@ -89,10 +102,11 @@ public abstract class Entity implements UpdateOnTimeEvent {
 
 
     protected void addSpriteTo(Ground ground){
-        spriteHandler.addSpriteTo(ground, sprite);
+        selfSpriteHandler = spriteHandler;
+        selfSpriteHandler.addSpriteTo(ground, sprite);
     }
 
     protected void removeSpriteTo(Ground ground){
-        spriteHandler.removeSpriteTo(ground, sprite);
+        selfSpriteHandler.removeSpriteTo(ground, sprite);
     }
 }

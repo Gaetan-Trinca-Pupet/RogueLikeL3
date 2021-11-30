@@ -38,7 +38,6 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
         float sizeDivider = (float) (Math.min(image.getHeight(), image.getWidth()) / size.x);
         this.size = new Vector2D(image.getWidth() / sizeDivider, image.getWidth() / sizeDivider);
         sprite = new ImageSprite(image, position, this.size);
-        addSpriteTo(Ground.FOREGROUND);
     }
 
 
@@ -83,7 +82,7 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     public void keyboardEvent(KeyEvent event) {
         if(event.getEventType() == KeyEvent.KEY_PRESSED){
             if(controller.keyCodeForAction(Action.INTERACT) == event.getCode()){
-                //checkInteraction();
+                map.getCurrentRoom().checkInteractionForCreature(this);
             }
             if (controller.getXTiltLeftJoystick() != 0 || controller.getYTiltLeftJoystick() != 0) {
                 facing.x = controller.getXTiltLeftJoystick();

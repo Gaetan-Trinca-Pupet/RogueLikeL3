@@ -163,22 +163,26 @@ public class FightState extends GameState{
         }
         if(monster.getCurrentLife() > 0) monster.attack(player);
         else {
-
+            monster.getCurrentRoom().removeEntity(monster);
+            monster.getCurrentRoom().removeInteractionFrom(player, monster);
             Random random = new Random();
             if (random.nextInt(2) == 0) { // 1 chance sur 2 pour le monstre de drop une pomme
                 Pickable pom = new Pickable(new Apple());
                 pom.setPosition(monster.getPosition());
-                player.addInteraction(pom);
+                monster.getCurrentRoom().addEntity(pom);
+                monster.getCurrentRoom().addInterractionTo(player, pom);
             }
             else if (random.nextInt(3) == 0) { // 1 chance sur 3 pour le monstre de drop une épée
                 Pickable epee = new Pickable(new Sword());
                 epee.setPosition(monster.getPosition());
-                player.addInteraction(epee);
+                monster.getCurrentRoom().addEntity(epee);
+                monster.getCurrentRoom().addInterractionTo(player, epee);
             }
             else if (random.nextInt(10) == 0) { // 1 chance sur 10 pour le monstre de drop LES BOTTES
                 Pickable boots = new Pickable(new RogueBoots());
                 boots.setPosition(monster.getPosition());
-                player.addInteraction(boots);
+                monster.getCurrentRoom().addEntity(boots);
+                monster.getCurrentRoom().addInterractionTo(player, boots);
             }
 
             backToLastContext();

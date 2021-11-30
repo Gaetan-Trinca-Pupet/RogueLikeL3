@@ -29,8 +29,8 @@ public class Pickable extends Interactable {
 
     public void interact(Creature creature){
         self.addSelfToInventory(creature.getInventory());
-        creature.removeInteraction(this);
-        removeSpriteTo(Ground.GROUND);
+        inWhatRoom.removeInteractionFrom(creature, this);
+        inWhatRoom.removeEntity(this);
     }
 
     @Override
