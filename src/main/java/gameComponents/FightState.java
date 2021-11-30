@@ -1,9 +1,7 @@
 package gameComponents;
 
 import Consomable.Apple;
-import Controller.Action;
 import EventManager.MouseEventManager;
-import collision.Collision;
 import collision.SquareCollision;
 import entity.Creature;
 import entity.Pickable;
@@ -15,7 +13,7 @@ import javafx.scene.paint.Color;
 import sprite.CompositeSprite;
 import sprite.LabelSprite;
 import sprite.Sprite;
-import test.Square;
+import sprite.SquareSprite;
 import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
@@ -41,13 +39,13 @@ public class FightState extends GameState{
 
         spriteList = new SpriteHandler();
         Vector2D screenSize = gameContext.gameWindow.getScreenSize();
-        spriteList.addSpriteTo(Ground.GROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
+        spriteList.addSpriteTo(Ground.GROUND, new SquareSprite(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
 
         // Main box
         Vector2D size = new Vector2D(1200,800);
         Vector2D pos = new Vector2D(size).divideBy(new Vector2D(-2, -2));
-        Sprite border = new Square(pos.subtract(new Vector2D(10,10)), size.add(new Vector2D(20,20)), new Color(1,1,1,1));
-        Sprite centerSquare = new Square(pos, size, new Color(0,0,0,1));
+        Sprite border = new SquareSprite(pos.subtract(new Vector2D(10,10)), size.add(new Vector2D(20,20)), new Color(1,1,1,1));
+        Sprite centerSquare = new SquareSprite(pos, size, new Color(0,0,0,1));
 
         spriteList.addSpriteTo(Ground.GROUND, border);
         spriteList.addSpriteTo(Ground.GROUND, centerSquare);
@@ -61,8 +59,8 @@ public class FightState extends GameState{
         attackCollision = new SquareCollision(new Vector2D(posAttackButton), sizeButton);
         CompositeSprite attackButton = new CompositeSprite(posAttackButton);
 
-        border = new Square(new Vector2D(-10, -10), sizeButton.add(new Vector2D(20,20)), new Color(1,1,1,1));
-        centerSquare = new Square(new Vector2D(), sizeButton, new Color(0,0,0,1));
+        border = new SquareSprite(new Vector2D(-10, -10), sizeButton.add(new Vector2D(20,20)), new Color(1,1,1,1));
+        centerSquare = new SquareSprite(new Vector2D(), sizeButton, new Color(0,0,0,1));
         label = new LabelSprite("Attaquer", new Color(1,1,1,1), sizeButton.divideBy(new Vector2D(3,2)));
         label.setSize(20);
 
@@ -75,8 +73,8 @@ public class FightState extends GameState{
         inventoryCollision = new SquareCollision(new Vector2D(posInventoryButton), sizeButton);
         CompositeSprite inventoryButton = new CompositeSprite(posInventoryButton);
 
-        border = new Square(new Vector2D(-10, -10), sizeButton.add(new Vector2D(20,20)), new Color(1,1,1,1));
-        centerSquare = new Square(new Vector2D(), sizeButton, new Color(0,0,0,1));
+        border = new SquareSprite(new Vector2D(-10, -10), sizeButton.add(new Vector2D(20,20)), new Color(1,1,1,1));
+        centerSquare = new SquareSprite(new Vector2D(), sizeButton, new Color(0,0,0,1));
         label = new LabelSprite("Inventaire", new Color(1,1,1,1), sizeButton.divideBy(new Vector2D(3,2)));
         label.setSize(20);
 

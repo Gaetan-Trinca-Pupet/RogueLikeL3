@@ -5,7 +5,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sprite.LabelSprite;
-import test.Square;
+import sprite.SquareSprite;
 import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
@@ -16,8 +16,8 @@ public class GameOverState extends GameState{
         Vector2D screenSize = gameContext.gameWindow.getScreenSize();
 
         spriteList.addHandlerToGround(Ground.BACKGROUND, this.lastState.getSpriteList());
-        spriteList.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
-        spriteList.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(1,0,0,0.2)));
+        spriteList.addSpriteTo(Ground.BACKGROUND, new SquareSprite(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
+        spriteList.addSpriteTo(Ground.BACKGROUND, new SquareSprite(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(1,0,0,0.2)));
 
         LabelSprite labelSprite = new LabelSprite("VOUS ÊTES MORT ET AVEZ PERDU !\nF pour continuer\nESCAPE pour quitter", Color.BLACK, new Vector2D(-400,-200));
         labelSprite.setSize(70);

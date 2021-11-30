@@ -3,8 +3,6 @@ package entity;
 import collision.SquareCollision;
 import gameComponents.FightState;
 import Monster.Fightable;
-import sprite.Sprite;
-import test.Square;
 import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;

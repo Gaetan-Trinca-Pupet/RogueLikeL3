@@ -2,17 +2,8 @@ package entity;
 
 import Inventory.Equipment;
 import Inventory.Inventory;
-import collision.CircleCollision;
-import collision.Collision;
-import collision.SquareCollision;
 import equipment.EquipmentNull;
-import javafx.scene.paint.Color;
-import sprite.Sprite;
-import test.Square;
 import utilities.Vector2D;
-import windowManager.Ground;
-
-import java.util.ArrayList;
 
 import static java.util.List.of;
 

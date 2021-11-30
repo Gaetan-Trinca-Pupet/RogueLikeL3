@@ -28,4 +28,6 @@ public abstract class Sprite {
         position.x += difference.x;
         position.y += difference.y;
     }
+
+    public abstract Sprite copy();
 }

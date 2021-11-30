@@ -2,11 +2,7 @@ package Consomable;
 
 import Inventory.Consomable;
 import entity.Creature;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import sprite.ImageSprite;
-import sprite.Sprite;
-import test.Square;
 import utilities.Vector2D;
 
 public class Apple extends Consomable {

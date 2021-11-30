@@ -1,11 +1,10 @@
-package test;
+package sprite;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import sprite.Sprite;
 import utilities.Vector2D;
 
-public class Square extends Sprite {
+public class SquareSprite extends Sprite {
     private Vector2D size;
     private Color color;
 
@@ -15,17 +14,22 @@ public class Square extends Sprite {
         graphicsContext.fillRect(position.x, position.y, size.x, size.y);
     }
 
-    public Square(Vector2D position, Vector2D size, Color color){
+    @Override
+    public Sprite copy() {
+        return new SquareSprite(position, size, color);
+    }
+
+    public SquareSprite(Vector2D position, Vector2D size, Color color){
         super(position);
         this.size = size;
         this.color = color;
     }
 
-    public Square(Vector2D position, Vector2D size){
+    public SquareSprite(Vector2D position, Vector2D size){
         this(position, size, new Color(0,0,0,1));
     }
 
-    public Square(){
+    public SquareSprite(){
         this(new Vector2D(), new Vector2D());
     }
 }

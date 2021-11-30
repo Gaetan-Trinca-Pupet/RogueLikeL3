@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import sprite.CompositeSprite;
 import sprite.LabelSprite;
 import sprite.Sprite;
-import test.Square;
+import sprite.SquareSprite;
 import test.TimeEvent;
 import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
@@ -45,8 +45,8 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
     private void drawFinalElement(){
         Vector2D pos = new Vector2D(sizeInventory).divideBy(new Vector2D(-2, -2));
 
-        Sprite border = new Square(pos.subtract(new Vector2D(10,10)), sizeInventory.add(new Vector2D(20,20)), new Color(1,1,1,1));
-        Sprite centerSquare = new Square(pos, sizeInventory, new Color(0,0,0,1));
+        Sprite border = new SquareSprite(pos.subtract(new Vector2D(10,10)), sizeInventory.add(new Vector2D(20,20)), new Color(1,1,1,1));
+        Sprite centerSquare = new SquareSprite(pos, sizeInventory, new Color(0,0,0,1));
 
         spriteHandler.addSpriteTo(Ground.BACKGROUND, border);
         spriteHandler.addSpriteTo(Ground.BACKGROUND, centerSquare);
@@ -63,8 +63,8 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
         String str = "PV : " + possessor.getCurrentLife() + " / " + possessor.getMaxLife();
         LabelSprite text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
         text.setSize(15);
-        Sprite rectangle = new Square(new Vector2D(10,10), new Vector2D(rectW,rectH));
-        Sprite outRectangle = new Square(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
+        Sprite rectangle = new SquareSprite(new Vector2D(10,10), new Vector2D(rectW,rectH));
+        Sprite outRectangle = new SquareSprite(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
         box.add(outRectangle);
         box.add(rectangle);
         box.add(text);
@@ -74,8 +74,8 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
         str = "Force : " + possessor.getForce();
         text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
         text.setSize(15);
-        rectangle = new Square(new Vector2D(10,10), new Vector2D(rectW,rectH));
-        outRectangle = new Square(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
+        rectangle = new SquareSprite(new Vector2D(10,10), new Vector2D(rectW,rectH));
+        outRectangle = new SquareSprite(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
         box.add(outRectangle);
         box.add(rectangle);
         box.add(text);
@@ -85,8 +85,8 @@ public class Inventory implements UpdateOnTimeEvent, MouseEventManager {
         str = "Defense : " + possessor.getDefense();
         text = new LabelSprite(str, new Color(1,1,1,1), new Vector2D(30,rectH/1.5));
         text.setSize(15);
-        rectangle = new Square(new Vector2D(10,10), new Vector2D(rectW,rectH));
-        outRectangle = new Square(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
+        rectangle = new SquareSprite(new Vector2D(10,10), new Vector2D(rectW,rectH));
+        outRectangle = new SquareSprite(new Vector2D(0,0), new Vector2D(rectW + 20,rectH + 20), new Color(1,1,1,1));
         box.add(outRectangle);
         box.add(rectangle);
         box.add(text);

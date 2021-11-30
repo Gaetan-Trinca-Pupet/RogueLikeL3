@@ -42,4 +42,9 @@ public class ImageSprite extends Sprite {
     protected void draw(GraphicsContext graphicsContext, Vector2D position) {
         graphicsContext.drawImage(image, position.x, position.y, size.x, size.y);
     }
+
+    @Override
+    public Sprite copy() {
+        return new ImageSprite(image, position, size);
+    }
 }

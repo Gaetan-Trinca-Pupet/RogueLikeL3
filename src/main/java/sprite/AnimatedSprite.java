@@ -29,4 +29,9 @@ public class AnimatedSprite extends Sprite {
         }
         animation.get(currentSprite).draw(graphicsContext, position);
     }
+
+    @Override
+    public Sprite copy() {
+        return new AnimatedSprite(position, animation, delay);
+    }
 }

@@ -15,6 +15,14 @@ public class CompositeSprite extends Sprite{
         sprites = new ArrayList<>();
     }
 
+    @Override
+    public Sprite copy() {
+        CompositeSprite compositeSprite = new CompositeSprite();
+        for (Sprite sprite : sprites)
+            compositeSprite.add(sprite);
+        return compositeSprite;
+    }
+
     public CompositeSprite() {
         this(new Vector2D());
     }

@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import map.Map;
-import test.Square;
+import sprite.SquareSprite;
 import test.TimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
@@ -45,7 +45,7 @@ public class InventoryState extends GameState{
         spriteList = new SpriteHandler();
 
         spriteList.addHandlerToGround(Ground.BACKGROUND, lastState.getSpriteList());
-        spriteList.addSpriteTo(Ground.BACKGROUND, new Square(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
+        spriteList.addSpriteTo(Ground.BACKGROUND, new SquareSprite(screenSize.divideBy(new Vector2D(-2,-2)),screenSize, new Color(0,0,0,0.5)));
         spriteList.addHandlerToGround(Ground.FOREGROUND, creature.getInventory().getSpriteHandler());
         gameContext.gameWindow.paintAll(spriteList);
     }

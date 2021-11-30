@@ -1,10 +1,7 @@
 package Monster;
 
-import entity.Monster;
 import sprite.ImageSprite;
-import test.Square;
 import utilities.Vector2D;
-import windowManager.Ground;
 
 public class Bear extends Fightable {
     public Bear(){

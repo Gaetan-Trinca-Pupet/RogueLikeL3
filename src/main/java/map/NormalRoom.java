@@ -8,7 +8,7 @@ import entity.Player;
 import javafx.scene.paint.Color;
 import sprite.CompositeSprite;
 import sprite.Sprite;
-import test.Square;
+import sprite.SquareSprite;
 import utilities.Vector2D;
 
 import java.util.*;
@@ -105,7 +105,7 @@ public class NormalRoom extends Room{
     public Sprite getMinimapSprite(Vector2D position, Vector2D size) {
         Vector2D vectorThree = new Vector2D(3, 3);
         CompositeSprite sprite = new CompositeSprite(position);
-        sprite.add(new Square(new Vector2D(), size, Color.POWDERBLUE));
+        sprite.add(new SquareSprite(new Vector2D(), size, Color.POWDERBLUE));
 
         Color color = Color.BLACK;
         if(updatableEntity.isEmpty()) color = Color.DARKGREEN;
@@ -118,10 +118,10 @@ public class NormalRoom extends Room{
             }
         }
 
-        sprite.add(new Square(size.divideBy(vectorThree), size.divideBy(vectorThree), color));
+        sprite.add(new SquareSprite(size.divideBy(vectorThree), size.divideBy(vectorThree), color));
         for (Map.Entry<Vector2D, Boolean> exit : exits.entrySet()) {
             if (exit.getValue()) {
-                sprite.add(new Square(size.multiply(exit.getKey().add(new Vector2D(1, 1))).divideBy(vectorThree), size.divideBy(vectorThree), Color.GRAY));
+                sprite.add(new SquareSprite(size.multiply(exit.getKey().add(new Vector2D(1, 1))).divideBy(vectorThree), size.divideBy(vectorThree), Color.GRAY));
             }
         }
         return sprite;

@@ -67,4 +67,9 @@ public class LabelSprite extends Sprite{
             graphicsContext.strokeText(text, position.x, position.y);
         }
     }
+
+    @Override
+    public Sprite copy() {
+        return new LabelSprite(text, color, position, size);
+    }
 }
