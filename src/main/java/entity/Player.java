@@ -55,8 +55,6 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     }
 
     private void move(TimeEvent event) {
-        //Collision collision = new CircleCollision(position.add(new Vector2D(facing.x, facing.y).multiply(new Vector2D(30,30))),20);
-
         Vector2D translation = new Vector2D(controller.getXTiltLeftJoystick() * speed * event.getDeltaTime(), controller.getYTiltLeftJoystick() * speed * event.getDeltaTime());
         Vector2D lastPos = new Vector2D(position);
         translate(translation);
@@ -67,10 +65,10 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
             CollisionType collisionType = collidable.collide();
 
             if(collisionType == CollisionType.BLOCK) setPosition(lastPos);
-            if(collisionType == CollisionType.EXIT_BOTTOM) setPosition(map.moveRoom(Vector2D.BOTTOM));
-            if(collisionType == CollisionType.EXIT_LEFT) setPosition(map.moveRoom(Vector2D.LEFT));
-            if(collisionType == CollisionType.EXIT_RIGHT) setPosition(map.moveRoom(Vector2D.RIGHT));
-            if(collisionType == CollisionType.EXIT_TOP) setPosition(map.moveRoom(Vector2D.TOP));
+            if(collisionType == CollisionType.EXIT_BOTTOM) setPosition(map.moveRoom(Vector2D.BOTTOM).subtract(size.divideBy(new Vector2D(2,2))));
+            if(collisionType == CollisionType.EXIT_LEFT) setPosition(map.moveRoom(Vector2D.LEFT).subtract(size.divideBy(new Vector2D(2,2))));
+            if(collisionType == CollisionType.EXIT_RIGHT) setPosition(map.moveRoom(Vector2D.RIGHT).subtract(size.divideBy(new Vector2D(2,2))));
+            if(collisionType == CollisionType.EXIT_TOP) setPosition(map.moveRoom(Vector2D.TOP).subtract(size.divideBy(new Vector2D(2,2))));
 
             if(collisionType == CollisionType.DAMAGING && collidable instanceof Trap && !((Trap) collidable).wasActivated()) {
                 ((Trap) collidable).Activate();
@@ -85,7 +83,7 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
     public void keyboardEvent(KeyEvent event) {
         if(event.getEventType() == KeyEvent.KEY_PRESSED){
             if(controller.keyCodeForAction(Action.INTERACT) == event.getCode()){
-                checkInteraction();
+                //checkInteraction();
             }
             if (controller.getXTiltLeftJoystick() != 0 || controller.getYTiltLeftJoystick() != 0) {
                 facing.x = controller.getXTiltLeftJoystick();
