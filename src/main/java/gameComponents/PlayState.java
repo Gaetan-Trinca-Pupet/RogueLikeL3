@@ -11,7 +11,9 @@ import equipment.RogueBoots;
 import equipment.Sword;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import map.Map;
+import sprite.LabelSprite;
 import test.TimeEvent;
 import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
@@ -23,6 +25,9 @@ import java.util.Random;
 
 public class PlayState extends GameState{
     private Map map;
+
+    private Player player;
+    private LabelSprite HPplayer;
 
     private InventoryState inventoryState;
     private MapState mapState;
@@ -54,6 +59,7 @@ public class PlayState extends GameState{
 
         //Player player = new Player(controller, map);
         //player.setPosition(new Vector2D(0,0));
+        this.player = map.getPlayer();
 
 //        Pickable[] pommes = new Pickable[200];
         Random random = new Random();
@@ -81,6 +87,8 @@ public class PlayState extends GameState{
 //        player.addInteraction(ours);
 //        spriteList.addSpriteTo(Ground.GROUND, ours.getSprite());
 
+        HPplayer = new LabelSprite("HP : " + player.getCurrentLife() + " / " + player.getMaxLife(), Color.BLACK, new Vector2D(-960,-500), 50);
+        spriteList.addSpriteTo(Ground.HUD, HPplayer);
 
         //updatableList.add(map);
         keyEventList.add(map.getPlayer());
@@ -103,6 +111,8 @@ public class PlayState extends GameState{
             object.updateOnTimeEvent(event);
         }
         map.getCurrentRoom().updateOnTimeEvent(event);
+        HPplayer.setText("HP : " + player.getCurrentLife() + " / " + player.getMaxLife());
+        if(player.getCurrentLife() <= 0) gameContext.setState(new GameOverState(gameContext, this));
         paintAll();
     }
 
@@ -110,6 +120,7 @@ public class PlayState extends GameState{
     public void mouseEvent(MouseEvent event) {
         for(MouseEventManager object : mouseEventList)
             object.mouseEvent(event);
+        //update();
     }
 
     @Override
@@ -123,5 +134,6 @@ public class PlayState extends GameState{
             if(event.getCode() == controller.keyCodeForAction(Action.MAP))
                 gameContext.setState(mapState);
         }
+        //update();
     }
 }
