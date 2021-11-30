@@ -1,6 +1,8 @@
 package map;
 
 import collision.CollisionType;
+import javafx.scene.image.Image;
+import sprite.ImageSprite;
 import sprite.ImageSpriteFromTilemapFactory;
 import sprite.Sprite;
 import utilities.Vector2D;
@@ -13,7 +15,7 @@ public class Trap extends Tile {
     private boolean activated = false;
 
     public Trap(Vector2D position, Vector2D size, Vector2D parentPosition, int dmg) {
-        super(position, size, ImageSpriteFromTilemapFactory.construct("map/roguelikeDungeon_transparent.png", 5, 0, position.multiply(size), size), parentPosition);
+        super(position, size, new ImageSprite(new Image("file:src/resources/traps/spikes1.png"), position.multiply(size), size), parentPosition);
         damage = dmg;
         this.position = position;
         this.size = size;
@@ -29,7 +31,7 @@ public class Trap extends Tile {
 
     public void Activate() {
         activated = true;
-        setSprite(ImageSpriteFromTilemapFactory.construct("map/roguelikeDungeon_transparent.png", 6, 0, position.multiply(size), size));
+//        setSprite(ImageSpriteFromTilemapFactory.construct("map/roguelikeDungeon_transparent.png", 6, 0, position.multiply(size), size));
     }
 
 
