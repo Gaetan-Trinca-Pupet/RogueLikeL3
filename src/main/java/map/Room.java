@@ -113,13 +113,21 @@ public abstract class Room implements UpdateOnTimeEvent {
 
     public void addEntity(Entity entity){
         entity.setRoom(this);
-        spriteHandler.addSpriteTo(Ground.FOREGROUND, entity.getSprite());
+        //spriteHandler.addSpriteTo(Ground.FOREGROUND, entity.getSprite());
         updatableEntity.add(entity);
     }
 
     public void removeEntity(Entity entity){
-        spriteHandler.removeSpriteTo(Ground.FOREGROUND, entity.getSprite());
+        //spriteHandler.removeSpriteTo(Ground.FOREGROUND, entity.getSprite());
         updatableEntity.remove(entity);
+    }
+
+    public void addSprite(Sprite sprite){
+        spriteHandler.addSpriteTo(Ground.FOREGROUND, sprite);
+    }
+
+    public void removeSprite(Sprite sprite){
+        spriteHandler.removeSpriteTo(Ground.FOREGROUND, sprite);
     }
 
     @Override

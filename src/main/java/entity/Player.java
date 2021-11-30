@@ -41,14 +41,6 @@ public class Player extends Creature implements KeyEventManager, MouseEventManag
         sprite = new ImageSprite(image, position, this.size);
     }
 
-
-    @Override
-    public void setPosition(Vector2D position){
-        this.position = position;
-        sprite.setPosition(this.position);
-        hitBox.setPosition(this.position);
-    }
-
     @Override
     public void updateOnTimeEvent(TimeEvent event) {
         move(event);

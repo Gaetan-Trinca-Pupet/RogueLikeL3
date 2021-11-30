@@ -21,10 +21,10 @@ public class Grid<T> implements Iterable<T>{
         return grid.get(i);
     }
 
-    public T get(int i, int j){
-        if(i >= getSizeWidth() || j >= getSizeHeight()) return null;
-        if(grid.get(i) == null) return null;
-        return grid.get(i).get(j);
+    public T get(int width, int height){
+        if(width >= getSizeWidth() || height >= getSizeHeight()) return null;
+        if(grid.get(width) == null) return null;
+        return grid.get(width).get(height);
     }
 
     public void set(int i, int j, T element){

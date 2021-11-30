@@ -11,7 +11,8 @@ public class Wolf extends Fightable {
         force = 10;
         life = 50;
         defense = 5;
-        size = new Vector2D(60,50);
+        speed = 100;
+        size = new Vector2D(70,60);
         sprite = new ImageSprite(imageManager.getRessource("file:src/resources/monster/wolf.png", this), new Vector2D(), size);
     }
 }

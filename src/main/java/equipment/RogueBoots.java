@@ -8,7 +8,7 @@ import utilities.Vector2D;
 public class RogueBoots extends Equipment {
     public RogueBoots(){
         super(-50,500,-10);
-        size = new Vector2D(50,50);
+        size = new Vector2D(70,70);
         sprite = new ImageSprite(imageManager.getRessource("file:src/resources/equipment/rogueBoots.png", this), new Vector2D(), size);
     }
 

@@ -35,6 +35,10 @@ public abstract class Entity implements UpdateOnTimeEvent {
 
     protected SpriteHandler selfSpriteHandler;
 
+    public void setSelfSpriteHandler(SpriteHandler selfSpriteHandler){
+        this.selfSpriteHandler = selfSpriteHandler;
+    }
+
     protected Collision hitBox;
 
     protected Sprite sprite;
@@ -43,6 +47,9 @@ public abstract class Entity implements UpdateOnTimeEvent {
 
 
     public boolean collideWith(Entity entity){
+        System.out.println("----------------------------");
+        System.out.println("This : " + hitBox.getPosition());
+        System.out.println("Entity : " + entity.hitBox.getPosition());
         return hitBox.intersect(entity.hitBox);
     }
 

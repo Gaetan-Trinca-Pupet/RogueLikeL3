@@ -7,6 +7,7 @@ import utilities.Vector2D;
 
 public class Fightable {
     static protected ImageManager imageManager = new ImageManager();
+    protected int speed = 1;
 
     protected Sprite sprite;
     protected Vector2D size;
@@ -14,6 +15,8 @@ public class Fightable {
     protected int life;
     protected int force;
     protected int defense;
+
+    public int getSpeed(){ return speed; }
 
     public Sprite getSprite(){
         return sprite;

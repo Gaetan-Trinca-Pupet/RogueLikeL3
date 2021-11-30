@@ -33,6 +33,7 @@ public class Map implements UpdateOnTimeEvent {
         Entity.setSpriteHandler(spriteHandler);
         player = new Player(controller, this);
         player.setPosition(new Vector2D());
+        Monster.setTarget(player);
 
         generateMap(10);
         sprite = new CompositeSprite();
@@ -96,7 +97,9 @@ public class Map implements UpdateOnTimeEvent {
 
     public void moveEntityToRoom(Entity entity, Vector2D source, Vector2D destination){
         rooms.get((int) source.x, (int) source.y).removeEntity(entity);
+        rooms.get((int) source.x, (int) source.y).removeSprite(entity.getSprite());
         rooms.get((int) destination.x, (int) destination.y).addEntity(entity);
+        rooms.get((int) destination.x, (int) destination.y).addSprite(entity.getSprite());
     }
 
     private void generateMap(final int nbRoom){
@@ -111,6 +114,7 @@ public class Map implements UpdateOnTimeEvent {
         rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new NormalRoom());
         currentRoomPosition = roomCreated.get(0);
         rooms.get((int) currentRoomPosition.x,(int) currentRoomPosition.y).addEntity(player);
+        rooms.get((int) currentRoomPosition.x,(int) currentRoomPosition.y).addSprite(player.getSprite());
 
         while(roomCreated.size() < nbRoom) {
             Vector2D processedRoom = roomCreated.get(rand.nextInt(roomCreated.size()));
@@ -141,6 +145,7 @@ public class Map implements UpdateOnTimeEvent {
         Vector2D roomPos = roomSize.divideBy(new Vector2D(-2,-2));
 
         Random random = new Random();
+        Entity.setSpriteHandler(room.getSpriteHandler());
 
         Creature creature = new Monster(new Wolf());
         creature.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
