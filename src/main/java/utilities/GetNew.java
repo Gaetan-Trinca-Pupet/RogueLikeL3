@@ -20,8 +20,15 @@ public class GetNew {
 
     public static Monster monster(MonsterType type){
         switch (type){
-            case BEAR : return new Monster(new Bear());
-            case WOLF : return new Monster(new Wolf());
+            case BEAR           : return new Monster(new Bear());
+            case FOX            : return new Monster(new Fox());
+            case FROG           : return new Monster(new Frog());
+            case GOKU           : return new Monster(new Goku());
+            case LANDMINE       : return new Monster(new LandMine());
+            case MICE           : return new Monster(new Mice());
+            case RABBIT         : return new Monster(new Rabbit());
+            case TOAD           : return new Monster(new Toad());
+            case WOLF           : return new Monster(new Wolf());
         }
         return null;
     }
@@ -35,7 +42,10 @@ public class GetNew {
 
     public static Pickable consomable(ConsomableType type){
         switch (type){
-            case APPLE : return new Pickable(new Apple());
+            case APPLE          : return new Pickable(new Apple());
+            case POISON         : return new Pickable(new Poison());
+            case POTION         : return new Pickable(new Potion());
+            case SANDWICH       : return new Pickable(new Sandwich());
         }
         return null;
     }
@@ -49,8 +59,10 @@ public class GetNew {
 
     public static Pickable equipment(EquipmentType type){
         switch (type){
-            case SWORD : return new Pickable(new Sword());
-            case BOOTS : return new Pickable(new RogueBoots());
+            case SWORD          : return new Pickable(new Sword());
+            case BOOTS          : return new Pickable(new RogueBoots());
+            case DAGGER         : return new Pickable(new Dagger());
+            case ARMOR          : return new Pickable(new Armor());
         }
         return null;
     }

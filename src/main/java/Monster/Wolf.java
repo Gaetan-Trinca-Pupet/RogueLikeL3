@@ -5,7 +5,7 @@ import utilities.Vector2D;
 
 public class Wolf extends Fightable {
     public Wolf(){
-        force = 10;
+        force = 20;
         life = 50;
         defense = 5;
         speed = 150;

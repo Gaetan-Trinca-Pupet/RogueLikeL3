@@ -188,7 +188,7 @@ public class Map implements UpdateOnTimeEvent {
         Random random = new Random();
         Entity.setSpriteHandler(room.getSpriteHandler());
         if(random.nextInt(3) != 0){
-            int nombre = random.nextInt(3);
+            int nombre = random.nextInt(5);
             for(int i = 0 ; i < nombre ; ++i) {
                 Creature creature = GetNew.monster(GetNew.randomMonsterType());
                 creature.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));

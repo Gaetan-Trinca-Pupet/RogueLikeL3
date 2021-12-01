@@ -141,11 +141,15 @@ public class FightState extends GameState{
             mouseEvent.mouseEvent(event);
     }
 
-    @Override
-    public void updateOnTimeEvent(TimeEvent event) {
+    public void paint(){
         HPplayer.setText("HP : " + player.getCurrentLife() + " / " + player.getMaxLife());
         HPmonster.setText("HP : " + monster.getCurrentLife() + " / " + monster.getMaxLife());
         gameContext.gameWindow.paintAll(spriteList);
+    }
+
+    @Override
+    public void updateOnTimeEvent(TimeEvent event) {
+        paint();
     }
 
     private enum Turn{
@@ -175,7 +179,7 @@ public class FightState extends GameState{
             if (random.nextInt(3) != 0) { // 1 chance sur 3 d'avoir un consomable
                 drop = GetNew.consomable(GetNew.randomConsomableType());
             }
-            else if (random.nextInt(2) == 0) { // 1 chance sur 15 pour le monstre de drop un equipment
+            else if (random.nextInt(2) == 0) { // 1 chance sur 6 pour le monstre de drop un equipment
                 drop = GetNew.equipment(GetNew.randomEquipmentType());
             }
 
@@ -189,7 +193,9 @@ public class FightState extends GameState{
             backToLastContext();
 
         }
-        if(player.getCurrentLife() <= 0)
+        if(player.getCurrentLife() <= 0) {
+            paint();
             gameContext.setState(new GameOverState(gameContext, this));
+        }
     }
 }

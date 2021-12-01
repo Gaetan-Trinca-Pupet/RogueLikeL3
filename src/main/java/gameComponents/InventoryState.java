@@ -53,7 +53,7 @@ public class InventoryState extends GameState{
     @Override
     public void keyboardEvent(KeyEvent event) {
         if(event.getEventType() == KeyEvent.KEY_PRESSED){
-            if(event.getCode() == controller.keyCodeForAction(Action.ESCAPE))
+            if(event.getCode() == controller.keyCodeForAction(Action.INVENTORY) || event.getCode() == controller.keyCodeForAction(Action.ESCAPE))
                 quitInventory();
         }
     }

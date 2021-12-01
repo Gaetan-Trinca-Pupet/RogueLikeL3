@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -38,7 +39,7 @@ public class App extends Application {
         root.getChildren().add(window);
         primaryStage.setScene(new Scene(root));
         primaryStage.setFullScreen(true);
-        primaryStage.setFullScreenExitKeyCombination(KeyCodeCombination.NO_MATCH);
+        primaryStage.setFullScreenExitKeyCombination(KeyCodeCombination.keyCombination("b"));
 
         primaryStage.show();
         primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, this::endLoop);
