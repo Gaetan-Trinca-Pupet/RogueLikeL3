@@ -5,6 +5,8 @@ import EventManager.MouseEventManager;
 import collision.SquareCollision;
 import entity.Creature;
 import entity.Entity;
+import entity.Monster;
+import Monster.Lion;
 import entity.Pickable;
 import equipment.RogueBoots;
 import equipment.Sword;
@@ -162,6 +164,7 @@ public class FightState extends GameState{
                 break;
         }
         if(monster.getCurrentLife() > 0) monster.attack(player);
+        else if (monster.getMaxLife() == 200) gameContext.setState(new WinState(gameContext, this));
         else {
             monster.getCurrentRoom().getSpriteHandler().removeSpriteTo(Ground.GROUND, monster.getSprite());
             monster.getCurrentRoom().removeEntity(monster);

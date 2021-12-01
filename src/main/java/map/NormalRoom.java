@@ -1,10 +1,8 @@
 package map;
 
 import collision.CollisionType;
-import entity.Entity;
-import entity.Monster;
-import entity.Pickable;
-import entity.Player;
+import entity.*;
+import Monster.Lion;
 import javafx.scene.paint.Color;
 import sprite.CompositeSprite;
 import sprite.Sprite;
@@ -15,7 +13,7 @@ import java.util.*;
 import java.util.Map;
 
 public class NormalRoom extends Room{
-    Map <Vector2D, Boolean> exits;
+    protected Map <Vector2D, Boolean> exits;
     public NormalRoom() {
         exits = new HashMap<>();
         generate();
@@ -105,8 +103,10 @@ public class NormalRoom extends Room{
             int hierarchy = Integer.MAX_VALUE;
             for (Entity entity : updatableEntity) {
                 if (hierarchy > 0 && entity instanceof Player) { color = Color.BLUE; hierarchy = 0 ; }
-                else if (hierarchy > 1 && entity instanceof Pickable) { color = Color.YELLOW; hierarchy = 1 ; }
-                else if (hierarchy > 2 && entity instanceof Monster) { color = Color.RED; hierarchy = 2 ; }
+                else if (hierarchy > 1 && entity instanceof Boss) { color = Color.PINK; hierarchy = 1 ; }
+                else if (hierarchy > 2 && entity instanceof Pickable) { color = Color.YELLOW; hierarchy = 2 ; }
+                else if (hierarchy > 3 && entity instanceof Monster) { color = Color.RED; hierarchy = 3 ; }
+
             }
         }
 

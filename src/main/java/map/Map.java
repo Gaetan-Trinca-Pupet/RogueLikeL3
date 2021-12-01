@@ -1,8 +1,6 @@
 package map;
 
-import Consomable.Apple;
 import Controller.MouseAndKeyboardController;
-import Monster.Wolf;
 import collision.Collidable;
 import entity.*;
 import sprite.CompositeSprite;
@@ -14,7 +12,8 @@ import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
-
+import Monster.Wolf;
+import Monster.Lion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,8 +34,9 @@ public class Map implements UpdateOnTimeEvent {
         player = new Player(controller, this);
         player.setPosition(new Vector2D());
         Monster.setTarget(player);
+        Boss.setTarget(player);
 
-        generateMap(50);
+        generateMap(10);
         sprite = new CompositeSprite();
         spriteHandler.addSpriteTo(Ground.BACKGROUND, sprite);
         actualizeSprite();
@@ -109,6 +109,9 @@ public class Map implements UpdateOnTimeEvent {
         maxSize = (int) (Math.sqrt(nbRoom) * 2);
         rooms = new Grid<>(maxSize, maxSize);
 
+        boolean mapHaveBoss = false;
+        int newRoomExits = 0;
+
         ArrayList<Vector2D> roomCreated = new ArrayList<>();
         roomCreated.add(new Vector2D((double)rooms.getSizeWidth()/2, (double)rooms.getSizeHeight()/2));
         rooms.set((int) roomCreated.get(0).x, (int) roomCreated.get(0).y, new NormalRoom());
@@ -121,7 +124,7 @@ public class Map implements UpdateOnTimeEvent {
             Vector2D direction = Vector2D.DIRECTIONS.get(rand.nextInt(Vector2D.DIRECTIONS.size()));
             Vector2D newRoom = processedRoom.add(direction);
 
-            if( ! isRoomPositionValid(newRoom)) continue;
+            if(!isRoomPositionValid(newRoom)) continue;
 
             roomCreated.add(newRoom);
             rooms.set((int) newRoom.x ,(int) newRoom.y, new NormalRoom());
@@ -129,7 +132,7 @@ public class Map implements UpdateOnTimeEvent {
             rooms.get((int) processedRoom.x, (int) processedRoom.y).addExit(direction);
             System.out.println("Room at : " + newRoom);
             rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(direction));
-
+            ++newRoomExits;
 
             for(Vector2D dir : Vector2D.DIRECTIONS){
                 Vector2D nextRoom = newRoom.add(dir);
@@ -137,6 +140,7 @@ public class Map implements UpdateOnTimeEvent {
                 if(isThereRoomAt(nextRoom) && rand.nextInt(5) == 0){
                     rooms.get((int) newRoom.x, (int) newRoom.y).addExit(dir);
                     rooms.get((int) nextRoom.x, (int) nextRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(dir));
+                    ++newRoomExits;
                     break;
                 }
             }
@@ -146,11 +150,31 @@ public class Map implements UpdateOnTimeEvent {
 
                 }
 
-
-            generateEntityInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
+            if (newRoomExits == 1 && !mapHaveBoss) {
+                mapHaveBoss = true;
+                generateBossInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
+            } else generateEntityInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
 
         }
 
+    }
+
+    private void generateBossInsideRoom(Room room) {
+        Random random = new Random();
+        Vector2D roomSize = new Vector2D();
+        roomSize.x = room.ROOM_SIZE.x * room.TILE_SIZE.x;
+        roomSize.y = room.ROOM_SIZE.y * room.TILE_SIZE.y;
+        roomSize = roomSize.multiply(new Vector2D(0.7,0.7));
+
+        Entity.setSpriteHandler(room.getSpriteHandler());
+
+        Vector2D roomPos = roomSize.divideBy(new Vector2D(-2,-2));
+        System.out.println("Boss generated");
+        Creature creature = new Boss(new Lion());
+        creature.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
+
+        room.addEntity(creature);
+        room.addInterractionTo(player, creature);
     }
 
     private void generateEntityInsideRoom(Room room){

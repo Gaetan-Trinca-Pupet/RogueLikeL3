@@ -34,7 +34,6 @@ public class Trap extends Tile {
 //        setSprite(ImageSpriteFromTilemapFactory.construct("map/roguelikeDungeon_transparent.png", 6, 0, position.multiply(size), size));
     }
 
-
     @Override
     public CollisionType collide() {
         return CollisionType.DAMAGING;
