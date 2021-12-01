@@ -53,40 +53,11 @@ public class PlayState extends GameState{
         map = new Map(controller);
         spriteList.addHandlerToGround(Ground.GROUND, map.getSpriteHandler());
 
-        //Player player = new Player(controller, map);
-        //player.setPosition(new Vector2D(0,0));
         this.player = map.getPlayer();
-
-//        Pickable[] pommes = new Pickable[200];
-        Random random = new Random();
-//        for(Pickable pomme : pommes)
-//        {
-//            pomme = new Pickable(new Apple());
-//            pomme.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-//            player.addInteraction(pomme);
-//        }
-
-//        Pickable epee = new Pickable(new Sword());
-//        epee.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-//        player.addInteraction(epee);
-//
-//        Pickable botte = new Pickable(new RogueBoots());
-//        botte.setPosition(new Vector2D(random.nextInt(1000)-500, random.nextInt(1000)-500));
-//        player.addInteraction(botte);
-//
-        Creature loup = new Monster(new Wolf());
-        loup.setPosition(new Vector2D(random.nextInt(500), random.nextInt(500)));
-        //player.addInteraction(loup);
-
-//        Creature ours = new Monster(new Bear());
-//        ours.setPosition(new Vector2D(random.nextInt(1000)-800, random.nextInt(1000)-800));
-//        player.addInteraction(ours);
-//        spriteList.addSpriteTo(Ground.GROUND, ours.getSprite());
 
         HPplayer = new LabelSprite("HP : " + player.getCurrentLife() + " / " + player.getMaxLife(), Color.BLACK, new Vector2D(-960,-500), 50);
         spriteList.addSpriteTo(Ground.HUD, HPplayer);
 
-        //updatableList.add(map);
         keyEventList.add(map.getPlayer());
 
         paintAll();
