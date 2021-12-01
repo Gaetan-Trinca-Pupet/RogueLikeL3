@@ -97,7 +97,7 @@ public abstract class Room implements UpdateOnTimeEvent {
         Vector2D posCollision = centerPos.add(sizeCollision.multiply(creature.getFacing()).subtract(sizeCollision.divideBy(new Vector2D(2,2))));
         SquareCollision collision = new SquareCollision(posCollision, sizeCollision);
 
-        ArrayList<Interactable> interactables = new ArrayList<>(interactionList.get(creature));
+        ArrayList<Interactable> interactables = new ArrayList<Interactable>(interactionList.get(creature));
         for(Interactable interactable : interactables)
             if(creature.getHitBox().intersect(interactable.getHitBox()) || collision.intersect(interactable.getHitBox())) {
                 interactable.interact(creature);

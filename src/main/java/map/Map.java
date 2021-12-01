@@ -3,6 +3,7 @@ package map;
 import Controller.MouseAndKeyboardController;
 import collision.Collidable;
 import entity.*;
+import javafx.scene.control.skin.TextInputControlSkin;
 import sprite.CompositeSprite;
 import sprite.Sprite;
 import test.TimeEvent;
@@ -109,7 +110,6 @@ public class Map implements UpdateOnTimeEvent {
         maxSize = (int) (Math.sqrt(nbRoom) * 2);
         rooms = new Grid<>(maxSize, maxSize);
 
-        boolean mapHaveBoss = false;
         int newRoomExits = 0;
 
         ArrayList<Vector2D> roomCreated = new ArrayList<>();
@@ -145,17 +145,28 @@ public class Map implements UpdateOnTimeEvent {
                 }
             }
 
-            for(int i = -1 ; i <= 1 ; ++i)
-                for(int j = -1 ; j <= 1 ; ++j){
-
-                }
-
-            if (newRoomExits == 1  && !mapHaveBoss) {
-                mapHaveBoss = true;
-                generateBossInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
-            } else generateEntityInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
-
+            generateEntityInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
         }
+
+        boolean isThereBoss = false;
+        for(int i = 0 ; i < rooms.getSizeWidth() && ! isThereBoss; ++i)
+            for (int j = 0 ; j < rooms.getSizeHeight() && ! isThereBoss ; ++j){
+                if( ! isThereRoomAt(new Vector2D(i, j))) continue;
+                for (Vector2D dir : Vector2D.DIRECTIONS) {
+                    Vector2D newRoom = new Vector2D(i, j).add(dir);
+                    if (isRoomPositionValid(newRoom)) {
+                        rooms.set((int) newRoom.x ,(int) newRoom.y, new NormalRoom());
+
+                        rooms.get((int) i, (int) j).addExit(dir);
+
+                        rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(dir));
+
+                        generateBossInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
+                        isThereBoss = true;
+                        break;
+                    }
+                }
+            }
 
     }
 
