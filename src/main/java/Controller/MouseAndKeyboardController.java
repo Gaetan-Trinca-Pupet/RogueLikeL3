@@ -157,4 +157,17 @@ public class MouseAndKeyboardController extends RogueLikeController implements M
 
         computeButtons();
     }
+
+    public void reinit(){
+        for(Direction direction : directionKeyPressed.keySet()){
+            directionKeyPressed.replace(direction, false);
+        }
+
+        leftJoystick.xTilt = 0;
+        leftJoystick.yTilt = 0;
+
+
+        computeJoystick();
+        computeButtons();
+    }
 }

@@ -24,6 +24,7 @@ public class GameContext implements KeyEventManager, MouseEventManager, UpdateOn
     }
 
     public void setState(GameState newState) {
+        currentState.controller.reinit();
         currentState = newState;
     }
 

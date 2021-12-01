@@ -99,7 +99,7 @@ public abstract class Room implements UpdateOnTimeEvent {
 
         ArrayList<Interactable> interactables = new ArrayList<>(interactionList.get(creature));
         for(Interactable interactable : interactables)
-            if(collision.intersect(interactable.getHitBox())) {
+            if(creature.getHitBox().intersect(interactable.getHitBox()) || collision.intersect(interactable.getHitBox())) {
                 interactable.interact(creature);
                 break;
             }
