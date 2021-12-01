@@ -1,14 +1,10 @@
 package gameComponents;
 
-import Consomable.Apple;
 import Controller.Action;
 import EventManager.KeyEventManager;
 import EventManager.MouseEventManager;
 import entity.*;
 import Monster.Wolf;
-import Monster.Bear;
-import equipment.RogueBoots;
-import equipment.Sword;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

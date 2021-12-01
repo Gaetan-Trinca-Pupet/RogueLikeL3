@@ -25,7 +25,7 @@ public class MapState extends GameState {
         this.map = map;
         keyEventList.add(controller);
         mouseEventList.add(controller);
-        computeMinimap();
+        //computeMinimap();
     }
 
     public void computeMinimap(){

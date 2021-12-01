@@ -47,9 +47,6 @@ public abstract class Entity implements UpdateOnTimeEvent {
 
 
     public boolean collideWith(Entity entity){
-        System.out.println("----------------------------");
-        System.out.println("This : " + hitBox.getPosition());
-        System.out.println("Entity : " + entity.hitBox.getPosition());
         return hitBox.intersect(entity.hitBox);
     }
 

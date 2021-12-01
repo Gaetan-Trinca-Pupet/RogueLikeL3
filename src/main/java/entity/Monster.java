@@ -32,8 +32,6 @@ public class Monster extends Creature {
         Vector2D posTarget = target.getPosition().add(target.getSize().divideBy(new Vector2D(2,2)));
         Vector2D selfPos = position.add(size.divideBy(new Vector2D(2,2)));
 
-        System.out.println("Target : " + posTarget + " | me : " + selfPos);
-
         double opp = Math.abs(posTarget.y - selfPos.y);
         double adj = Math.abs(posTarget.x - selfPos.x);
         double angle = Math.atan(opp/adj);

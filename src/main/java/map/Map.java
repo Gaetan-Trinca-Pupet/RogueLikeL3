@@ -8,6 +8,7 @@ import entity.*;
 import sprite.CompositeSprite;
 import sprite.Sprite;
 import test.TimeEvent;
+import utilities.GetNew;
 import utilities.Grid;
 import utilities.UpdateOnTimeEvent;
 import utilities.Vector2D;
@@ -35,10 +36,9 @@ public class Map implements UpdateOnTimeEvent {
         player.setPosition(new Vector2D());
         Monster.setTarget(player);
 
-        generateMap(10);
+        generateMap(50);
         sprite = new CompositeSprite();
         spriteHandler.addSpriteTo(Ground.BACKGROUND, sprite);
-        //spriteHandler.addSpriteTo(Ground.FOREGROUND, player.getSprite());
         actualizeSprite();
         actualizeCollidables();
     }
@@ -130,6 +130,23 @@ public class Map implements UpdateOnTimeEvent {
             System.out.println("Room at : " + newRoom);
             rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(direction));
 
+
+            for(Vector2D dir : Vector2D.DIRECTIONS){
+                Vector2D nextRoom = newRoom.add(dir);
+                if(nextRoom.x < 0 || newRoom.x >= rooms.getSizeWidth() || nextRoom.y < 0 || nextRoom.y >= rooms.getSizeHeight() ) continue;
+                if(isThereRoomAt(nextRoom) && rand.nextInt(5) == 0){
+                    rooms.get((int) newRoom.x, (int) newRoom.y).addExit(dir);
+                    rooms.get((int) nextRoom.x, (int) nextRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(dir));
+                    break;
+                }
+            }
+
+            for(int i = -1 ; i <= 1 ; ++i)
+                for(int j = -1 ; j <= 1 ; ++j){
+
+                }
+
+
             generateEntityInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
 
         }
@@ -146,17 +163,35 @@ public class Map implements UpdateOnTimeEvent {
 
         Random random = new Random();
         Entity.setSpriteHandler(room.getSpriteHandler());
+        if(random.nextInt(3) != 0){
+            int nombre = random.nextInt(3);
+            for(int i = 0 ; i < nombre ; ++i) {
+                Creature creature = GetNew.monster(GetNew.randomMonsterType());
+                creature.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
 
-        Creature creature = new Monster(new Wolf());
-        creature.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
-        Pickable pickable = new Pickable(new Apple());
-        pickable.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
+                room.addEntity(creature);
+                room.addInterractionTo(player, creature);
+            }
+        }
 
-        room.addEntity(creature);
-        room.addEntity(pickable);
+        if(random.nextInt(5) == 0){
+            int nombre = random.nextInt(2);
+            for(int i = 0 ; i < nombre ; ++i) {
+                Pickable pickable = GetNew.consomable(GetNew.randomConsomableType());
+                pickable.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
 
-        room.addInterractionTo(player, creature);
-        room.addInterractionTo(player, pickable);
+                room.addEntity(pickable);
+                room.addInterractionTo(player, pickable);
+            }
+        }
+
+        if(random.nextInt(10) == 0){
+            Pickable equipment = GetNew.equipment(GetNew.randomEquipmentType());
+            equipment.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
+
+            room.addEntity(equipment);
+            room.addInterractionTo(player, equipment);
+        }
     }
 
     private boolean isRoomPositionValid(Vector2D v) {

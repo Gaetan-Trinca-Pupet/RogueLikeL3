@@ -4,6 +4,7 @@ import Consomable.Apple;
 import EventManager.MouseEventManager;
 import collision.SquareCollision;
 import entity.Creature;
+import entity.Entity;
 import entity.Pickable;
 import equipment.RogueBoots;
 import equipment.Sword;
@@ -15,6 +16,7 @@ import sprite.LabelSprite;
 import sprite.Sprite;
 import sprite.SquareSprite;
 import test.TimeEvent;
+import utilities.GetNew;
 import utilities.Vector2D;
 import windowManager.Ground;
 import windowManager.SpriteHandler;
@@ -165,29 +167,26 @@ public class FightState extends GameState{
             monster.getCurrentRoom().removeEntity(monster);
             monster.getCurrentRoom().removeInteractionFrom(player, monster);
             Random random = new Random();
-            if (random.nextInt(2) == 0) { // 1 chance sur 2 pour le monstre de drop une pomme
-                Pickable pom = new Pickable(new Apple());
-                pom.setPosition(monster.getPosition());
-                monster.getCurrentRoom().addEntity(pom);
-                monster.getCurrentRoom().addInterractionTo(player, pom);
+            Pickable drop = null;
+            Entity.setSpriteHandler(monster.getCurrentRoom().getSpriteHandler());
+            if (random.nextInt(3) != 0) { // 1 chance sur 3 d'avoir un consomable
+                drop = GetNew.consomable(GetNew.randomConsomableType());
             }
-            else if (random.nextInt(3) == 0) { // 1 chance sur 3 pour le monstre de drop une épée
-                Pickable epee = new Pickable(new Sword());
-                epee.setPosition(monster.getPosition());
-                monster.getCurrentRoom().addEntity(epee);
-                monster.getCurrentRoom().addInterractionTo(player, epee);
+            else if (random.nextInt(2) == 0) { // 1 chance sur 15 pour le monstre de drop un equipment
+                drop = GetNew.equipment(GetNew.randomEquipmentType());
             }
-            else if (random.nextInt(10) == 0) { // 1 chance sur 10 pour le monstre de drop LES BOTTES
-                Pickable boots = new Pickable(new RogueBoots());
-                boots.setPosition(monster.getPosition());
-                monster.getCurrentRoom().addEntity(boots);
-                monster.getCurrentRoom().addInterractionTo(player, boots);
+
+            if(drop != null) {
+                System.out.println("Objet : " + drop);
+                drop.setPosition(monster.getPosition().add(monster.getSize().divideBy(new Vector2D(2,2))));
+                monster.getCurrentRoom().addEntity(drop);
+                monster.getCurrentRoom().addInterractionTo(player, drop);
             }
 
             backToLastContext();
 
         }
-        if(player.getCurrentLife() < 0)
+        if(player.getCurrentLife() <= 0)
             gameContext.setState(new GameOverState(gameContext, this));
     }
 }

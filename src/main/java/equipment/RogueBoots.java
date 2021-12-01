@@ -1,7 +1,6 @@
 package equipment;
 
 import Inventory.Equipment;
-import javafx.scene.image.Image;
 import sprite.ImageSprite;
 import utilities.Vector2D;
 
