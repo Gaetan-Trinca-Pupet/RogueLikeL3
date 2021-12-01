@@ -14,11 +14,11 @@ public class Apple extends Consomable {
 
     @Override
     public String info() {
-        return "+20HP";
+        return "+15HP";
     }
 
     @Override
     public void use(Creature creature){
-        creature.addToLife(20);
+        creature.addToLife(15);
     }
 }
