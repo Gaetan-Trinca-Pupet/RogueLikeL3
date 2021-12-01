@@ -32,6 +32,8 @@ public class Monster extends Creature {
         Vector2D posTarget = target.getPosition().add(target.getSize().divideBy(new Vector2D(2,2)));
         Vector2D selfPos = position.add(size.divideBy(new Vector2D(2,2)));
 
+        System.out.println("Target : " + posTarget + " | me : " + selfPos);
+
         double opp = Math.abs(posTarget.y - selfPos.y);
         double adj = Math.abs(posTarget.x - selfPos.x);
         double angle = Math.atan(opp/adj);
@@ -40,14 +42,14 @@ public class Monster extends Creature {
         translate.x = Math.cos(angle) * speed;
         translate.y = Math.sin(angle) * speed;
 
-        if(target.getPosition().x < position.x) translate.x *= -1;
-        if(target.getPosition().y < position.y) translate.y *= -1;
+        if(posTarget.x < selfPos.x) translate.x *= -1;
+        if(posTarget.y < selfPos.y) translate.y *= -1;
 
         translate(translate);
     }
 
     public void attack(){
-        if(collideWith(target))
+        if(target.getHitBox().isInside(position.add(size.divideBy(new Vector2D(2,2)))))
             this.interact(target);
     }
 

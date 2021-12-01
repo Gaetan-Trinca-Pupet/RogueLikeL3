@@ -30,6 +30,7 @@ public class Pickable extends Interactable {
     public void interact(Creature creature){
         self.addSelfToInventory(creature.getInventory());
         inWhatRoom.removeInteractionFrom(creature, this);
+        inWhatRoom.getSpriteHandler().removeSpriteTo(Ground.GROUND, sprite);
         inWhatRoom.removeEntity(this);
     }
 

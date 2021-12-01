@@ -161,6 +161,7 @@ public class FightState extends GameState{
         }
         if(monster.getCurrentLife() > 0) monster.attack(player);
         else {
+            monster.getCurrentRoom().getSpriteHandler().removeSpriteTo(Ground.GROUND, monster.getSprite());
             monster.getCurrentRoom().removeEntity(monster);
             monster.getCurrentRoom().removeInteractionFrom(player, monster);
             Random random = new Random();
