@@ -9,7 +9,7 @@ public class Frog extends Fightable {
         life = 30;
         defense = 15;
         speed = 50;
-        size = new Vector2D(40,40);
+        size = new Vector2D(40,50);
         sprite = new ImageSprite(imageManager.getRessource("file:src/resources/monster/frog.png", this), new Vector2D(), size);
     }
 }
