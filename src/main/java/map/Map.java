@@ -128,9 +128,7 @@ public class Map implements UpdateOnTimeEvent {
 
             roomCreated.add(newRoom);
             rooms.set((int) newRoom.x ,(int) newRoom.y, new NormalRoom());
-            System.out.println("Room at : " + processedRoom);
             rooms.get((int) processedRoom.x, (int) processedRoom.y).addExit(direction);
-            System.out.println("Room at : " + newRoom);
             rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(direction));
 
 
@@ -177,7 +175,6 @@ public class Map implements UpdateOnTimeEvent {
 
         Entity.setSpriteHandler(room.getSpriteHandler());
 
-        System.out.println("Boss generated");
         Creature creature = new Boss(new Lion());
         creature.setPosition(new Vector2D(0,0).subtract(creature.getSize().divideBy(new Vector2D(2,2))));
 
