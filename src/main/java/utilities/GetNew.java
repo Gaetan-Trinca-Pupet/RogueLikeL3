@@ -6,13 +6,15 @@ import Consomable.*;
 import equipment.*;
 import entity.Pickable;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class GetNew {
+
     public static MonsterType randomMonsterType(){
         for(Random random = new Random() ; ; )
             for (MonsterType type : MonsterType.values())
-                if(random.nextInt(20) == 0)
+                if(random.nextInt(type.getChance()) == 0)
                     return type;
     }
 
@@ -27,7 +29,7 @@ public class GetNew {
     public static ConsomableType randomConsomableType(){
         for(Random random = new Random() ; ; )
             for (ConsomableType type : ConsomableType.values())
-                if(random.nextInt(20) == 0)
+                if(random.nextInt(type.getChance()) == 0)
                     return type;
     }
 
@@ -41,7 +43,7 @@ public class GetNew {
     public static EquipmentType randomEquipmentType(){
         for(Random random = new Random() ; ; )
             for (EquipmentType type : EquipmentType.values())
-                if(random.nextInt(20) == 0)
+                if(random.nextInt(type.getChance()) == 0)
                     return type;
     }
 
