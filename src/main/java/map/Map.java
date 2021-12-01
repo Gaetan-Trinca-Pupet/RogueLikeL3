@@ -36,7 +36,7 @@ public class Map implements UpdateOnTimeEvent {
         Monster.setTarget(player);
         Boss.setTarget(player);
 
-        generateMap(10);
+        generateMap(50);
         sprite = new CompositeSprite();
         spriteHandler.addSpriteTo(Ground.BACKGROUND, sprite);
         actualizeSprite();
@@ -132,7 +132,7 @@ public class Map implements UpdateOnTimeEvent {
             rooms.get((int) processedRoom.x, (int) processedRoom.y).addExit(direction);
             System.out.println("Room at : " + newRoom);
             rooms.get((int) newRoom.x, (int) newRoom.y).addExit(Vector2D.OPPOSITE_DIRECTION.get(direction));
-            ++newRoomExits;
+
 
             for(Vector2D dir : Vector2D.DIRECTIONS){
                 Vector2D nextRoom = newRoom.add(dir);
@@ -150,7 +150,7 @@ public class Map implements UpdateOnTimeEvent {
 
                 }
 
-            if (newRoomExits == 1 && !mapHaveBoss) {
+            if (newRoomExits == 1  && !mapHaveBoss) {
                 mapHaveBoss = true;
                 generateBossInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
             } else generateEntityInsideRoom(rooms.get((int) newRoom.x, (int) newRoom.y));
@@ -160,18 +160,15 @@ public class Map implements UpdateOnTimeEvent {
     }
 
     private void generateBossInsideRoom(Room room) {
-        Random random = new Random();
         Vector2D roomSize = new Vector2D();
         roomSize.x = room.ROOM_SIZE.x * room.TILE_SIZE.x;
         roomSize.y = room.ROOM_SIZE.y * room.TILE_SIZE.y;
-        roomSize = roomSize.multiply(new Vector2D(0.7,0.7));
 
         Entity.setSpriteHandler(room.getSpriteHandler());
 
-        Vector2D roomPos = roomSize.divideBy(new Vector2D(-2,-2));
         System.out.println("Boss generated");
         Creature creature = new Boss(new Lion());
-        creature.setPosition(new Vector2D(random.nextInt((int) roomSize.x) + roomPos.x, random.nextInt((int) roomSize.y) + roomPos.y));
+        creature.setPosition(new Vector2D(0,0).subtract(creature.getSize().divideBy(new Vector2D(2,2))));
 
         room.addEntity(creature);
         room.addInterractionTo(player, creature);

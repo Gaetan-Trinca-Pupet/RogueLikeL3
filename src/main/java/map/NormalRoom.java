@@ -45,7 +45,7 @@ public class NormalRoom extends Room{
         Random rand = new Random();
         for (int y = 1; y < ROOM_SIZE.y-1; ++y) {
             for (int x = 1; x < ROOM_SIZE.x-1; ++x) {
-                if (rand.nextInt(100) == 0) setTrap(x, y);
+                if (rand.nextInt(150) == 0) setTrap(x, y);
                 else setFloor(x, y);
             }
         }
